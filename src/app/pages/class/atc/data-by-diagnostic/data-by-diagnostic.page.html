@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-grid class="header-container">
+    <ion-row class="row-header">
+      <ion-col class="close-icon">
+        <ion-text class="material-icons" (click)="navigateToAtcPage()">arrow_back</ion-text>
+      </ion-col>
+      <ion-col class="title">
+        <ion-text>{{'DATA_BY_DIAGNOSTIC' | translate}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-dropdown" *ngIf="selectedMilestone">
+      <ion-select #domainSelect hidden="true" [interfaceOptions]="milestoneSelectHeader" [value]="selectedMilestone.sequenceId" (ionChange)="onSelectMilestone($event)" dropdownScrollIntoView>
+        <ng-container *ngFor="let domain of diagnosticSummary.domains">
+          <ion-select-option [value]="domain.sequenceId">{{domain.title}}</ion-select-option>
+        </ng-container>
+      </ion-select>
+      <ion-col class="col-icon">
+        <ion-icon class="assessment-icon"></ion-icon>
+      </ion-col>
+      <ion-col class="col-title">
+        <ion-text class="ellipsis">{{selectedMilestone.code}}</ion-text>
+        <ion-text class="ellipsis">{{selectedMilestone.title}}</ion-text>
+      </ion-col>
+      <ion-col class="col-dropdown-icon" (click)="openMilestoneList()">
+        <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-search">
+      <ion-col size="10" class="ion-no-padding">
+        <ion-input type="text" placeholder="{{ 'SEARCH' | translate }}" (ionInput)="filterStudentList($event)"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding search-icon">
+        <ion-icon name="search"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+<ion-content>
+  <ion-grid class="grid-table">
+    <ion-row class="row-table-header">
+      <ion-col class="trow-col col-header-1">
+        <ion-text>{{'STUDENT' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="trow-col col-header-2">
+        <ion-text>{{'RESULT' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="trow-col col-header-3">
+        <ion-text>{{'STUDNET_BEGAN_AT' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="trow-col col-header-4">
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="selectedMilestone">
+      <ion-row class="row-table-body">
+        <ng-container *ngIf="selectedMilestone.students.length; else noStudent">
+          <ng-container *ngFor="let student of selectedMilestone.students | listFilter: searchText: 'firstName'">
+            <ion-row class="row-table-data">
+              <ion-col class="trow-col col-data-1">
+                <ion-item class="student-info-container">
+                  <ion-avatar class="profile avatar-icon" *ngIf="student.thumbnail; else avatarIcon">
+                    <img [src]="student.thumbnail" class="profile-icon">
+                  </ion-avatar>
+                  <ng-template #avatarIcon>
+                    <ion-avatar class="profile avatar-icon">
+                      <ngx-avatar size="30" [name]="student.firstName"></ngx-avatar>
+                    </ion-avatar>
+                  </ng-template>
+                  <ion-label>{{student.lastName}} {{student.firstName}}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col class="trow-col col-data-2">
+                <ion-text *ngIf="student.level > 0; else belowGrade">{{'ABOVE_GRADE_LEVLEL' | translate}}</ion-text>
+              </ion-col>
+              <ng-template #belowGrade>
+                <ion-text>{{'BELOW_GRADE_LEVEL' | translate}}</ion-text>
+              </ng-template>
+              <ion-col class="trow-col col-data-3">
+                <ion-text *ngIf="student.startingCompetency; else nullValue">{{student.startingCompetency}}</ion-text>
+              </ion-col>
+              <ng-template #nullValue>
+                <ion-text>&ndash;&ndash;&ndash;</ion-text>
+              </ng-template>
+              <ion-col class="trow-col col-data-4">
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </ng-container>
+        <ng-template #noStudent>
+          <ion-row class="row-no-records">
+            <ion-text class="no-text">{{'NO_RECORD_FOUND' | translate}}</ion-text>
+          </ion-row>
+        </ng-template>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>

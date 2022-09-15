@@ -1,0 +1,169 @@
+.suggestion-popup-container {
+  position: relative;
+  width: 100%;
+  background-color: var(--suggestion-popup-bg-color);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+  overflow-y: auto;
+  z-index: 13;
+  max-height: calc(100% - 48px);
+
+  .collection-image-container {
+    width: 100%;
+    height: 170px;
+    position: relative;
+
+    .collection-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: relative;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: center;
+
+      &::after {
+        position: absolute;
+        background-image: linear-gradient(to bottom,rgba(255,255,255,0) 0, var(--suggestion-popup-image-bg) 100%);
+        width: 100%;
+        height: 170px;
+        content: "";
+        top: 0;
+      }
+    }
+  }
+
+  .collection-title {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: var(--suggestion-popup-bg-color);
+  }
+
+  .suggestion-content {
+    display: grid;
+    width: 100%;
+    margin: 5px auto;
+
+    .item {
+      width: max-content;
+      margin: 15px auto;
+      color: white;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      height: 20px;
+      border-radius: 12px;
+      background-color: var(--taxonomy-list-color);
+
+      .label {
+        color: var(--taxonomy-list-font-color);
+        font-size: 12px;
+        font-weight: 700;
+        margin: 0 15px;
+      }
+    }
+
+    .suggestion-msg {
+      height: 48px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      color: var(--suggestion-popup-title-color);
+      opacity: 0.5;
+      font-size: 15px;
+      text-transform: capitalize;
+    }
+
+    .users-profile-details {
+      display: flex;
+      justify-content: center;
+
+      .user-detail {
+        display: grid;
+        width: 100px;
+
+        ion-avatar {
+          width: 34px;
+          height: 34px;
+          margin: auto;
+
+          .profile {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+          }
+
+          .avatar-icon {
+            ::ng-deep .avatar-container {
+              height: 34px !important;
+              width: 34px !important;
+
+              .avatar-content {
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font: 12px / 30px Helvetica, Arial, sans-serif !important;
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        ion-text {
+          margin-top: 10px;
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .actions-container {
+    justify-content: flex-end;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: capitalize;
+    width: 100%;
+    height: 56px;
+
+    .cancel {
+      opacity: 0.3;
+    }
+
+    ion-text {
+      margin: auto 0;
+      font-size: 12px;
+      padding: 0 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+  }
+
+  .suggestion-content-count {
+    margin: auto auto auto 10px;
+    display: flex;
+    opacity: 0.6;
+    height: 40px;
+    color: var(--suggestion-panel-count-color);
+
+    ion-text {
+      display: flex;
+      margin: auto 0;
+    }
+
+    .count {
+      margin: auto auto auto 2px;
+    }
+  }
+}
+
+.backdrop {
+  z-index: 4;
+}

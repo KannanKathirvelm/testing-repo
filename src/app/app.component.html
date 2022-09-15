@@ -1,0 +1,85 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu [swipeGesture]="isAuthenticated" *ngIf="isAuthenticated" side="start" content-id="main-content" type="overlay">
+      <ng-container *ngIf="userSession">
+        <ion-header class="menu-drawer-header">
+          <ion-toolbar>
+            <ion-row class="item-header">
+              <ion-col size="3" class="profile" *ngIf="!showNgxAvatar && userSession.thumbnail; else avatarIcon">
+                <img [src]="userSession.thumbnail" class="profile-icon" (error)="imageErrorHandler()">
+              </ion-col>
+              <ng-template #avatarIcon>
+                <ion-col size="3" class="avatar-icon">
+                  <ngx-avatar [name]="userSession.first_name"></ngx-avatar>
+                </ion-col>
+              </ng-template>
+              <ion-col size="9" class="user-info">
+                <span class="fullname">{{userSession.first_name}} {{userSession.last_name}}</span>
+                <span class="username ellipsis" *ngIf="userSession.username">{{userSession.username}}</span>
+                <ion-text class="email ellipsis">{{userSession.email}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="menu-drawer-content">
+          <ion-grid class="ion-no-padding">
+            <ion-row class="row-item" (click)="closeMenu()" routerLink="/teacher-home">
+              <ion-col size="3">
+                <ion-icon class="journey-icon"></ion-icon>
+              </ion-col>
+              <ion-col size="9" routerLink="/teacher-home">
+                <span class="label">{{'CLASSROOM' | translate}}</span>
+              </ion-col>
+            </ion-row>
+            <ion-row class="row-item" (click)="closeMenu()" routerLink="/profile/preferences">
+              <ion-col size="3">
+                <ion-icon class="profile-icon"></ion-icon>
+              </ion-col>
+              <ion-col size="9" routerLink="/profile/preferences">
+                <span class="label">{{'PROFILE' | translate}}</span>
+              </ion-col>
+            </ion-row>
+            <ion-row class="row-item" (click)="closeMenu()" routerLink="/offline-settings" [ngClass]="{'offline' : !isOnline}">
+              <ion-col size="3" class="text-center">
+                <span class="material-icons">
+                  download_for_offline
+                </span>
+              </ion-col>
+              <ion-col size="9" routerLink="/offline-settings">
+                <span class="label">{{'OFFLINE_SETTINGS' | translate}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-content>
+        <ion-footer class="menu-drawer-footer ion-no-border">
+          <ion-grid class="ion-no-padding">
+            <ion-row class="row-item app-version text-center">
+              <ion-col size="12">
+                <ion-text>V {{appVersion}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="row-item language-container" [ngClass]="{'offline' : !isOnline}">
+              <ion-col size="3">
+                <ion-icon class="nav-language"></ion-icon>
+              </ion-col>
+              <ion-col size="9">
+                <ion-select [value]="defaultLanguage" (ionChange)="changeLanguage($event)" dropdownScrollIntoView>
+                  <ion-select-option [value]="language.value" *ngFor="let language of languageList">{{language.label}}</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+            <ion-row class="row-item" (click)="onLogout()" [ngClass]="{'offline' : !isOnline}">
+              <ion-col size="3">
+                <ion-text class="material-icons logout-icon">launch</ion-text>
+              </ion-col>
+              <ion-col size="9">
+                <ion-text class="label">{{'LOGOUT' | translate}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-footer>
+      </ng-container>
+    </ion-menu>
+    <ion-router-outlet id="main-content" main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

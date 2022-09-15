@@ -1,0 +1,156 @@
+.performance-container {
+  background-color: var(--competency-performance-panel-bg);
+  height: max-content;
+  width: 100%;
+
+  .performance-content {
+    width: 100%;
+
+    .students-container {
+      .competency-header {
+        width: 100%;
+        font-size: 13px;
+        font-weight: bold;
+        color: var(--competency-performance-content-color);
+        height: 70px;
+
+        ion-text {
+          display: flex;
+          margin: auto;
+        }
+      }
+
+      .student-container {
+        display: grid;
+        grid-template-columns: 45px auto;
+        align-items: center;
+        height: 50px;
+        text-align: left;
+        background-color: var(--competency-performance-content-color);
+
+        .suggestion {
+          width: 30px;
+          margin: auto;
+          background-color: var(--suggestion-bg-color);
+          border-radius: 50%;
+          height: 30px;
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          color: var(--suggestion-txt-color);
+        }
+
+        ion-avatar {
+          display: flex;
+          width: 29px;
+          height: 29px;
+          margin: auto;
+
+          .profile {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+          }
+
+          .avatar-icon {
+            ::ng-deep .avatar-container {
+              height: 29px !important;
+              width: 29px !important;
+
+              .avatar-content {
+                width: 29px;
+                height: 29px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font: 12px / 30px Helvetica, Arial, sans-serif !important;
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        .student-name {
+          color: var(--competency-performance-panel-bg);
+          font-size: 14px;
+          text-transform: capitalize;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .students-competencies-performance-container {
+      overflow-x: auto;
+
+      .competencies-info {
+        display: flex;
+        width: max-content;
+        align-items: center;
+        height: 70px;
+
+        .topic-coverage {
+          display: grid;
+          height: 100%;
+
+          .topic-seq {
+            margin: auto;
+            color: var(--suggestion-txt-color);
+            border-bottom: var(--suggestion-txt-color) solid 1px;
+            width: 90%;
+            justify-content: center;
+          }
+        }
+
+        .competency-info {
+          width: 50px;
+          justify-content: center;
+          font-size: 11px;
+          font-weight: bold;
+          text-align: center;
+          color: var(--competency-performance-content-color);
+        }
+      }
+
+      .competency-performance-content {
+        background-color: var(--competency-performance-content-color);
+        width: max-content;
+        display: grid;
+
+        .competencies-performance-container {
+          display: flex;
+          overflow-x: scroll;
+          width: max-content;
+
+          .competency-performance {
+            height: 50px;
+            width: 50px;
+
+            &.status-0 {
+              background-color: var(--proficiency-competency-status-0);
+            }
+
+            &.status-1 {
+              background-color: var(--proficiency-competency-status-1);
+            }
+
+            &.status-2,
+            &.status-3,
+            &.status-4,
+            &.status-5 {
+              background-color: var(--proficiency-competency-status-3);
+            }
+
+            .nav-check-circle {
+              height: 24px;
+              width: 24px;
+              margin: auto;
+              background-color: var(--students-competency-performance-icon);
+            }
+          }
+        }
+      }
+    }
+  }
+}

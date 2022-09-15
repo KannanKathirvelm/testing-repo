@@ -1,0 +1,145 @@
+<div class="offline-activity-report-container">
+  <ion-header>
+    <ion-toolbar position="top">
+      <div class="header-section">
+        <div class="collection-icon horiz-vert-center">
+          <ion-icon class="nav-offline-activity"></ion-icon>
+        </div>
+        <div class="collection-content">
+          <div class="collection-title-wrapper">
+            <ion-text class="collection-title" *ngIf="offlineActivity; else skeletonText">{{offlineActivity.title}}</ion-text>
+          </div>
+          <ng-container *ngIf="!context.isPreview">
+            <ion-text class="collection-performance-text">{{ 'PERFORMANCE_REPORT' | translate }}</ion-text>
+          </ng-container>
+        </div>
+        <div class="close-wrapper horiz-vert-center">
+          <i class="material-icons" (click)="closeReport()">clear</i>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="report-container" *ngIf="offlineActivity && ((activityTasks && activeStudent) || context.isPreview); else reportSkeletonView">
+    <ion-grid class="grid-report-body ion-no-padding ">
+      <ng-container *ngIf="!context.isPreview">
+        <ion-row class="row-student-list">
+          <ion-grid class="attempts-list-container ion-no-padding ">
+            <ion-row (click)="toggleStudentList()" class="attempt-date-container">
+              <ion-col class="col-icon">
+                <ion-thumbnail class="profile" *ngIf="activeStudent.thumbnail && !isThumbnailError; else avatarImage">
+                  <ion-img (ionError)="onImgError()" [src]="activeStudent.thumbnail" class="profile-icon"></ion-img>
+                </ion-thumbnail>
+                <ng-template #avatarImage>
+                  <ion-thumbnail class="profile avatar-icon">
+                    <ngx-avatar [name]="activeStudent.username" [size]="36"></ngx-avatar>
+                  </ion-thumbnail>
+                </ng-template>
+              </ion-col>
+              <ion-col class="col-text">
+                <ion-text class="ellipsis">{{activeStudent.username}}</ion-text>
+              </ion-col>
+              <ion-col class="col-dropdown-icon">
+                <ion-text *ngIf="hideStudentList; else showDropupIcon" class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                <ng-template #showDropupIcon>
+                  <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                </ng-template>
+              </ion-col>
+              <ion-col class="col-performance" [ngClass]="{'no-performance' : !activeStudent.performance}">
+                <ion-text *ngIf="activeStudent.performance" class="attempt-score grade-range-{{activeStudent.performance.score | gradeRange}}">{{activeStudent.performance.score | transformPerformanceScore}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row [@collapse]="hideStudentList" class="attempt-list-wrapper">
+              <ion-list class="attempts-list" *ngIf="studentList && studentList.length">
+                <ion-row *ngFor="let student of studentList; let studentIndex = index">
+                  <ion-grid class="individual-attempt ion-no-padding " [ngClass]="{'active-attempt': student.id === activeStudent.id }" (click)="renderStudentPerformance(studentIndex)">
+                    <ion-row class="attempt-date-container individual-student">
+                      <ion-col class="col-icon">
+                        <ion-thumbnail class="profile" *ngIf="student.thumbnail && !isThumbnailError; else avatarImage">
+                          <ion-img (ionError)="onImgError()" [src]="student.thumbnail" class="profile-icon"></ion-img>
+                        </ion-thumbnail>
+                        <ng-template #avatarImage>
+                          <ion-thumbnail class="profile avatar-icon">
+                            <ngx-avatar [name]="student.username" [size]="36"></ngx-avatar>
+                          </ion-thumbnail>
+                        </ng-template>
+                      </ion-col>
+                      <ion-col class="col-text">
+                        <ion-text class="attempt-date">{{student.username}}</ion-text>
+                      </ion-col>
+                      <ion-col class="col-performance" [ngClass]="{'no-performance' : !student.performance}">
+                        <ion-text *ngIf="student.performance" class="attempt-score grade-range-{{student.performance.score | gradeRange}}">{{student.performance.score | transformPerformanceScore}}</ion-text>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-row>
+              </ion-list>
+            </ion-row>
+          </ion-grid>
+        </ion-row>
+        <ion-row class="row-activity-summary">
+          <offline-activity-summary-report [offlineActivity]="offlineActivity" [performance]="activeStudent.performance"></offline-activity-summary-report>
+        </ion-row>
+      </ng-container>
+      <ion-row class="row-activities">
+        <offline-activity-content-report [isStudent] ="context.isStudent" [offlineActivity]="offlineActivity" [isPreview]="context.isPreview" [activityTasks]="activityTasks" [teacherRubric]="teacherRubric" [studentRubric]="studentRubric" *ngIf="activityTasks">
+        </offline-activity-content-report>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</div>
+<!-- animated skeleton view -->
+<ng-template #reportSkeletonView>
+  <div class="skeleton-report">
+    <div class="skeleton-date-container">
+      <ion-skeleton-text animated></ion-skeleton-text>
+    </div>
+    <div class="skeleton-summary-report">
+      <div class="skeleton-performance-activity">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+      <div class="skeleton-answers">
+        <div class="skeleton-correct-answer">
+          <ion-skeleton-text animated class="small-skeleton-text"></ion-skeleton-text>
+          <ion-skeleton-text animated class="big-skeleton-text"></ion-skeleton-text>
+        </div>
+        <div class="skeleton-timespent-container">
+          <ion-skeleton-text animated class="small-skeleton-text"></ion-skeleton-text>
+          <ion-skeleton-text animated class="big-skeleton-text"></ion-skeleton-text>
+        </div>
+        <div class="skeleton-in-correct-answer">
+          <ion-skeleton-text animated class="small-skeleton-text"></ion-skeleton-text>
+          <ion-skeleton-text animated class="big-skeleton-text"></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+    <div class="skeleton-question-container" *ngFor="let item of [].constructor(2)">
+      <div class="skeleton-setting-container">
+        <div class="toggle-container">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="skeleton-question">
+        <div class="skeleton-header-section">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </div>
+        <div class="skeleton-questions-container">
+          <div class="skeleton-title-container">
+            <div class="skeleton-title">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </div>
+            <div class="skeleton-description">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </div>
+          </div>
+          <div class="skeleton-performance-container">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #skeletonText>
+  <ion-skeleton-text animated></ion-skeleton-text>
+</ng-template>
+<!-- animated skeleton view -->

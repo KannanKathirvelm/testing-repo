@@ -1,0 +1,247 @@
+svg.navigator-atc-chart {
+  background-color: var(--atc-chart-bg);
+
+  .inferred-checkbox {
+    display: none;
+    align-items: center;
+
+    span {
+      margin: auto auto auto 10px;
+    }
+  }
+
+  .initial-checkbox {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin: auto auto auto 10px;
+    }
+  }
+
+  .disable-initial-skyline {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  #grade-list {
+    padding: 2px;
+    background-color: transparent;
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: none;
+    color: var(--grade-list);
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    pointer-events: all;
+
+    &:active,
+    &:focus {
+      box-shadow: none;
+      border: none;
+      outline: none;
+    }
+
+    option {
+      color: var(--grade-list-option);
+      padding: 3px;
+      cursor: pointer;
+    }
+  }
+
+  .exclude-inferred {
+    display: grid;
+    color: var(--grade-list);
+    font-size: 15px;
+    padding-top: 10px;
+
+    .grade-grid {
+      align-items: center;
+
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .initial-inferred {
+    color: var(--grade-list);
+    font-size: 15px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .grade-grid {
+      align-items: center;
+
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .x.axis,
+  .y.axis {
+    .tick {
+      line {
+        stroke: var(--atc-tick-text);
+        stroke-dasharray: 4;
+        opacity: 0.5;
+      }
+    }
+
+    &.x.axis {
+      .tick {
+        line {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.x.axis.no-grid {
+      .tick {
+        line {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .x1.axis {
+    path {
+      display: none;
+    }
+  }
+
+  .axis {
+    path.domain {
+      stroke: var(--atc-tick-text);
+      stroke-width: 2px;
+      fill: none;
+    }
+  }
+
+  .tick {
+    text {
+      fill: var(--atc-tick-text);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    &.no-label {
+      text {
+        display: none;
+      }
+    }
+  }
+
+  .node-point {
+    z-index: 999;
+    pointer-events: all;
+    
+    .student-profile {
+      clip-path: circle(50% at 50% 50%);
+      -webkit-clip-path: circle(50% at 50% 50%);
+      cursor: pointer;
+    }
+  }
+
+  .placeholder {
+    fill: var(--atc-tick-text);
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: normal;
+  }
+}
+
+.landscape-chart {
+  svg.navigator-atc-chart {
+    pointer-events: all;
+    .exclude-inferred {
+      display: flex;
+
+      .grade-grid {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.performance-bar-container {
+  .grade-range-not-started {
+    --progress-background: var(--white);
+  }
+
+  .grade-range-0-59,
+  .grade-range-60-69,
+  .grade-range-70-79,
+  .grade-range-80-89,
+  .grade-range-90-100 {
+    border-right: 0;
+    color: var(--white);
+  }
+
+  .grade-range-0-59 {
+    --progress-background: var(--red);
+  }
+
+  .grade-range-not-started {
+    --progress-background: transparent;
+  }
+
+  .grade-range-60-69 {
+    --progress-background: var(--grade-range-60-69);
+  }
+
+  .grade-range-70-79 {
+    --progress-background: var(--grade-range-70-79);
+  }
+
+  .grade-range-80-89 {
+    --progress-background: var(--grade-range-80-89);
+  }
+
+  .grade-range-90-100 {
+    --progress-background: var(--grade-range-90-100);
+  }
+}
+
+.non-premium-atc-chart-view {
+  margin: auto;
+
+  .axis line,
+  .axis path {
+    fill: none;
+    stroke: var(--atc-chart-view-path-color);
+    stroke-dasharray: 4;
+    opacity: 0.5;
+  }
+
+  .line {
+    fill: none;
+    stroke: var(--atc-chart-view-line-color);
+  }
+
+  .placeholder,
+  .tick text {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    fill: var(--atc-chart-view-path-color);
+  }
+
+  .tick line {
+    opacity: 0.5;
+  }
+}
+
+.navigator-atc-chart-skyline {
+  position: absolute;
+  left: 0;
+}
+.position-count {
+  background-color:  var(--white);
+  text-align: center;
+}

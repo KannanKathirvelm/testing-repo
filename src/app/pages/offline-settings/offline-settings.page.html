@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar class="offline-setting-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'OFFLINE_SETTINGS' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="offline-settings-container">
+  <ng-container *ngIf="!isLoading">
+    <ion-grid class="ion-no-padding" *ngIf="classList && classList?.length; else noClassMsgTemplate">
+      <ion-row class="class-list-container" *ngFor="let class of classList">
+        <ion-row class="class-content-row">
+          <ion-col class="class-content-col ion-no-padding">
+            <ion-text class="class-name"> {{class.title}} </ion-text>
+          </ion-col>
+          <ion-col class="toggle-col ion-no-padding">
+            <ion-toggle [ngModel]="class.isOfflineAccessEnabled" (ngModelChange)="toggleCheckBox(class)"
+              color="primary"></ion-toggle>
+          </ion-col>
+        </ion-row>
+        <ion-row class="progress-container" *ngIf="class.syncDetails && class.isOfflineAccessEnabled"
+          [ngClass]="class.syncDetails.isDownloadCompleted ? 'downloaded' : 'in-progress'">
+          <ion-text>
+            {{class.syncDetails.isDownloadCompleted ?('DOWNLOAD_COMPLETED' | translate) :
+            ('DOWNLOAD_IN_PROGRESS' | translate) }}
+            {{class.syncDetails.progress.progressPercent}}%
+          </ion-text>
+          <ion-row class="progress-bar-container">
+            <ion-progress-bar value="{{class.syncDetails.progress.progressPercent / 100}}"></ion-progress-bar>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-grid>
+    <ng-template #noClassMsgTemplate>
+      <ion-row class="no-class-msg"> {{'NO_CLASSES_MSG' | translate}} </ion-row>
+    </ng-template>
+  </ng-container>
+</ion-content>

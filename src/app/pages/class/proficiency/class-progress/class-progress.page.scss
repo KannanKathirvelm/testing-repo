@@ -1,0 +1,340 @@
+ion-content {
+  --background: var(--class-progress-ion-content-bg);
+
+  .search-student-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--student-list-search-border);
+    background: var(--class-progress-body-bg);
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+
+    .input-row {
+      font-size: 12px;
+      color: var(--student-list-search-text);
+      border-right: 1px solid var(--student-list-search-border);
+    }
+
+    .search-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--student-list-search-text);
+
+      ion-icon {
+        height: 22px;
+        min-width: 48px;
+      }
+    }
+  }
+
+  .class-progress-report {
+    overflow-y: scroll;
+    padding: 0;
+    font-family: var(--helvetica);
+    margin-top: 10px;
+    background: var(--class-progress-body-bg);
+
+    .header-container {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      height: 56px;
+
+      .header-left {
+        height: 100%;
+        padding: 0;
+        border-bottom: 1px solid var(--class-progress-border-color);
+
+        ion-grid {
+          height: 100%;
+          grid-template-rows: 50% 50%;
+          display: grid;
+          align-items: center;
+          padding: 0 0 0 16px;
+        }
+
+        .dropdown {
+          padding-top: 5px;
+          display: grid;
+          grid-template-columns: 1fr 30px;
+
+          .select-period {
+            padding: 0;
+            text-transform: capitalize;
+            text-decoration: underline;
+            text-underline-position: under;
+            color: var(--period-select-color);
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 10px;
+          }
+
+          ion-text {
+            width: 25px;
+            justify-content: center;
+            display: flex;
+          }
+        }
+
+        .name {
+          color: var(--name-color);
+          font-size: 13px;
+          text-transform: uppercase;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .header-right {
+        height: 100%;
+        padding: 0;
+        border-bottom: 1px solid var(--class-progress-border-color);
+
+        .col-width {
+          align-items: center;
+          justify-content: center;
+          min-width: 105px;
+          text-align: center;
+          display: flex;
+        }
+
+        .row-header-right {
+          height: 100%;
+          overflow-x: hidden;
+          display: grid;
+          grid-template-columns: repeat(9,1fr);
+
+          .header-title {
+            margin: auto;
+            color: var(--header-title-color);
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+
+          .sub-header {
+            display: grid;
+            grid-template-columns: repeat(5,1fr);
+            justify-content: center;
+
+            ion-text {
+              font-size: 12px;
+              text-transform: uppercase;
+              white-space: nowrap;
+              color: var(--name-color);
+              font-weight: bold;
+            }
+          }
+        }
+
+        .col-competencies {
+          text-align: center;
+          padding: 0;
+          display: grid;
+          grid-template-rows: 50% 50%;
+
+          .competency-sub-header {
+            ion-col {
+              white-space: nowrap;
+            }
+          }
+        }
+
+        .col-timespent {
+          padding: 0;
+          display: grid;
+          grid-template-rows: 50% 50%;
+          text-align: center;
+        }
+      }
+    }
+
+    .body-container {
+      display: grid;
+      grid-template-columns: 180px auto;
+
+      .skeleton-col-value {
+        width: 30px;
+      }
+
+      ion-item {
+        --border-color: transparent;
+        --padding-start: 0;
+      }
+
+      .body-right {
+        padding: 0;
+
+        .student-summary-container {
+          display: grid;
+          grid-template-columns: auto;
+          height: 48px;
+          border-bottom: 1px solid var(--class-progress-border-color);
+
+          .summary-container {
+            display: grid;
+            grid-template-columns: repeat(11,1fr);
+            cursor: pointer;
+
+            ion-col {
+              display: grid;
+              grid-template-columns: auto auto;
+              align-items: center;
+              justify-content: center;
+              column-gap: 8px;
+              min-width: 105px;
+
+              .competency-status {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                display: block;
+
+                &.competency-status-2,
+                &.competency-status-3,
+                &.competency-status-4,
+                &.competency-status-5 {
+                  background-color: var(--competency-status-2-5-color);
+                }
+
+                &.competency-status-1 {
+                  background-color: var(--competency-status-1-color);
+                }
+              }
+
+              ion-text {
+                white-space: nowrap;
+
+                &.suggestion-taken {
+                  color: var(--suggestion-text-color);
+                  font-weight: bold;
+                }
+              }
+
+              .score-range {
+                background: none;
+                font-weight: bold;
+
+                &.grade-range-0-59 {
+                  color: var(--red);
+                }
+
+                &.grade-range-not-started {
+                  color: transparent;
+                }
+
+                &.grade-range-60-69 {
+                  color: var(--grade-range-60-69);
+                }
+
+                &.grade-range-70-79 {
+                  color: var(--grade-range-70-79);
+                }
+
+                &.grade-range-80-89 {
+                  color: var(--grade-range-80-89);
+                }
+
+                &.grade-range-90-100 {
+                  color: var(--grade-range-90-100);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .body-left {
+        padding: 0;
+
+        .student-info-container {
+          border-bottom: 1px solid var(--class-progress-border-color);
+          height: 48px;
+          padding-left: 16px;
+
+          ion-avatar {
+            margin: 0 8px 0 0;
+            width: 32px;
+            height: 32px;
+          }
+
+          ion-label {
+            font-family: var(--helvetica);
+            font-size: 13px;
+            text-transform: capitalize;
+            opacity: 0.9;
+          }
+
+          .avatar-icon {
+            ::ng-deep .avatar-container {
+              height: 32px !important;
+              width: 32px !important;
+  
+              .avatar-content {
+                width: 35px;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font: 16px / 30px Helvetica, Arial, sans-serif !important;
+                margin: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ion-fab-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.no-data-msg {
+  color: var(--class-proficiency-no-data);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+}
+
+.download-prompt-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: var(--alert-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: lighter;
+    font-size: 20px;
+    text-transform: capitalize;
+    text-align: center;
+    color: var(--alert-text-color);
+
+    ion-text {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+::ng-deep .class-progress.student-proficiency-view {
+  display: none;
+}

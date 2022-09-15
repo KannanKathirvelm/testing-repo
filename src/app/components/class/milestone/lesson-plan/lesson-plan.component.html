@@ -1,0 +1,31 @@
+<mat-accordion class="lesson-plan-container">
+  <ion-row class="ion-no-padding lesson-plan-container-row">
+    <mat-expansion-panel class="lesson-plan-panel" [hideToggle]="true">
+      <mat-expansion-panel-header class="lesson-plan-panel-header" collapsedHeight="48px" expandedHeight="inherit">
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="lesson-plan-row">
+            <ion-col class="lesson-plan-icon-col">
+              <ion-icon class="lesson-plan-icon" name="ellipsis-horizontal-circle"></ion-icon>
+            </ion-col>
+            <ion-col class="title-col ellipsis">
+              <ion-row class="lesson-plan-title lesson ellipsis">
+                <ion-text>Lesson Plan</ion-text>
+              </ion-row>
+            </ion-col>
+            <ion-col class="title-col ellipsis">
+              <ion-row class="lesson-plan-title sessions ellipsis">
+                <ion-text>4 sessions</ion-text>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+      <ng-container>
+        <lesson-plan-list></lesson-plan-list>
+      </ng-container>
+      <ng-container>
+        <lesson-plan-session></lesson-plan-session>
+      </ng-container>
+    </mat-expansion-panel>
+  </ion-row>
+</mat-accordion>

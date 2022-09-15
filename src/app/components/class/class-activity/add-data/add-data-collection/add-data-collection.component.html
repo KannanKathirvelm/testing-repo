@@ -1,0 +1,66 @@
+<ion-header class="ion-no-padding add-data-collection-container">
+  <ion-toolbar>
+    <ion-row class="report-header-row">
+      <ion-col class="ion-no-padding header-icon">
+        <ion-icon class="nav-collection"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding header-text">
+        <ion-text>{{'ADD_DATA' | translate}}</ion-text>
+        <ion-text class="ellipsis">{{title}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-no-padding header-icon">
+        <ion-text class="material-icons" (click)="closeReport()">clear</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-search" *ngIf="isCollection">
+      <ion-searchbar placeholder="{{'SEARCH_QUESTIONS' | translate}}" enterkeyhint="search" [(ngModel)]="searchText"></ion-searchbar>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="isCollection; else externalCollection">
+    <ng-container *ngIf="questions; else skeletonView">
+      <ion-row class="row-questions">
+        <mat-accordion class="accordion-container">
+          <ng-container *ngFor="let question of questions | listFilter: searchText: 'title'; let questionIndex = index; let isFirstQuestion = first">
+            <mat-expansion-panel class="accordion-panel" [hideToggle]="true" [expanded]="isFirstQuestion || question.isExpanded" (opened)="openedContent(question)">
+              <mat-expansion-panel-header class="milestone-panel-header main-header" collapsedHeight="48px" expandedHeight="48px">
+                <ion-row class="row-header">
+                  <ion-col class="col-text">
+                    <ion-text class="ellipsis">{{questionIndex + 1}}. {{question.title}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-performance" [ngClass]="{'has-timespent': question.timespent >= 1}">
+                    {{question.timespent | transformTimeSpent }}
+                  </ion-col>
+                </ion-row>
+              </mat-expansion-panel-header>
+              <ng-template matExpansionPanelContent>
+                <nav-timepicker [hours]="question.hours" [minutes]="question.minutes" (hoursMinutes)="setTimespent($event, questionIndex)"></nav-timepicker>
+              </ng-template>
+            </mat-expansion-panel>
+          </ng-container>
+        </mat-accordion>
+      </ion-row>
+      <ion-row class="row-submit-btn">
+        <ion-button class="submit-btn" [disabled]="!isTimespentAdded" (click)="submitTimespent()">{{'SUBMIT' | translate}}</ion-button>
+      </ion-row>
+    </ng-container>
+  </ng-container>
+</ion-content>
+<ng-template #externalCollection>
+  <ion-row class="external-collection-container">
+    <nav-timepicker [hours]="externalHours" [minutes]="externalMinutes" (hoursMinutes)="submitExternalCollectionTimeSpent($event)"></nav-timepicker>
+  </ion-row>
+</ng-template>
+<ng-template #skeletonView>
+  <ion-grid class="skeleton-grid">
+    <ion-row class="skeleton-row" *ngFor="let items of [].constructor(3)">
+      <ion-col class="title-col">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-col>
+      <ion-col class="performance-col">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>

@@ -1,0 +1,8 @@
+<ion-grid class="grid-increment-container">
+  <ion-row class="row-input">
+    <ion-input type="number" inputmode="numeric" pattern="\d*" [step]="increment" [max]="maxScore" [value]="score" (keyup)="updateScore($event)"></ion-input>
+  </ion-row>
+  <ion-row class="row-text">
+    <ion-text class="score">{{maxScore}}</ion-text>
+  </ion-row>
+</ion-grid>

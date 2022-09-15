@@ -1,0 +1,13 @@
+<ion-content class="preferences-container">
+  <ng-container *ngIf="isLoaded;else spinner">
+    <general-preference [preferences]="preferences"></general-preference>
+    <language-preference *ngIf="languages" [languages]="languages"></language-preference>
+    <preferences-category-panel *ngIf="classificationType" (selectFramework)="onSelectFramework($event)" (deleteCategory)="onDeleteCategory($event)" [classificationType]="classificationType">
+    </preferences-category-panel>
+  </ng-container>
+  <ng-template #spinner>
+    <ion-row class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </ion-row>
+  </ng-template>
+</ion-content>

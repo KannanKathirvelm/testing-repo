@@ -1,0 +1,10 @@
+<ion-row class="class-info-container">
+  <ion-row class="class-info ellipsis">
+    <ion-text class="class-name ellipsis">{{'PROGRESS_CLASS_BASELINE' | translate}}</ion-text>
+  </ion-row>
+  <ion-row class="total-competencies">
+    <ion-text class="competency-count ellipsis">{{totalMasteredCompetencies}} {{'COMPETENCIES' | translate}}</ion-text>
+    <ion-text class="competency-label"> {{'GAINED' | translate}} Until {{selectedDate | date: 'MMM yyyy'}}</ion-text>
+  </ion-row>
+</ion-row>
+<ion-row class="atc-chart-container">

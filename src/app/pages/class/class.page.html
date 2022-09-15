@@ -1,0 +1,15 @@
+<ion-header class="class-header">
+  <ion-toolbar class="class-toolbar">
+    <class-navbar [isOnline]="isOnline" [class]="class" [activeRoute]="activeRoute" [classScore]="classScore" [classActivityScore]="classActivityScore" [competencyScore]="competencyScore" (openNotification)="openNotification()"
+      (openMilestoneCourseReport)="onOpenMilestoneCourseReport()">
+    </class-navbar>
+  </ion-toolbar>
+</ion-header>
+<div #container class="class-content-wrapper">
+  <ion-row class="backdrop" *ngIf="showNotification" (click)="closeNotification()"></ion-row>
+  <app-notification *ngIf="notifications" [@collapse]="!showNotification" class="notification-panel-container" (closeNotification)="closeNotification()" [classId]="classId">
+  </app-notification>
+  <ng-container *ngIf="isLoaded">
+    <ion-router-outlet></ion-router-outlet>
+  </ng-container>
+</div>

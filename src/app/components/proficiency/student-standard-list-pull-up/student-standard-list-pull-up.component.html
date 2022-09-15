@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="row-header">
+      <ion-col class="col-title">
+        <ion-text>{{subject.title}}</ion-text>
+        <ion-text>{{framework}}</ion-text>
+      </ion-col>
+      <ion-col class="col-icon">
+        <ion-text class="material-icons close" (click)="closeModal()">close</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ng-container *ngIf="isLoaded; else skeletonView">
+      <ion-row class="row-competency-detail">
+        <ion-text class="text-title">{{studentsCompetency.displayCode}}</ion-text>
+        <ion-text class="text-desc">
+          {{studentsCompetency.description || competency.competencyDesc}}
+        </ion-text>
+      </ion-row>
+      <ng-container *ngIf="studentsCompetency.students && studentsCompetency.students.length; else noStudentsMsg">
+        <ion-row class="row-student-search">
+          <ion-searchbar [value]="searchText" placeholder="{{'SEARCH' | translate}}" (ionInput)="handleInputEvent($event)"></ion-searchbar>
+        </ion-row>
+        <ng-container *ngFor="let student of studentsCompetency.students | listFilter: searchText: 'fullName'">
+          <ion-row class="row-student-list-container">
+            <ion-col class="col-profile">
+              <ion-avatar class="profile" *ngIf="student.thumbnail != null; else avatarIcon">
+                <img [src]="student.thumbnail" class="profile-icon">
+              </ion-avatar>
+              <ng-template #avatarIcon>
+                <ion-avatar class="profile avatar-icon">
+                  <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                </ion-avatar>
+              </ng-template>
+            </ion-col>
+            <ion-col class="col-title">
+              <ion-text>{{student.firstName}} {{student.lastName}}</ion-text>
+            </ion-col>
+            <ion-col class="col-title" (click)="onClickSuggestion(student)">
+              <ion-icon name="compass" class="suggestion-icon"></ion-icon>
+            </ion-col>
+            <ion-col class="col-performance grade-range-{{student.score | gradeRange}}">
+              <ion-text>{{student.score | transformPerformanceScore}}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ng-container>
+      <ng-template #noStudentsMsg>
+        <ion-text class="no-students-list">{{'NO_STUDENTS_IN_COMPETENCY' | translate}}</ion-text>
+      </ng-template>
+    </ng-container>
+    <ng-template #skeletonView>
+      <ion-row class="row-competency-detail skeleton-view">
+        <ion-text class="text-title">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-text>
+        <ion-text class="text-desc">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-text>
+      </ion-row>
+      <ion-row class="row-student-search skeleton-view">
+        <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+      </ion-row>
+      <ion-row class="row-student-list-container skeleton-view" *ngFor="let item of [].constructor(3)">
+        <ion-col class="col-profile">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-col>
+        <ion-col class="col-title">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-col>
+        <ion-col class="col-performance">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </ion-grid>
+</ion-content>

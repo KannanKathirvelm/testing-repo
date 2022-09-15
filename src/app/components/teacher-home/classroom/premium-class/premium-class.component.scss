@@ -1,0 +1,333 @@
+.premium-class {
+  width: calc(100% - 48px);
+  height: 76vw;
+  border-radius: 4px;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.07);
+  background-color: var(--class-card-bg);
+  display: grid;
+  grid-template-rows: 40px auto;
+  margin: 0 auto 16px;
+
+  ion-card-header {
+    background-color: var(--header-bg);
+    padding: 0;
+    border-bottom: 1px solid var(--header-line-color);
+    overflow: hidden;
+
+    ion-row {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+    }
+
+    .class-name {
+      font-size: 14px;
+      line-height: 0.75;
+      color: var(--classname-text-color);
+    }
+
+    .card-header {
+      .class-title {
+        overflow: hidden;
+
+        &.archived-class {
+          text-align: center;
+        }
+      }
+
+      .setting-icon {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 5px 0 0;
+        color: var(--dark-400);
+
+        ion-icon {
+          width: 44px;
+        }
+      }
+    }
+  }
+
+  ion-card-content {
+    .header-line {
+      width: 100%;
+      border-top: solid 1px var(--line-gray);
+      margin: 0;
+      height: 0;
+    }
+
+    .card-content {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 50px 30px;
+
+      ion-row {
+        display: flex;
+        align-items: flex-end;
+
+        &.card-img {
+          width: 100%;
+          height: 100%;
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          background-color: var(--black);
+        }
+
+        .information {
+          width: 100%;
+          color: white;
+          padding-bottom: 15px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+
+          &.has-course {
+            background-image: linear-gradient(to bottom,
+                var(--has-course-linear-first-half) 0,
+                var(--has-course-linear-second-half) 100%);
+          }
+
+          &.has-no-course {
+            height: 100%;
+            background-image: none;
+            justify-content: center;
+            align-items: center;
+
+            ion-row {
+              display: grid;
+
+              ion-text {
+                font-size: 18px;
+                color: var(--class-has-no-course-color);
+                opacity: 0.5;
+                font-style: italic;
+                font-weight: 500;
+              }
+            }
+          }
+
+          .current-activity {
+            z-index: 10;
+            font-size: 12px;
+            font-weight: 700;
+          }
+
+          .course-title {
+            font-weight: bold;
+            font-size: 14px;
+            width: 95%;
+
+            &.archived-class {
+              .ellipsis {
+                margin: 0 auto;
+              }
+            }
+          }
+
+          .title-section {
+            margin: 40px 0 0;
+            padding: 0 10px;
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+
+            ion-icon {
+              margin: 0 2px 0 0;
+              width: 23px;
+              height: 17px;
+              vertical-align: top;
+              display: inline-block;
+              mask-repeat: no-repeat;
+              mask-position: center;
+              mask-size: cover;
+              background: var(--ion-icon-default-color);
+
+              &.collection {
+                mask-image: var(--collection);
+              }
+
+              &.assessment {
+                mask-image: var(--assessment);
+              }
+
+              &.assessment-external {
+                mask-image: var(--assessment);
+              }
+
+              &.offline-activity {
+                mask-image: var(--offline);
+              }
+            }
+
+            .title {
+              line-height: 13px;
+              vertical-align: top;
+              width: 86%;
+              font-weight: 700;
+              line-height: 15px;
+              margin-left: 5px;
+              max-width: 100%;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              white-space: normal;
+            }
+          }
+        }
+      }
+
+      .class-code-label {
+        width: 62px;
+        height: 14px;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: center;
+        color: var(--label-gray);
+        margin: 5px 0 0 auto;
+      }
+
+      .class-code-container {
+        display: flex;
+        align-items: center;
+
+        .class-code-wrapper {
+          text-align: right;
+
+          .class-code {
+            width: 59px;
+            height: 19px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            color: var(--label-gray);
+            margin: 0 8px 0 12px;
+          }
+        }
+      }
+
+      ion-row.class-actions {
+        width: 100%;
+        height: 50px;
+        object-fit: contain;
+        box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.5);
+        background-color: var(--white);
+
+        ion-col {
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-left: 1px solid var(--class-action-border);
+
+          &:focus {
+            outline: none;
+          }
+
+          .overview-icon {
+            width: 22px;
+            height: 22px;
+            background-image: var(--nav-performance-overview-black);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+          }
+
+          &.competency-container {
+            &.has-competency {
+              background: var(--competency-bg);
+              color: var(--white);
+
+              ion-text {
+                display: flex;
+                flex-direction: column;
+                word-break: break-all;
+                font-size: 15px;
+                font-weight: bold;
+                align-items: center;
+              }
+            }
+          }
+        }
+
+        .class-stats {
+          height: 50px;
+          background-color: var(--sky-blue);
+          display: flex;
+
+          .stats {
+            width: 100%;
+            height: 38px;
+            font-size: 15px;
+            font-weight: 900;
+            color: var(--white);
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            padding-right: 4px;
+          }
+        }
+
+        .class-action {
+          height: 50px;
+          border-right: solid 1px var(--border-black);
+          max-width: 52px;
+
+          ion-icon {
+            width: 21px;
+            height: 21px;
+            display: flex;
+            margin: 8px auto auto;
+          }
+
+          .dca {
+            background-image: var(--dca-icon);
+          }
+
+          .course-map {
+            margin: 5px auto;
+            display: flex;
+            justify-content: center;
+          }
+
+          .class-mgmt {
+            background-image: var(--proficiency-icon);
+          }
+        }
+      }
+    }
+  }
+}
+
+.custom-skeleton {
+  ion-card-content {
+    ion-grid {
+      display: grid;
+      grid-template-rows: auto 50px 30px;
+      height: 100%;
+
+      .class-actions {
+        border-bottom: 1px solid var(--class-action-border);
+
+        .class-action {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .class-code {
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 5px;
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+<ion-toolbar class="learning-map-activity-header" position="top">
+  <ion-row class="activity-header">
+    <ion-text class="title" *ngIf="activityType">{{activityType}}</ion-text>
+    <ion-text class="close material-icons" (click)="onClose()">close</ion-text>
+  </ion-row>
+</ion-toolbar>
+<ion-content class="activity-container">
+  <ng-container *ngIf="isLoaded;else showLearningMapSkeleton">
+    <ng-container *ngIf="learningMapContent?.length;else noData">
+      <ion-row class="activity-panel" *ngFor="let content of learningMapContent">
+        <ion-item-sliding>
+          <ion-item class="ion-no-padding">
+            <ion-grid class="ion-no-padding">
+              <ion-row class="activity-content ion-no-padding">
+                <ion-row class="icon">
+                  <ion-icon class="nav-{{content.contentFormat}}"></ion-icon>
+                </ion-row>
+                <ion-row class="activity-description ellipsis">
+                  <ion-text class="title ellipsis">{{content.title}}</ion-text>
+                  <ion-row class="taxonomy-count" *ngIf="content.standards">
+                    <nav-taxonomy-list [taxonomy]="content.standards">
+                    </nav-taxonomy-list>
+                  </ion-row>
+                </ion-row>
+                <ion-row class="activity-actions">
+                  <ng-container *ngIf="content.isAssessment || content.isCollection">
+                    <ion-text class="suggestion action material-icons" (click)="onClickSuggestion(content)">explore</ion-text>
+                  </ng-container>
+                </ion-row>
+                <ion-row class="activity-image">
+                  <ion-img class="thumbnail" [src]="content.thumbnail"></ion-img>
+                </ion-row>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option class="option">
+              <ion-row class="item-content">
+                <ion-row class="content-count">
+                  <ng-container *ngIf="content.resourceCount > 0">
+                    <ion-text class="material-icons">local_library</ion-text>
+                    <ion-text>{{content.resourceCount}}</ion-text>
+                  </ng-container>
+                  <ng-container *ngIf="content.questionCount > 0">
+                    <ion-text class="material-icons">help_outline</ion-text>
+                    <ion-text>{{content.questionCount}}</ion-text>
+                  </ng-container>
+                  <ng-container *ngIf="content.unitCount > 0">
+                    <ion-icon class="nav-course"></ion-icon>
+                    <ion-text>{{content.unitCount}}</ion-text>
+                  </ng-container>
+                  <ng-container *ngIf="content.assessmentCount > 0">
+                    <ion-icon class="nav-assessment"></ion-icon>
+                    <ion-text>{{content.assessmentCount}}</ion-text>
+                  </ng-container>
+                  <ng-container *ngIf="content.collectionCount > 0">
+                    <ion-icon class="nav-collection"></ion-icon>
+                    <ion-text>{{content.collectionCount}}</ion-text>
+                  </ng-container>
+                </ion-row>
+              </ion-row>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-row>
+    </ng-container>
+    <ng-template #noData>
+      <ion-row class="no-data-row">
+        <ion-text>
+          {{'NO_DATA_AVAILABLE_MSG' | translate}}
+        </ion-text>
+      </ion-row>
+    </ng-template>
+  </ng-container>
+  <ng-template #showLearningMapSkeleton>
+  <ion-row class="activity-panel">
+    <ion-item-sliding>
+      <ion-item class="ion-no-padding">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="activity-content ion-no-padding">
+            <ion-row class="icon">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-row>
+            <ion-row class="activity-description">
+              <ion-skeleton-text class="title" animated></ion-skeleton-text>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-row>
+            <ion-row class="activity-actions">
+              <ion-text class="suggestion action">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-text>
+              <ion-text class="play action">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-text>
+            </ion-row>
+            <ion-row class="activity-image">
+              <ion-skeleton-text animated class="thumbnail"></ion-skeleton-text>
+            </ion-row>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-row>
+  </ng-template>
+  <ion-text class="show-more" *ngIf="isShowMore" (click)="onClickShowMore()">
+    {{'SHOW_MORE' | translate}}
+  </ion-text>
+</ion-content>

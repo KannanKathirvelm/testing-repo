@@ -1,0 +1,181 @@
+.mat-accordion {
+  &.question-grading {
+    .mat-expansion-panel {
+      .mat-expansion-panel-header {
+        .row-header {
+          ion-col {
+            &.col-icon {
+              background-size: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mat-expansion-panel {
+    box-shadow: none;
+
+    .mat-expansion-panel-header {
+      padding: 0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      margin-bottom: 1px;
+      border-radius: 0;
+
+      ::ng-deep .mat-content {
+        height: 100%;
+      }
+
+      .row-header {
+        width: 100%;
+        height: 100%;
+        display: grid;
+
+        &.assessment-header {
+          grid-template-columns: 48px auto repeat(3, 48px);
+        }
+
+        &.offline-header {
+          grid-template-columns: 48px auto repeat(2, 48px);
+        }
+
+        ion-col {
+          padding: 0;
+
+          &.col-icon,
+          &.col-thumbnail {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+          }
+
+          &.col-icon {
+            background-size: 32px;
+          }
+
+          &.col-title {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+
+            ion-text {
+              font-family: var(--sans);
+              color: var(--dark-400);
+            }
+          }
+
+          &.col-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            ion-text {
+              padding: 0 5px;
+            }
+          }
+
+          &.question-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-400);
+            font-size: 18px;
+
+            ion-icon {
+              font-size: 22px;
+              padding-right: 2px;
+            }
+          }
+        }
+      }
+
+      ::ng-deep .mat-expansion-indicator {
+        display: none;
+      }
+    }
+
+    ::ng-deep .mat-expansion-panel-body {
+      background: var(--class-activity-bg-color);
+      padding: 0 8px 16px;
+
+      .row-grading-classes {
+        padding: 0;
+
+        .row-grading-class {
+          height: 48px;
+          background: #fff;
+          box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,0);
+          display: grid;
+          margin-bottom: 1px;
+
+          &.assessment-grading {
+            grid-template-columns: 1fr 135px 48px;
+          }
+
+          &.oa-grading {
+            grid-template-columns: 1fr 135px 48px;
+          }
+
+          .col-title {
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
+
+            ion-text {
+              font-family: var(--sans);
+              color: var(--dark-400);
+              font-size: 14px;
+            }
+          }
+
+          .col-rubric,
+          .col-student {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .activity-date {
+              padding-right: 10px;
+              font-style: italic;
+              font-size: 13px;
+              font-weight: 600;
+            }
+
+            ion-text {
+              font-family: var(--sans);
+              color: var(--dark-400);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.question-grading {
+    .mat-expansion-panel {
+      .mat-expansion-panel-header {
+        .row-header {
+          ion-col {
+            &.col-icon {
+              background-image: var(--rubric);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.offline-activity-grading {
+    .mat-expansion-panel {
+      .mat-expansion-panel-header {
+        .row-header {
+          ion-col {
+            &.col-icon {
+              background-image: var(--offline);
+            }
+          }
+        }
+      }
+    }
+  }
+}

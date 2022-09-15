@@ -1,0 +1,261 @@
+.atc-student-report-container {
+  padding: 8px;
+  background-color: var(--atc-student-report-container);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+  width: 100%;
+  overflow-y: auto;
+  z-index: 13;
+  max-height: calc(100% - 48px);
+
+  .header-container {
+    display: grid;
+    grid-template-columns: 75px auto;
+    border-bottom: 1px solid var(--atc-student-header-container);
+    padding-bottom: 5px;
+    align-items: end;
+    height: 95px;
+    align-items: center;
+    width: 100%;
+
+    .profile-container {
+      border-radius: 50%;
+      height: 68px;
+      width: 68px;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+
+      ion-thumbnail {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        overflow: hidden;
+
+        ion-img {
+          border-radius: 50%;
+          width: 59px;
+          height: 59px;
+          margin: auto;
+        }
+
+        .profile {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 2px;
+        }
+
+        .avatar-icon {
+          ::ng-deep .avatar-container {
+            height: 59px !important;
+            width: 59px !important;
+
+            .avatar-content {
+              width: 59px;
+              height: 59px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font: 25px / 30px Helvetica, Arial, sans-serif !important;
+              margin: auto;
+            }
+          }
+        }
+      }
+    }
+
+    .student-info {
+      display: grid;
+
+      .student-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--atc-student-title);
+        text-transform: capitalize;
+        overflow: hidden;
+        display: grid;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .grade-info {
+        ion-text {
+          font-size: 15px;
+          color: var(--atc-student-title);
+        }
+
+        .title-container {
+          font-weight: bold;
+        }
+
+        .grade-level {
+          padding-left: 8px;
+        }
+      }
+    }
+
+    .competency-status-count {
+      font-size: 13px;
+      font-weight: bold;
+      justify-self: right;
+
+      .mastered {
+        color: var(--atc-progress-mastered);
+      }
+
+      .inprogress {
+        color: var(--atc-progress-color);
+      }
+
+      .not-started {
+        color: var(--gray-300);
+        font-weight: bold;
+      }
+    }
+
+    .close {
+      position: absolute;
+      right: 8px;
+    }
+  }
+
+  .inferred {
+    font-size: 8px;
+    color: var(--inferred);
+    font-weight: bold;
+  }
+
+  .body-container {
+    display: grid;
+    row-gap: 15px;
+    padding: 15px 10px;
+    width: 100%;
+
+    .info-container {
+      display: grid;
+      grid-template-columns: auto 40% auto;
+      align-items: center;
+      grid-column-gap: 5px;
+
+      &.competency-not-started {
+        grid-template-columns: auto auto;
+      }
+    }
+
+
+    .progress-container {
+      margin: auto;
+      color: var(--atc-student-title);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .performance-container {
+      cursor: pointer;
+
+      .performance-bar-container {
+        .performance-bar {
+          height: 10px;
+          display: block;
+          background-color: rgb(231 232 233);
+          border-radius: 10px;
+        }
+      }
+
+      .performance-percentage {
+        font-size: 15px;
+        font-weight: bold;
+        justify-self: right;
+        color: var(--no-performance-bg);
+        text-align: end;
+
+        &.atc-grade-range-0-59 {
+          color: var(--red);
+        }
+
+        &.atc-grade-range-60-69 {
+          color: var(--grade-range-60-69);
+        }
+
+        &.atc-grade-range-70-79 {
+          color: var(--grade-range-70-79);
+        }
+
+        &.atc-grade-range-80-89 {
+          color: var(--grade-range-80-89);
+        }
+
+        &.atc-grade-range-90-100 {
+          color: var(--grade-range-90-100);
+        }
+      }
+    }
+
+    .competencies-container {
+      cursor: pointer;
+
+      .competency-count-container {
+        height: 24px;
+        display: flex;
+
+        .count-box {
+          height: inherit;
+          display: block;
+        }
+
+        .mastered-count {
+          background-color: var(--atc-progress-mastered-count);
+        }
+
+        .inprogress-count {
+          background-color: var(--atc-progress-color);
+        }
+
+        .not-started-count {
+          background-color: var(--atc-competency-count-not-started);
+        }
+      }
+
+      .competencies-not-started {
+        justify-content: center;
+      }
+
+      .competency-count {
+        justify-self: right;
+        flex-wrap: nowrap;
+        color: var(--black);
+
+        ion-text {
+          font-size: 12px;
+          font-weight: bold;
+          color: var(--atc-competency-count-gray);
+          margin: auto 2px;
+        }
+
+        .mastered {
+          color: var(--atc-competency-count-mastered);
+        }
+
+        .inprogress {
+          color: var(--atc-progress-color);
+        }
+
+        .not-started {
+          color: var(--atc-competency-count-not-started);
+        }
+      }
+    }
+
+    .title-container {
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--atc-student-title);
+    }
+  }
+}
+
+.backdrop {
+  z-index: 4;
+}

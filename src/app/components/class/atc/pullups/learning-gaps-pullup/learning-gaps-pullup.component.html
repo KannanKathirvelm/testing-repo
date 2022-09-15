@@ -1,0 +1,71 @@
+<ion-row class="learning-challenges-container">
+  <ion-row class="grade-header-title">
+    <ion-text class="title">{{'LEARNING_GAPS' | translate}}</ion-text>
+    <ion-text class="material-icons close-btn" (click)="onCloseLearningGapsPullUp()">close</ion-text>
+  </ion-row>
+  <mat-accordion class="accordion-container">
+    <ng-container *ngFor="let gradeCompetency of otherGradeCompetency;index as gradeIndex">
+      <mat-expansion-panel *ngIf="gradeCompetency.domains?.length" [expanded]="gradeIndex === selectedGradeCompetencyIndex">
+        <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+          <mat-panel-title>
+            <ion-text class="atc-learning-topic title ellipsis">
+              {{gradeCompetency.grade}}
+            </ion-text>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let domain of gradeCompetency.domains;index as domainIndex">
+          <mat-expansion-panel class="domains-container" class="domain-competency-container" [expanded]="domainIndex === selectedGradeDomainIndex">
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+              <mat-panel-title class="atc-learning-title">
+                <ion-label *ngIf="displayDomainLabel">{{'DOMAIN' | translate}}</ion-label>
+                <ion-text class="atc-learning-topic main-title ellipsis">
+                  {{
+                  fwDomains |
+                  domainGutToFwTransform :
+                  domain.domainCode :
+                  domain.domainName :
+                  'fwDomainName' :
+                  true
+                  }}
+                </ion-text>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ion-row class="atc-title-row row-title-border" *ngFor="let competency of domain.competencies" (click)="onClickSuggestionContainer()">
+              <ion-col size="10" class="ion-no-padding">
+                <ion-row class="ellipsis">
+                  <ion-text class="atc-learning-topic main-title ellipsis">
+                    {{
+                      fwCompetencies |
+                      competencyGutToFwTransform :
+                      competency.code :
+                      competency.name :
+                      'frameworkCompetencyName' :
+                      false :
+                      true
+                    }}
+                  </ion-text>
+                </ion-row>
+                <ion-row class="ellipsis title-info">
+                  <ion-text class="atc-learning-topic title-id">
+                    {{competency.displayCode}}
+                  </ion-text>
+                </ion-row>
+              </ion-col>
+              <ion-col size="1" class="ion-no-padding atc-suggestion-icon-col">
+                <ion-icon name="compass" class="rotate-90"></ion-icon>
+              </ion-col>
+              <ion-col size="1" class="ion-no-padding atc-student-count-col">
+                <ion-text class="student-count">
+                  {{competency.studentsCount}}
+                </ion-text>
+                <ion-text class="material-icons info">person</ion-text>
+              </ion-col>
+            </ion-row>
+          </mat-expansion-panel>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
+</ion-row>
+<ion-row class="backdrop" (click)="onCloseLearningGapsPullUp()" *ngIf="isShowLearningGapsPullUp">
+</ion-row>

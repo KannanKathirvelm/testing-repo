@@ -1,0 +1,15 @@
+<ion-grid class="offline-message-container">
+  <ion-row class="offline-img-container">
+    <ion-thumbnail class="offline-icon-img"></ion-thumbnail>
+  </ion-row>
+  <ion-row class="offline-message-text">
+    <ion-text>{{ 'UH_OH' | translate }}</ion-text>
+    <ion-text>{{ 'SEEMS_OFFLINE' | translate }}</ion-text>
+  </ion-row>
+  <ion-row class="offline-message-text" *ngIf="navigationPageTitle">
+    <ion-text>{{'WANT_ACCESS_OFFLINE_MSG'|translate}}
+      <ion-text class="title-name" (click)="onClickNavigationPageUrl()">{{navigationPageTitle}}</ion-text>
+      {{'ENABLE_OFFLINE_MODE'|translate}}
+    </ion-text>
+  </ion-row>
+</ion-grid>

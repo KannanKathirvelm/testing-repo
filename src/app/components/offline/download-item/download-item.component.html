@@ -1,0 +1,26 @@
+<ion-row class="download-item-row">
+  <ng-container [ngSwitch]="downloadState">
+    <ng-container *ngIf="isOnline && collectionType !== 'offline-activity' ">
+      <ion-row *ngSwitchCase="1">
+        <ion-button class="button">
+          <ion-text class="material-icons download-icon"> downloading </ion-text>
+        </ion-button>
+      </ion-row>
+      <ion-row *ngSwitchCase="3">
+        <ion-button class="button">
+          <ion-text class="material-icons download-icon"> pending</ion-text>
+        </ion-button>
+      </ion-row>
+      <ion-row *ngSwitchDefault>
+        <ion-button class="button" (click)="downloadContent()">
+          <ion-text class="material-icons download-icon"> download_for_offline </ion-text>
+        </ion-button>
+      </ion-row>
+    </ng-container>
+    <ion-row *ngSwitchCase="2">
+      <ion-button class="button">
+        <ion-text class="material-icons download-icon"> download_done </ion-text>
+      </ion-button>
+    </ion-row>
+  </ng-container>
+</ion-row>

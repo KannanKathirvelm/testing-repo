@@ -1,0 +1,109 @@
+ion-toolbar {
+  --min-height: var(--toolbar-height);
+
+  ion-title {
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--learner-identity-header-color);
+  }
+}
+
+.offline-settings-container {
+  --background: var(--grade-level-rubric-font);
+  height: 56px;
+
+  ion-grid {
+    margin: 8px;
+
+    .class-list-container {
+      border-bottom: 1px solid var(--offline-row-border-color);
+
+      .class-content-row {
+        width: 100%;
+        background: var(--white);
+        grid-template-columns: 1fr 75px;
+        display: grid;
+        height: 66px;
+        text-transform: capitalize;
+        padding-left: 15px;
+
+        .class-content-col {
+          display: grid;
+          height: 100%;
+          align-items: center;
+
+          .class-name {
+            font-family: var(--montserrat);
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.14;
+            color: var(--grade-level-rubric-font);
+          }
+        }
+
+        .toggle-col {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    .no-class-msg {
+      color: var(--coursemap-no-course-bg-color);
+      padding: 20px;
+      width: 90%;
+      margin: 20px auto;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .downloaded {
+      font-size: 9pt;
+      font-weight: bold;
+      border: none;
+
+      ion-text {
+        color: var(--dark-400);
+        padding-bottom: 5px;
+      }
+
+      ion-progress-bar {
+        --background: var(--sync-progress-bar-linear-fade);
+        --progress-background: var(--toast-success);
+        border-radius: 20px;
+      }
+    }
+
+    .in-progress {
+      @extend .downloaded;
+
+      ion-text {
+        color: var(--dark-400);
+        padding-bottom: 5px;
+      }
+
+      ion-progress-bar {
+        --background: var(--whisper);
+        --progress-background: var(--sun);
+        border-radius: 20px;
+      }
+    }
+
+    .progress-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding-left: 10px;
+      padding-right: 20px;
+      background: var(--white);
+
+      .progress-bar-container {
+        padding-bottom: 10px;
+      }
+    }
+  }
+}

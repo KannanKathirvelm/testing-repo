@@ -1,0 +1,40 @@
+<ion-row class="delete-conatiner">
+  <ion-row class="list-header">
+    <div class="modal-header">
+      <h5 class="header-title">{{'STUDENT_DELETE_ALERT_MSG' | translate}}</h5>
+    </div>
+    <ion-row class="close" (click)="onClosePopUp()">
+      <ion-text class="material-icons">close</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-grid class="content-container">
+    <ion-text class="delete-message">
+      {{'STUDENT_DELETE_MSG_1' | translate}} <span class="student-name">{{studentFullName}}</span>
+      {{'STUDENT_DELETE_MSG_2' | translate}}
+    </ion-text>
+    <ion-list class="action-confirm">
+      <ion-item lines="none">
+        <ion-label>{{'STUDENT_DATA_NOT_ACCESSIBLE' | translate}}
+        </ion-label>
+        <ion-checkbox (ionChange)="onChangeCheckbox()" [(ngModel)]="dataAccess" color="primary" slot="start">
+        </ion-checkbox>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{'STUDENT_NOT_ACCESS_CLASSROOM' | translate}}
+        </ion-label>
+        <ion-checkbox (ionChange)="onChangeCheckbox()" [(ngModel)]="classAccess" color="primary" slot="start">
+        </ion-checkbox>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{'STUDENT_LOST_DATA' | translate}}</ion-label>
+        <ion-checkbox (ionChange)="onChangeCheckbox()" [(ngModel)]="lostData" color="primary" slot="start">
+        </ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <ion-row class="actions">
+      <ion-button (click)="onClosePopUp()" class="cancel-btn">{{'CANCEL' | translate}}</ion-button>
+      <ion-button (click)="onConfirm()" class="confirm-btn" [disabled]="!enableConfirm">{{'DELETE' | translate}}
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+</ion-row>

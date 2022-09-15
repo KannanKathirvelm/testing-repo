@@ -1,0 +1,10 @@
+<ion-content>
+  <ion-row>
+    <nav-calender-navbar></nav-calender-navbar>
+  </ion-row>
+  <ion-row class="row-activity-list">
+    <ng-container *ngFor="let classActivity of classContents; let activityIndex = index">
+      <nav-class-activity-card [activity]="classActivity"></nav-class-activity-card>
+    </ng-container>
+  </ion-row>
+</ion-content>

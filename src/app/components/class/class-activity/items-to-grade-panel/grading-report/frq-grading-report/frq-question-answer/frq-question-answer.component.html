@@ -1,0 +1,14 @@
+<ion-row class="row-question-answer-section">
+  <ion-row class="row-question">
+    <ion-text class="title">{{'BRIEF' | translate}}</ion-text>
+    <span class="content-text" [innerHTML]="questionAnswerContent.questionDesc"></span>
+  </ion-row>
+  <ion-row class="row-answer">
+    <ion-text class="title">{{'ANSWER' | translate}}</ion-text>
+    <ng-container *ngIf="questionAnswerContent.answerText">
+      <ng-container *ngFor="let answer of questionAnswerContent.answerText">
+        <span class="content-text" [innerHTML]="answer.text"></span>
+      </ng-container>
+    </ng-container>
+  </ion-row>
+</ion-row>

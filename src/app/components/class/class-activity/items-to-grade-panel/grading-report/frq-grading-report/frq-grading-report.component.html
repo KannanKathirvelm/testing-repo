@@ -1,0 +1,11 @@
+<ng-container *ngIf="showTeacherTab">
+  <ng-container *ngIf="student && student.teacherRubric">
+    <nav-rubric-report [isReadonly]="false" [rubric]="student.teacherRubric" (updateCategoryLevels)="updateCategory($event)" (submitGrade)="submitGrade($event)" [isTeacherRubric]="true" [maxScore]="maxScore"></nav-rubric-report>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="showStudentTab">
+  <ng-container *ngIf="student && student.frqQa">
+    <nav-frq-question-answer [questionAnswerContent]="student.frqQa"></nav-frq-question-answer>
+  </ng-container>
+</ng-container>

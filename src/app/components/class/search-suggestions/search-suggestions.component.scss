@@ -1,0 +1,305 @@
+.suggestion-pullup-header {
+  ion-toolbar {
+    --min-height: 48px;
+
+    .suggestion-header-container {
+      height: 48px;
+      padding: 0 5px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      background-color: var(--teacher-suggestion-icon);
+      color: var(--teacher-suggestion-text);
+
+      ion-col {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        ion-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      .col-suggestion {
+        padding-left: 10px;
+
+        ion-item {
+          height: 100%;
+          color: var(--filter-txt-color);
+          --padding-end: 0;
+          --padding-start: 0;
+          display: flex;
+          align-items: center;
+          --background: transparent;
+
+          ion-select {
+            max-width: 100%;
+          }
+
+          ion-label {
+            display: none;
+          }
+        }
+      }
+
+      .col-search {
+        position: unset;
+        justify-content: flex-end;
+        padding-right: 10px;
+
+        ion-searchbar {
+          padding: 0;
+          --box-shadow: none;
+          --background: var(--teacher-suggestion-icon);
+          --color: var(--white);
+          z-index: 11;
+
+          &.searchbar-has-focus {
+            padding-left: 8px;
+          }
+
+          ::ng-deep .searchbar-input-container {
+            .searchbar-input {
+              padding: 0;
+              padding-left: 5px;
+              border-bottom: 1px solid var(--white);
+            }
+
+            .searchbar-clear-button,
+            .searchbar-search-icon {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .col-filter {
+        .filter-count {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          top: 5px;
+          background-color: var(--teacher-suggestion-text);
+          border-radius: 50%;
+          right: -5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--filter-count-border);
+          font-size: 13px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.suggestion-pullup-container {
+  .no-suggest-result-content {
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 15px;
+
+    .suggest-message {
+      font-size: 18px;
+      text-align: center;
+      font-weight: 600;
+      opacity: 0.7;
+      margin: auto;
+    }
+  }
+
+  .content-type-actions {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    height: 40px;
+    margin: auto auto 8px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .collection {
+      margin-left: 25px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      &.active {
+        ion-icon {
+          background-color: var(--teacher-suggestion-icon);
+          opacity: 1;
+        }
+        border-bottom: solid 2px var(--teacher-suggestion-icon);
+      }
+    }
+
+    ion-icon {
+      width: 30px;
+      height: 30px;
+      opacity: 0.6;
+    }
+  }
+
+  suggestion-panel {
+    width: 100%;
+  }
+
+  mat-expansion-panel ::ng-deep {
+    box-shadow: none;
+    border-bottom: 1px solid var(--border-gray);
+
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+
+    .mat-expansion-panel-header-title {
+      .student-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .student-img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+        }
+
+        .profile {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 32px;
+          height: 32px;
+
+          .profile-icon {
+            background-size: 100% 100%;
+            background-position: center;
+            width: 32px;
+            height: 32px;
+            margin: auto;
+            display: flex;
+            border-radius: 50%;
+          }
+        }
+
+        .avatar-icon {
+          ::ng-deep .avatar-container {
+            height: 32px !important;
+            width: 32px !important;
+
+            .avatar-content {
+              width: 32px;
+              height: 32px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .student-container {
+    grid-template-columns: 50px 1fr 50px;
+    height: 48px;
+    display: grid;
+    align-items: center;
+    padding: 0 15px;
+
+    .student-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .student-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+
+      .profile {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+
+        .profile-icon {
+          background-size: 100% 100%;
+          background-position: center;
+          width: 32px;
+          height: 32px;
+          margin: auto;
+          display: flex;
+          border-radius: 50%;
+        }
+      }
+
+      .avatar-icon {
+        ::ng-deep .avatar-container {
+          height: 32px !important;
+          width: 32px !important;
+
+          .avatar-content {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    .student-name {
+      margin-left: 10px;
+      text-transform: capitalize;
+    }
+
+    .student-score {
+      display: flex;
+      justify-content: center;
+      padding: 5px 10px;
+      align-items: center;
+      color: var(--white);
+    }
+  }
+
+  .tenant-library-container {
+    height: 49px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 32px 35px auto;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid var(--suggestion-border);
+  }
+
+  .tenant-library-icon {
+    width: 25px;
+    height: 25px;
+  }
+  .student-list {
+    mat-expansion-panel ::ng-deep {
+      box-shadow: none;
+      border-bottom: 1px solid var(--border-gray);
+  
+      .mat-expansion-panel-body {
+        height: 200px;
+        overflow-y: scroll;
+      }
+
+      .mat-expansion-panel-header {
+        .mat-content {
+          overflow-x: scroll;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

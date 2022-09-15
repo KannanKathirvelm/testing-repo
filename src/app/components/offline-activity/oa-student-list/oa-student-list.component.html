@@ -1,0 +1,25 @@
+<ion-grid class="grid-student-list">
+  <ion-row class="row-search">
+    <ion-searchbar placeholder="{{'TYPE_ANY_NAME' | translate}}" enterkeyhint="search" [(ngModel)]="searchText"></ion-searchbar>
+  </ion-row>
+  <ion-row class="row-student-list">
+    <ion-row class="row-student" [ngClass]="{'active': activeStudentIndex === studentIndex}" *ngFor="let student of students | listFilter: searchText: 'name' | sortBy: 'name'; let studentIndex = index" (click)="selectStudent(studentIndex)">
+      <ion-col class="col-icon">
+        <ion-avatar class="profile avatar-icon" *ngIf="student.thumbnail && !isThumbnailError; else avatarIcon">
+          <img [src]="student.thumbnail" class="profile-icon" (error)="onImgError()">
+        </ion-avatar>
+        <ng-template #avatarIcon>
+          <ion-avatar class="profile avatar-icon">
+            <ngx-avatar [name]="student.name" [size]="32"></ngx-avatar>
+          </ion-avatar>
+        </ng-template>
+      </ion-col>
+      <ion-col class="col-text">
+        <ion-text class="text-name ellipsis">{{student.name}}</ion-text>
+      </ion-col>
+      <ion-col class="col-selected-icon">
+        <ion-icon class="nav-tick"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-grid>

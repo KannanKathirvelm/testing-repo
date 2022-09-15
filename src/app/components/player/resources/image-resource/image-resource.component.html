@@ -1,0 +1,77 @@
+<ion-row class="image-resource-container content-{{componentSequence}}"
+  [ngClass]="{'question-answered': isQuestionAnswered}">
+  <ion-row class="resource-content-container" (click)="onPlayContent()">
+    <ion-row class="hz-line"></ion-row>
+    <ng-container *ngIf="isDownloadPdf">
+      <hr />
+    </ng-container>
+    <ion-row *ngIf="!isDownloadPdf" class="resource-sequence-content">
+      <ion-text> {{componentSequence}}. {{ 'IMAGE_RESOURCE' | translate }}</ion-text>
+    </ion-row>
+    <ion-row class="resource-content" (click)="onClickToView()"
+      [ngClass]="{'active-content': isActive,'blurred': !reportViewMode}">
+      <ion-row class="header-section" (click)="toggleResourseContent()">
+        <ion-row class="title" (click)="toggleInfo()">
+          <mathjax *ngIf="content.title" [content]="content.title"></mathjax>
+        </ion-row>
+        <ion-row *ngIf="!isDownloadPdf" class="icons">
+          <ion-row class="resource-icon" [ngClass]="{'preview': showResourcePreview}">
+            <ion-text class="image"></ion-text>
+          </ion-row>
+          <ion-row class="info-icon" (click)="toggleInfo()">
+            <ion-text class="material-icons info" *ngIf="content.taxonomy">info_outlined</ion-text>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+      <ion-row [ngStyle]="isDownloadPdf && pdfPreviewStyles.resouceContentStyles" class="content-panel"
+        [@collapse]="!showResourseContent && !isRelatedContent">
+        <ion-row [ngStyle]="isDownloadPdf && pdfPreviewStyles.resourceContentGridStyles" class="info"
+          [@collapse]="showAdditionalInfo && !isRelatedContent">
+          <nav-taxonomy-list *ngIf="content.taxonomy" [taxonomy]="content.taxonomy"></nav-taxonomy-list>
+        </ion-row>
+        <ion-row [ngStyle]="isDownloadPdf && pdfPreviewStyles.pdfPaddingStyles" class="description"
+          *ngIf="content.description">
+          <ng-container *ngIf="isDownloadPdf">
+            {{ componentSequence }}.
+          </ng-container>
+          <read-more [lineCount]="2" [maxLength]="110" [length]="content.description && content.description.length">
+            <ion-text class="description-text">{{content.description}}</ion-text>
+          </read-more>
+        </ion-row>
+        <ion-row [ngStyle]="isDownloadPdf && pdfPreviewStyles.pdfPaddingStyles" class="narration"
+          *ngIf="content.narration && !isRelatedContent">
+          <mathjax *ngIf="content.narration" [content]="content.narration"></mathjax>
+        </ion-row>
+        <ion-row>
+        <nav-taxonomy-list *ngIf="content.taxonomy" [taxonomy]="content.taxonomy"></nav-taxonomy-list>
+      </ion-row>
+        <ng-container *ngIf="!isDownloadPdf;else pdfPreview">
+          <ion-row class="timespent-container" *ngIf="reportViewMode && !isRelatedContent">
+            <ion-text class="material-icons clock-icon">access_time</ion-text>
+            <ion-text class="timespent-text" *ngIf="performance; else noPerformance">{{performance.timespent |
+              transformTimeSpent}}</ion-text>
+            <ng-template #noPerformance>
+              <ion-text class="timespent-text">&ndash;&ndash;&ndash;</ion-text>
+            </ng-template>
+          </ion-row>
+        </ng-container>
+        <ng-template #pdfPreview>
+          <ion-row class="description" *ngIf="content.url">
+            <a href="content.url" class="description-text">{{content.url}}</a>
+          </ion-row>
+        </ng-template>
+        <ion-row class="button-wrapper" *ngIf="!reportViewMode && !isRelatedContent">
+          <ion-button [disabled]="disableConfirmBtn" class="play-button" (click)="onPlay($event)">{{'BROWSE'|
+            translate}} {{'IMAGE'| translate}}</ion-button>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+    <ion-row class="thumbnail ">
+      <img *ngIf="content.thumbnail" [src]="content.thumbnail" />
+    </ion-row>
+    <ion-row class="preview-btn" *ngIf="isPreview && !isDownloadPdf">
+      <ion-button (click)="onClickResourceIcon()" class="preview-text">{{ 'PREVIEW' | translate }}</ion-button>
+    </ion-row>
+  </ion-row>
+  <ion-row class="player-overlay" *ngIf="!isActive && !reportViewMode" (click)="onClickResource()"></ion-row>
+</ion-row>

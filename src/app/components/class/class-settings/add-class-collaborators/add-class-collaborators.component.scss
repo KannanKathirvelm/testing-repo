@@ -1,0 +1,102 @@
+.add-collaborator-container {
+  margin: 0;
+  width: 100%;
+  background: #fff;
+  height: 100%;
+  position: relative;
+  display: grid;
+  grid-template-rows: 48px auto;
+
+  ion-row {
+    &.row-header {
+      display: flex;
+      align-items: center;
+      color: var(--add-collaborator-text-color);
+      border-bottom: 1px solid var(--add-collaborator-border-color);
+      font-weight: bold;
+
+      ion-col {
+        &.col-text {
+          padding: 0 10px;
+          font-size: 18px;
+        }
+
+        &.col-icon {
+          justify-content: center;
+          display: flex;
+
+          ion-icon {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+
+    &.row-content {
+      display: flex;
+      justify-content: center;
+
+      .add-teacher-section {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .row-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-button {
+          --background: linear-gradient(to right, #00abdf 21%, #0072bc 75%);
+        }
+      }
+
+      .row-collaborator-list {
+        max-width: 260px;
+
+        ion-col {
+          &.col-image {
+            ion-thumbnail {
+              width: 32px;
+              height: 32px;
+
+              .profile {
+                width: 32px;
+                height: 32px;
+                padding-top: 2px;
+              }
+
+              .avatar-icon {
+                ::ng-deep .avatar-container {
+                  height: 32px !important;
+                  width: 32px !important;
+
+                  .avatar-content {
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font: 12px / 30px Helvetica, Arial, sans-serif !important;
+                    margin: auto;
+                  }
+                }
+              }
+            }
+          }
+
+          &.col-close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          &.col-email {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}

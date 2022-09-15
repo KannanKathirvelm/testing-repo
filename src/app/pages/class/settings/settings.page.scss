@@ -1,0 +1,246 @@
+.settings-header {
+  max-height: 55px;
+  &.archived-class {
+    pointer-events: none;
+  }
+
+  .settings-toolbar {
+    --background: var(--class-code-bar);
+    --min-height: 42px;
+    padding: 2px 15px;
+
+    .row-class-edit {
+      display: flex;
+      align-items: center;
+
+      ion-col {
+        padding: 0;
+
+        .row-class-name {
+          padding: 4px 0;
+
+          .col-class-edit {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+
+            ion-input {
+              color: var(--class-setting-header-text-color);
+              --padding-start: 0;
+              --padding-end: 0;
+              --padding-bottom: 0;
+              --padding-top: 0;
+              text-align: right;
+
+              ::ng-deep .native-input {
+                opacity: 1;
+              }
+            }
+
+            ion-text {
+              margin-left: 10px;
+              color: var(--class-setting-header-text-color);
+            }
+          }
+        }
+
+        .class-code {
+          padding: 4px 0;
+
+          ion-col {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: var(--class-setting-header-text-color);
+
+            &.col-class-code-title {
+              justify-content: flex-start;
+            }
+
+            ion-icon {
+              margin-left: 10px;
+            }
+          }
+        }
+
+        ion-text {
+          font-size: 15px;
+          color: var(--class-setting-header-text-color);
+        }
+      }
+    }
+
+    .class-code-row {
+      max-height: 42px;
+
+      .class-code-col {
+        color: var(--class-setting-header-text-color);
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        text-transform: capitalize;
+      }
+
+      .class-code {
+        color: white;
+        font-size: 15px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+
+        &.code {
+          font-weight: bold;
+        }
+
+        &.copy {
+          font-weight: 500;
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+}
+
+.settings-container {
+  .basic-setting-container {
+    padding: 0 15px;
+    margin-top: 12px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14);
+
+    .basic-class-setting {
+      color: var(--class-setting-text);
+      width: 100%;
+      margin-bottom: 8px;
+
+      .select-class-list {
+        --padding-top: 0;
+        --padding-bottom: 0;
+      }
+
+      .class-setting {
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+
+        &.ask-question {
+          display: grid;
+
+          .title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+          }
+
+          .label {
+            font-size: 14px;
+          }
+        }
+      }
+
+      .class-setting-diagnostic {
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .setting-value {
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        ion-toggle {
+          padding: 5px 0;
+          --handle-width: 14px;
+          --handle-height: 14px;
+          height: 12px;
+        }
+      }
+    }
+
+    ion-item {
+      height: 100%;
+      color: var(--proficiency-dropdown-color);
+      --padding-end: 0;
+      --padding-start: 0;
+      display: flex;
+      align-items: center;
+
+      ion-label {
+        display: none;
+      }
+    }
+
+    hr {
+      margin-bottom: 8px;
+    }
+
+    .language-row {
+      display: flex;
+      width: 100%;
+      margin-bottom: 8px;
+
+      .language-col {
+        color: var(--class-setting-text);
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+
+        &.lang-dropdown {
+          justify-content: flex-end;
+          font-style: italic;
+          font-weight: 600;
+        }
+
+        ion-select {
+          padding: 0;
+          width: 100px;
+          color: var(--dark-400);
+          font-weight: 600;
+          font-size: 15px;
+          font-style: italic;
+          display: flex;
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .delete-class-row {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px 0;
+
+    .delete-archive-class {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.75;
+      color: var(--class-delete-archive-color);
+      opacity: 0.75;
+
+      &.delete {
+        margin-right: 5px;
+      }
+
+      ion-label {
+        margin-right: 5px;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+    }
+  }
+  &.archived-class {
+    teacher-list,
+    student-list,
+    .basic-setting-container,
+    .delete-class-row {
+      pointer-events: none;
+    }
+  }
+}

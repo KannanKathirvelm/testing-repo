@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="row-assign-class-activity" [ngClass]="{'offline': !isOnline}">
+      <ion-col size="4" class="col-content-type-container">
+        <ion-row class="col-content-type">
+          <ng-container *ngFor="let contentType of contentTypes; let contentIndex = index">
+            <ion-col class="col-{{contentType.format}}-icon" [ngClass]="{'selected-content': contentType.format === activeContentType.format }">
+              <ion-icon class="nav-{{contentType.format}}" (click)="selectContentType(contentIndex)"></ion-icon>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+      </ion-col>
+      <ion-col size="1" class="col-meeting-icon" (click)="toggleMeeting()"></ion-col>
+      <ion-col size="4" class="col-search">
+        <ion-searchbar #search enterkeyhint="search" [(ngModel)]="searchTerms" (ionFocus)="onSearchFocus()" (ionBlur)="onSearchBlur()" (search)="onSearch()" (ionClear)="onSearchClear($event)"></ion-searchbar>
+        <ion-icon name="search-outline" (click)="onSearch()"></ion-icon>
+      </ion-col>
+      <ion-col size="1" class="col-filter">
+        <ion-icon [ngClass]="{'filter-applied': filterCount}" name="filter-outline" (click)="onFilter()"></ion-icon>
+        <ion-text *ngIf="filterCount" class="filter-count">
+          {{filterCount}}
+        </ion-text>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="close-outline" (click)="closeModal()"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-header-tab" *ngIf="!showMeeting && isOnline">
+      <ion-row class="row-tab" *ngIf="!isShowDefaultView">
+        <ion-col class="col-select-scope-sequence">
+          <ion-item>
+            <ion-checkbox slot="start" [checked]="isScopeAndSequenceActive" (ionChange)="toggleScopeAndSequence($event)"></ion-checkbox>
+            <ion-label [ngClass]="{'disabled-with-click': !isScopeAndSequenceActive}">{{'SCOPE_AND_SEQUENCE' | translate}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="col-select-grade">
+          <ng-container *ngIf="isInitialLoaded">
+            <ion-select [ngClass]="{'disabled': !isScopeAndSequenceActive}" placeholder="{{'SELECT_GRADE' | translate}}" [value]="activeScopeAndSequence.id" class="select-grade-list" (ionChange)="changeActiveScope($event)" dropdownScrollIntoView>
+              <ion-select-option *ngFor="let scope of scopeAndSequences" [value]="scope.id">
+                <ng-container *ngIf="scope.scopeName; else scopeTitle">
+                  {{scope.scopeName}} - {{scope.grade}}
+                </ng-container>
+                <ng-template #scopeTitle>
+                  {{scope.title}}
+                </ng-template>
+              </ion-select-option>
+            </ion-select>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-content-list">
+        <ion-select (ionChange)="changeContentLibrary($event)" [value]="selectedContentLibraryName" dropdownScrollIntoView>
+          <ion-select-option [value]="sequence.name" *ngFor="let sequence of activeSequence">{{sequence.name}}</ion-select-option>
+        </ion-select>
+      </ion-row>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content [ngClass]="{'meeting-active': showMeeting}">
+  <ng-container *ngIf="isOnline; else offlineMessage">
+    <ng-container *ngIf="showMeeting; else otherContentTypeActivities">
+      <nav-create-meeting-activity (createActivityEvent)="createMeetingActivity($event)" [classId]="classDetails.id"></nav-create-meeting-activity>
+    </ng-container>
+    <ng-template #otherContentTypeActivities>
+      <ion-grid class="grid-content">
+        <ion-row class="row-search-result" *ngIf="isInitialLoaded; else scopeAndSequenceTemplate">
+          <ng-container *ngIf="isScopeAndSequenceActive; else showAllContentTemplate">
+            <ng-container *ngIf="isShowScopeAndSequence; else defaultScopeandSequence">
+              <nav-scope-and-sequence [classDetails]="classDetails" [activities]="activities" [activeScopeAndSequence]="activeScopeAndSequence" (fetchModulesListEvent)="onFetchModules()" (toggleModuleEvent)="onToggleModule($event)"
+                (toggleTopicEvent)="onToggleTopicForSS($event)" (toggleCompetencyEvent)="onToggleCompetencyForSS($event)" (addActivityEvent)="addActivity($event)" (loadMoreData)="loadMoreData($event)" (loadLessData)="loadLessData($event)">
+              </nav-scope-and-sequence>
+            </ng-container>
+            <ng-template #defaultScopeandSequence>
+              <nav-default-scope-and-sequence [classDetails]="classDetails" [activities]="activities" [activeScopeAndSequence]="activeScopeAndSequence" (fetchDomainsEvent)="onFetchDomains()" [activeSequence]="activeSequence"
+                [snsScopeSequence]="snsScopeSequence" [isCaBaselineWorkflow]="isCaBaselineWorkflow" (toggleDomainEvent)="onToggleDomain($event)" (toggleTopicEvent)="onToggleTopic($event)" (toggleCompetencyEvent)="onToggleCompetency($event)" (addActivityEvent)="addActivity($event)" 
+                (loadMoreData)="loadMoreData($event)" (loadLessData)="loadLessData($event)">
+              </nav-default-scope-and-sequence>
+            </ng-template>
+          </ng-container>
+        </ion-row>
+      </ion-grid>
+    </ng-template>
+  </ng-container>
+</ion-content>
+<ng-template #offlineMessage>
+  <nav-offline-message-preview></nav-offline-message-preview>
+</ng-template>
+<ng-template #showAllContentTemplate>
+  <ng-container *ngIf="showAllContent && showAllContent.contentData && showAllContent.contentData.length; else noRecordFound">
+    <nav-default-view [classDetails]="classDetails" [libraryContent]="showAllContent" [activities]="activities" (loadMoreData)="loadMoreData($event)" (loadLessData)="loadLessData($event)" [isLoading]="isLoading"
+      (addActivityEvent)="addActivity($event)"></nav-default-view>
+  </ng-container>
+</ng-template>
+<ng-template #noRecordFound>
+  <ion-text class="row-no-record" *ngIf="!isLoading">
+    {{'NO_RECORD_FOUND' | translate}}
+  </ion-text>
+</ng-template>
+<ng-template #scopeAndSequenceTemplate>
+  <ion-row class="skeleton-row-select">
+    <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+  </ion-row>
+  <ion-row class="skeleton-row-domain" *ngFor="let item of [].constructor(3)">
+    <ion-col *ngFor="let item of [].constructor(2)">
+      <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+    </ion-col>
+  </ion-row>
+</ng-template>

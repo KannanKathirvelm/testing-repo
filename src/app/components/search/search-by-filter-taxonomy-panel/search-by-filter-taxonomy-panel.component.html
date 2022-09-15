@@ -1,0 +1,72 @@
+<ion-grid class="search-filter-content">
+  <ion-row class="item-header" (click)="onClickHeader()">
+    <ion-col size="2" class="count-container">
+      <ion-row class="count-circle" [ngClass]="{'has-value': selectedItem}">
+        <ng-container *ngIf="selectedItem;else zeroData">
+          <ion-text class="count">
+            1
+          </ion-text>
+        </ng-container>
+        <ng-template #zeroData>
+          <ion-text class="count">
+            0
+          </ion-text>
+        </ng-template>
+      </ion-row>
+    </ion-col>
+    <ion-col size="8" class="label-container title ellipsis">
+      <ion-text class="label">
+        {{title}}
+      </ion-text>
+      <ion-row *ngIf="selectedItem;else noData" class="selected-item-container">
+        <ion-text class="selected-items multi-line-ellipsis">
+          {{selectedItem.title}}
+        </ion-text>
+      </ion-row>
+      <ng-template #noData>
+        <ion-text class="no-selected-items">
+          &#45; {{'NONE' | translate}} &#45;
+        </ion-text>
+      </ng-template>
+    </ion-col>
+    <ion-col size="2" class="label-container ellipsis">
+      <ion-text class="dropdown-icon">
+        <ng-template #downArrow>
+          <ion-text class="material-icons-outlined">
+            arrow_drop_down
+          </ion-text>
+        </ng-template>
+        <ion-text *ngIf="isExpand;else downArrow" class="material-icons-outlined">
+          arrow_drop_up
+        </ion-text>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ng-container *ngIf="items">
+    <ion-row [@collapse]="!isExpand" class="items-container">
+      <ng-container *ngFor="let item of items">
+        <ion-row class="item-container" (click)="onSelectItem(item)">
+          <ion-col size="2" class="icon-container">
+          </ion-col>
+          <ion-col size="2" class="icon-container">
+            <ng-container *ngIf="item.isActive;else circleIcon">
+              <ion-text class="selected material-icons-outlined">
+                task_alt
+              </ion-text>
+            </ng-container>
+            <ng-template #circleIcon>
+              <ion-text class="material-icons-outlined">
+                circle
+              </ion-text>
+            </ng-template>
+          </ion-col>
+          <ion-col size="8" class="label-container ellipsis">
+            <ion-text class="label">
+              {{item.title}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+    </ion-row>
+  </ng-container>
+</ion-grid>

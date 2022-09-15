@@ -1,0 +1,33 @@
+<ion-grid class="row-student-body">
+  <ng-container *ngIf="!isLoading; else loadSkeleton">
+    <ion-row class="row-content-list" *ngIf="libraryContent && libraryContent.contentData && libraryContent.contentData.length; else noRecords">
+      <ng-container *ngFor="let studentContent of libraryContent.contentData; let sequenceIndex=index">
+        <ion-row class="row-content-list">
+          <nav-assign-activity-card [classDetails]="classDetails" [activities]="activities" [content]="studentContent" (addActivityEvent)="addActivity($event)"></nav-assign-activity-card>
+        </ion-row>
+      </ng-container>
+    </ion-row>
+    <ng-container *ngIf="libraryContent.totalCount > 10">
+      <ion-row class="row-show-more-btn">
+        <ng-container *ngIf="libraryContent.contentData.length === libraryContent.totalCount; else showMoreBtn">
+          <ion-button (click)="showLess(libraryContent)">{{'SHOW_LESS'| translate}}</ion-button>
+        </ng-container>
+        <ng-template #showMoreBtn>
+          <ion-button (click)="showMore(libraryContent)">{{'SHOW_MORE'| translate}}
+            <ion-spinner name="crescent" *ngIf="libraryContent.isLoading"></ion-spinner>
+          </ion-button>
+        </ng-template>
+      </ion-row>
+    </ng-container>
+  </ng-container>
+</ion-grid>
+<ng-template #loadSkeleton>
+  <ion-row *ngFor="let item of [].constructor(2)" class="row-skeleton">
+    <ion-col *ngFor="let item of [].constructor(2)">
+      <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+    </ion-col>
+  </ion-row>
+</ng-template>
+<ng-template #noRecords>
+  <ion-text class="text-no-records">{{'NO_RECORDS' | translate}}</ion-text>
+</ng-template>

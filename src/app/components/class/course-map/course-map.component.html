@@ -1,0 +1,154 @@
+<mat-accordion class="coursemap-container">
+  <ion-row [ngClass]="{'disabled': !isOnline}" class="ion-no-padding coursemap-unit-container-row" *ngFor="let unit of units;let unitIndex = index;let isFirstUnit = first;">
+    <mat-expansion-panel class="coursemap-unit-panel unit-{{unitIndex}}" [expanded]="isOnline ? isFirstUnit : false" [hideToggle]="true" (opened)="onOpenUnitPanel(unitIndex, unit)" (afterExpand)="onExpandUnit(unitIndex)">
+      <mat-expansion-panel-header class="coursemap-unit-panel-header" collapsedHeight="56px" expandedHeight="inherit">
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="coursemap-unit-row" [ngClass]="{'no-coursemap-visiblity-toggle' : isStudentCourseMap || !showVisibilityToggle}">
+            <ion-col class="title-col unit ellipsis" [ngClass]="{'disable-visibility': !unit.isVisible}">
+              <ion-row class="unit-name">
+                <ion-text>{{'UNIT' | translate}} <span *ngIf="!isHideSeqNumber">{{ hasUnit0 ? unitIndex : unitIndex + 1}}</span></ion-text>
+              </ion-row>
+              <ion-row class="coursemap-unit-title ellipsis">
+                <ion-text class="ellipsis">{{unit.title}}</ion-text>
+              </ion-row>
+            </ion-col>
+            <ion-col class="visibility-toggle" size="2" *ngIf="!isStudentCourseMap && showVisibilityToggle">
+              <ion-toggle [checked]="unit.isVisible" (ionChange)="onToggleVisibility(unit)"></ion-toggle>
+            </ion-col>
+            <ion-col class="toggle-icon-wrapper">
+              <i class="material-icons arrow-dropdown"> arrow_drop_down </i>
+              <i class="material-icons arrow-dropup"> arrow_drop_up </i>
+            </ion-col>
+            <ion-col *ngIf="unit.performance; else noUnitPerformance" (click)="onOpenUnitReport($event, unit, unitIndex)" class="performance-col unit-performance grade-range-{{unit.performance.scoreInPercentage | gradeRange}}">
+              <ion-row class="performance-row">
+                <ion-text class="performance-score unit-performance-score">{{unit.performance.scoreInPercentage | transformScore}}</ion-text>
+              </ion-row>
+              <ion-row class="profile-count-row" *ngIf="!isStudentCourseMap">
+                <ion-icon class="profile-icon" name="person-circle"></ion-icon>
+                <ion-row class="profile-count">{{unit.performance.studentsCount}}</ion-row>
+              </ion-row>
+            </ion-col>
+            <ng-template #noUnitPerformance>
+              <ion-col class="performance-col unit-performance grade-range-not-started"></ion-col>
+            </ng-template>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ng-container *ngIf="isLessonLoaded; else skeletonViewTemplate">
+          <mat-accordion class="coursemap-lesson-container">
+            <ion-row class="coursemap-lesson-container-row" *ngFor="let lesson of unit.lessons;let lessonIndex = index;let isFirstLesson = first;" [ngClass]="{'disable-visibility': !unit.isVisible ||  !lesson.isVisible}">
+              <mat-expansion-panel class="coursemap-lesson-panel lesson-{{lessonIndex}}"  [expanded]="isFirstLesson" (opened)="onOpenLessonPanel(unitIndex, lessonIndex, lesson)" (afterExpand)="onExpandLesson(unitIndex, lessonIndex)"
+                [hideToggle]="true" >
+                <mat-expansion-panel-header class="coursemap-lesson-panel-header" collapsedHeight="48px" expandedHeight="inherit">
+                  <ion-grid class="ion-no-padding ellipsis">
+                    <ion-row class="coursemap-lesson-row"  [ngClass]="{'no-coursemap-visiblity-toggle' : isStudentCourseMap || !showVisibilityToggle}">
+                      <ion-col class="title-col lesson ellipsis">
+                        <ion-row class="lesson-name" *ngIf="lessonLabelValue; else noLessonLabel">
+                          <ion-text>{{tenantSettings.uiElementVisibilitySettings.lessonLabelCourseMap}} {{lessonIndex + 1}}</ion-text>
+                        </ion-row>
+                        <ng-template #noLessonLabel>
+                          <ion-text>{{'LESSON' | translate}} <span *ngIf="!isHideSeqNumber">{{lessonIndex + 1}}</span></ion-text>
+                        </ng-template>
+                        <ion-row class="coursemap-lesson-title ellipsis">
+                          <ion-text class="ellipsis">{{lesson.title}}</ion-text>
+                        </ion-row>
+                      </ion-col>
+                      <ion-col class="visibility-toggle" size="2" *ngIf="!isStudentCourseMap && showVisibilityToggle" [ngClass]="{'read-only': !unit.isVisible &&  !lesson.isVisible}">
+                        <ion-toggle [checked]="lesson.isVisible" (ionChange)="onToggleVisibility(lesson)"></ion-toggle>
+                      </ion-col>
+                      <ion-col class="toggle-icon-wrapper">
+                        <i class="material-icons arrow-dropdown"> arrow_drop_down </i>
+                        <i class="material-icons arrow-dropup"> arrow_drop_up </i>
+                      </ion-col>
+                      <ion-col *ngIf="lesson.performance && lesson.performance.scoreInPercentage > 0; else noLessonPerformance" (click)="onOpenLessonReport($event, lesson, unitIndex, lessonIndex)"
+                        class="performance-col lesson-performance grade-range-{{lesson.performance.scoreInPercentage | gradeRange}}">
+                        <ion-row class="performance-row">
+                          <ion-text class="performance-score lesson-performance-score">{{lesson.performance.scoreInPercentage | transformScore}}</ion-text>
+                        </ion-row>
+                        <ion-row class="profile-count-row" *ngIf="!isStudentCourseMap">
+                          <ion-icon class="profile-icon" name="person-circle"></ion-icon>
+                          <ion-row class="profile-count">{{lesson.performance.studentsCount}}</ion-row>
+                        </ion-row>
+                      </ion-col>
+                      <ng-template #noLessonPerformance>
+                        <ion-col class="performance-col lesson-performance grade-range-not-started"></ion-col>
+                      </ng-template>
+                    </ion-row>
+                  </ion-grid>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                  <ng-container *ngIf="isCollectionLoaded; else skeletonViewTemplate">
+                    <ion-grid class="ion-no-padding collection-container ellipsis">
+                      <ion-row class="coursemap-collection-row" *ngFor="let collection of lesson.collections;" [ngClass]="{'disable-visibility': !collection.isVisible ||  !lesson.isVisible}">
+                        <ion-col class="ion-no-padding collection-title-container">
+                          <ion-row class="collection-title-row">
+                            <ion-col class="ion-no-padding collection-icon-col">
+                              <ion-icon class="nav-{{collection.format}}-icon collection-icon"></ion-icon>
+                            </ion-col>
+                            <ion-col class="ion-no-padding collection-title-col ellipsis" (click)="onPreview($event, collection, lesson)">
+                              <ion-text class="collection-title">{{collection.title}}</ion-text>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col class="fluency-col" *ngIf="tenantSettings.fluencyLevel === 'on' && collection.metadata">
+                          <ion-text class="fluency">{{collection.metadata.fluencyDisplayCode}}</ion-text>
+                        </ion-col>
+                        <ion-col class="visibility-toggle" size="2" *ngIf="!isStudentCourseMap && showVisibilityToggle">
+                          <ion-toggle [checked]="collection.isVisible" (ionChange)="onToggleVisibility(collection)"></ion-toggle>
+                        </ion-col>
+                        <ion-col *ngIf="collection.performance && collection.performance.gradingStatus !== 'in-progress'; else noCollectionPerformance" (click)="onOpenCollectionReport($event, collection, lesson, unitIndex)"
+                          class="performance-col ion-no-padding collection-thumbnail-col no-padding format-{{collection.format}} grade-range-{{collection.performance.scoreInPercentage | gradeRange}}">
+                          <ion-row class="score" *ngIf="collection.isAssessment|| collection.isExternalAssessment || collection.isOfflineActivity; else showTimeSpent">
+                            <ng-container *ngIf="collection.performance.scoreInPercentage !== null; else noCollectionPerformance">
+                              <ion-row class="performance-row">
+                                <ion-text class="performance-score">
+                                  {{collection.performance.scoreInPercentage | transformScore}}
+                                </ion-text>
+                              </ion-row>
+                              <ion-row class="profile-count-row" *ngIf="!isStudentCourseMap">
+                                <ion-icon class="profile-icon" name="person-circle"></ion-icon>
+                                <ion-row class="profile-count">{{collection.performance.studentsCount}}</ion-row>
+                              </ion-row>
+                            </ng-container>
+                          </ion-row>
+                          <ng-template #showTimeSpent>
+                            <ion-row class="timespent" *ngIf="collection.performance.timespent; else noCollectionPerformance">
+                              <ion-text>{{collection.performance.timespent | transformTimeSpent }}</ion-text>
+                            </ion-row>
+                          </ng-template>
+                        </ion-col>
+                        <ng-template #noCollectionPerformance>
+                          <ion-col class="collection-score empty-performance">
+                            <ion-thumbnail class="thumbnail-image pull-right" *ngIf="!collection.performance;else inProgress">
+                              <ion-img [src]="collection.thumbnail"></ion-img>
+                            </ion-thumbnail>
+                          </ion-col>
+                        </ng-template>
+                        <ng-template #inProgress>
+                          <ion-text class="inprogress-txt">{{'IN_PROGRESS' | translate}}</ion-text>
+                        </ng-template>
+                      </ion-row>
+                    </ion-grid>
+                  </ng-container>
+                </ng-template>
+              </mat-expansion-panel>
+            </ion-row>
+          </mat-accordion>
+        </ng-container>
+      </ng-template>
+    </mat-expansion-panel>
+  </ion-row>
+</mat-accordion>
+<ng-template #skeletonViewTemplate>
+  <ion-grid class="skeleton-grid">
+    <ion-row class="skeleton-row" *ngFor="let items of [].constructor(3)">
+      <ion-col class="title-col">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-col>
+      <ion-col class="performance-col">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>

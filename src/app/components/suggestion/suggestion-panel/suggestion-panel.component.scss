@@ -1,0 +1,129 @@
+.suggestion-panel {
+  ion-item {
+    --padding: 0;
+    --padding-end: 0;
+    --inner-padding-end: 0;
+  }
+
+  ion-item-options {
+    ion-item-option {
+      background-color: var(--suggestion-panel-slider-option);
+    }
+  }
+
+  .suggestion-header {
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid var(--suggestion-border);
+
+    ion-col {
+      display: flex;
+    }
+
+    .icon-suggestion {
+      width: 31px;
+      height: 23px;
+      margin: auto;
+      background-color: var(--suggestion-panel-title);
+      mask-size: cover;
+    }
+
+    .suggestion {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 48px 48px;
+      align-items: center;
+
+      .title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--suggestion-panel-title);
+        position: relative;
+        text-align: left;
+      }
+
+      .action {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        color: var(--suggestion-panel-action-font);
+        height: 49px;
+        border-left: 1px solid var(--suggestion-border);
+        border-right: 1px solid var(--suggestion-border);
+      }
+
+      .add,
+      .teacher-suggestion-icon {
+        color: var(--suggestion-panel-action-font);
+        margin: auto;
+      }
+
+      .suggestion-icon {
+        display: flex;
+        justify-content: center;
+        color: var(--suggestion-panel-icon);
+        align-items: center;
+      }
+    }
+
+    &.add-actions {
+      .icon-suggestion {
+        display: none;
+      }
+
+      .suggestion {
+        grid-template-columns: 1fr 48px 48px 48px;
+
+        .title {
+          margin-left: 15px;
+          display: grid;
+          grid-row-gap: 5px;
+        }
+
+        .code {
+          font-size: 10px;
+        }
+
+        .action,
+        .add,
+        .done-icon,
+        .suggestion-icon,
+        .teacher-suggestion-icon,
+        .title {
+          color: var(--teacher-suggestion-color);
+          font-weight: 500;
+        }
+
+        .done-icon {
+          margin: auto;
+        }
+
+        .done-icon,
+        .teacher-suggestion-icon {
+          color: var(--teacher-suggestion-icon);
+        }
+        
+        ::ng-deep .taxonomy-list {
+          .item {
+            padding: 0 5px;
+            margin-left: 0;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+
+  .content-count {
+    margin: auto auto auto 10px;
+    display: flex;
+    justify-content: center;
+    opacity: 0.6;
+    color: var(--suggestion-panel-count-color);
+
+    ion-text {
+      display: flex;
+      margin: auto auto auto 2px;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<ion-grid class="atc-ca-progress-grid">
+  <ion-row class="ca-progress-title-row main-title-border">
+    <ion-col size="10" class="ion-no-padding">
+      <ion-text class="ca-progress-title">{{'CA_PROGRESS' | translate}}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding navigate-col" (click)="onClickNavigate()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ca-progress-title-row row-title-border">
+    <ion-col size="2" class="ion-no-padding icon-col">
+      <ion-icon class="tab-icon nav-dca"></ion-icon>
+    </ion-col>
+    <ion-col size="8" class="ion-no-padding ca-progress-status">
+      <ion-text>{{'CA_COMPLETED' | translate}}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding ca-progress-count">
+      <ion-text *ngIf="activitiesCount; else loadSkeleton">{{activitiesCount.scheduled}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ca-progress-title-row">
+    <ion-col size="2" class="ion-no-padding icon-col">
+      <ion-icon class="tab-icon nav-dca"></ion-icon>
+    </ion-col>
+    <ion-col size="8" class="ion-no-padding ca-progress-status">
+      <ion-text>{{'CA_PENDING' | translate}}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding ca-progress-count">
+      <ion-text *ngIf="activitiesCount; else loadSkeleton">{{activitiesCount.unscheduled}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ng-template #loadSkeleton>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ng-template>
+</ion-grid>

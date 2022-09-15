@@ -1,0 +1,149 @@
+/* ---start external icons--- */
+ion-icon {
+  &[class*="nav-"] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    width: 22px;
+    height: 22px;
+    background: var(--icon-default-color);
+  }
+
+  &[class*="nav-assessment"] {
+    mask-image: var(--assessment);
+  }
+
+  &[class*="nav-setting"] {
+    mask-image: var(--nav-setting);
+  }
+
+  &[class*="nav-collection"] {
+    mask-image: var(--collection);
+  }
+
+  &[class*="nav-assessment-external"] {
+    mask-image: var(--assessment);
+  }
+
+  &[class*="nav-collection-external"] {
+    mask-image: var(--collection);
+  }
+
+  &[class*="nav-offline-activity"] {
+    width: 28px;
+    height: 28px;
+    mask-image: var(--offline);
+  }
+
+  &[class*="nav-dca"] {
+    mask-image: var(--nav-dca);
+  }
+
+  &[class*="nav-proficiency"] {
+    mask-image: var(--nav-proficiency);
+  }
+
+  &[class*="nav-performance-overview-black"] {
+    mask-image: var(--nav-performance-overview-black);
+  }
+
+  &[class*="nav-performance-overview-blue"] {
+    mask-image: var(--nav-performance-overview-blue);
+  }
+
+  &[class*="nav-resource"] {
+    mask-image: var(--dca-resource);
+  }
+
+  &[class*="nav-course"] {
+    mask-image: var(--course);
+  }
+
+  &[class*="nav-lesson"] {
+    mask-image: var(--lesson);
+  }
+
+  &[class*="nav-rubric"] {
+    mask-image: var(--rubric);
+  }
+
+  &[class*="nav-question"] {
+    mask-image: var(--question);
+  }
+
+  &[class*="nav-task"] {
+    mask-image: var(--text-resource-icon);
+  }
+
+  &[class*="nav-milestone-lesson-icon"] {
+    mask-image: var(--milestone-lesson-icon);
+  }
+
+  &[class*="nav-assignment-icon"] {
+    mask-image: var(--assignment-icon);
+  }
+
+  &[class*="nav-collection-icon"] {
+    mask-image: var(--collection-icon);
+  }
+
+  &[class*="nav-video-resource-icon"] {
+    mask-image: var(--video-resource-icon);
+  }
+
+  &[class*="nav-pdf-icon"] {
+    mask-image: var(--pdf-icon);
+  }
+
+  &[class*="nav-check-circle"] {
+    mask-image: var(--check-circle);
+  }
+
+  &[class*="nav-meet"] {
+    mask-image: var(--meet-icon);
+  }
+
+  &[class*="nav-clock"] {
+    mask-image: var(--clock-icon);
+  }
+
+  &[class*="nav-download"] {
+    mask-image: var(--download-icon);
+  }
+
+  &[class*="nav-tick"] {
+    mask-image: var(--tick);
+  }
+
+  &[class*="nav-student-profile"] {
+    mask-image: var(--menu-profile);
+  }
+
+  &[class*="nav-tick"] {
+    mask-image: var(--tick);
+  }
+
+  &[class*="nav-info"] {
+    mask-image: var(--info-icon);
+  }
+
+  &[class*="nav-tick-icon"] {
+    mask-image: var(--tick-icon);
+  }
+
+  &[class*="nav-zoom-icon"] {
+    mask-image: var(--zoom-icon);
+  }
+
+  &[class*="nav-thumbnail-assessment"] {
+    background: var(--assessment-thumbnail);
+  }
+
+  &[class*="nav-thumbnail-collection"] {
+    background: var(--collection-thumbnail);
+  }
+
+  &[class*="nav-thumbnail-offline-activity"] {
+    background: var(--offline-thumbnail);
+  }
+}

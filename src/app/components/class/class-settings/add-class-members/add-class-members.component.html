@@ -1,0 +1,137 @@
+<ion-grid class="search-result-container ion-no-padding" [ngClass]="{'multiple-search-result-container': isMultipleStudentAdd}">
+  <ion-row class="row-header">
+    <ion-col size="10" class="col-text">
+      <ion-text *ngIf="!isMultipleStudentAdd; else multipleStudent">
+        {{ 'ADD_STUDENTS' | translate }}
+      </ion-text>
+      <ng-template #multipleStudent>
+        <ion-text>{{ 'ADD_MULTIPLE_STUDENTS' | translate }}</ion-text>
+      </ng-template>
+    </ion-col>
+    <ion-col size="2" class="col-icon">
+      <ion-icon name="close-outline" (click)="closeModal()"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="!isMultipleStudentAdd; else multipleStudentAdd" class="row-content">
+    <ion-grid class="grid-input-field">
+      <ion-row class="row-input-field">
+        <ion-row class="row-select">
+          <ion-select value="email" [interfaceOptions]="searchByHeader" (ionChange)="changeSearchType($event)">
+            <ion-select-option value="email">{{ 'EMAIL' | translate }}</ion-select-option>
+            <ion-select-option value="username">{{ 'USERNAME' | translate }}</ion-select-option>
+          </ion-select>
+          <ion-input type="{{searchFilter === 'email' ? 'email' : 'search'}}" enterkeyhint="search" [(ngModel)]="searchStudentName" placeholder="{{ 'ENTER_WORD' | translate }}" class="input-row"></ion-input>
+        </ion-row>
+        <ion-row class="row-button">
+          <ion-button [disabled]="!searchStudentName || (searchStudentName.length < 3)" (click)="onUserSearch()">
+            {{ 'SEARCH' | translate }}
+          </ion-button>
+        </ion-row>
+      </ion-row>
+      <ion-row class="row-student-list-container" *ngIf="isSearchLoaded">
+        <ng-container *ngIf="studentList && studentList.length; else noResults">
+          <ion-content class="row-student-list-container">
+            <ion-grid class="grid-table">
+              <ion-row class="row-header">
+                <ion-col size="5">
+                  <ion-text>{{ 'STUDENTS' | translate }}</ion-text>
+                </ion-col>
+                <ion-col size="7">
+                  <ion-text>{{ 'USERNAME' | translate }}/{{ 'EMAIL' | translate }}</ion-text>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row-body">
+                <ion-grid class="grid-student-list">
+                  <ion-row class="row-student" *ngFor="let student of studentList; let studentIndex = index" (click)="addStudent(student)">
+                    <ion-col size="5" class="col-student">
+                      <ion-thumbnail [ngClass]="{'selected-student': student.isSelected}">
+                        <ng-container *ngIf="student.isSelected; else imageAvatar">
+                          <ion-text class="material-icons">done_all</ion-text>
+                        </ng-container>
+                        <ng-template #imageAvatar>
+                          <ion-img *ngIf="student.avatarUrl && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.avatarUrl"></ion-img>
+                          <ng-template #ngxAvatar>
+                            <ngx-avatar [name]="student.firstName" [size]="24"></ngx-avatar>
+                          </ng-template>
+                        </ng-template>
+                      </ion-thumbnail>
+                      <ion-text class="student-name ellipsis">{{student.firstName}} {{student.lastName}}</ion-text>
+                    </ion-col>
+                    <ion-col size="7" class="col-student-username-email">
+                      <ng-container *ngIf="student.showEmail | checkToShowEmail: tenantSettingShowInfo; else showUsername">
+                        <ion-text class="ellipsis student-email">{{student.email}}</ion-text>
+                      </ng-container>
+                      <ng-template #showUsername>
+                        <ion-text class="ellipsis student-username">{{student.username}}</ion-text>
+                      </ng-template>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-row>
+              <ion-row class="row-button">
+                <ion-button (click)="addStudentsToClass()">{{ 'CONFIRM' | translate }}</ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-content>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+  </ion-row>
+  <ng-template #multipleStudentAdd>
+    <ion-row class="multiple-student-input-field">
+      <ion-row class="row-select">
+        <ion-select value="email" [interfaceOptions]="searchByHeader" (ionChange)="changeSearchType($event)">
+          <ion-select-option value="email">{{ 'EMAIL' | translate }}</ion-select-option>
+          <ion-select-option value="username">{{ 'USERNAME' | translate }}</ion-select-option>
+        </ion-select>
+        <ion-row class="multi-student">
+          <ion-text *ngIf="searchFilter === 'email'; else multiStudentUsername" class="add-email">{{ 'MULTI_STUDENT_EMAIL' | translate }}</ion-text>
+          <ng-template #multiStudentUsername>
+            <ion-text class="add-email">{{ 'MULTI_STUDENT_USERNAME' | translate }}</ion-text>
+          </ng-template>
+          <textarea class="search-student" [(ngModel)]="userMailIds"></textarea>
+        </ion-row>
+      </ion-row>
+      <ion-row class="row-button">
+        <ion-button (click)="onSearchUsersByMailId()">
+          {{ 'SEARCH' | translate }}
+        </ion-button>
+      </ion-row>
+    </ion-row>
+    <ion-content *ngIf="multiSearchUsers.length">
+      <ion-row class="student-table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{ 'STUDENT' | translate }}</th>
+              <th>{{ 'STATUS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of multiSearchUsers">
+              <td>
+                <span class="student-info"><a href="#">{{user.email || '--'}}</a></span>
+                <span>{{user.lastName || '--'}} {{user.firstName || '--'}} </span>
+              </td>
+              <td>{{(user.status ? 'AVAILABLE' : 'NOT_ON_NAVIGATOR') | translate}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-row>
+      <ion-row class="email-notification-msg">
+        <ion-text>{{ 'MESSAGE_BY_EMAIL' | translate }}
+          <span class="student-signup" (click)='onClickStudentSignUp()'>{{tenantSignUpUrl}}</span>
+        </ion-text>
+      </ion-row>
+      <ion-row class="multi-add-student">
+        <button type="submit" class="cancel-student" (click)="onClear()">{{'CANCEL' | translate}}</button>
+        <button type="submit" class="add-student" (click)="addStudentToClass()">{{'ADD' | translate}}</button>
+      </ion-row>
+    </ion-content>
+  </ng-template>
+</ion-grid>
+<ng-template #noResults>
+  <ion-row class="no-result-row">
+    <ion-text>{{ 'NO_SEARCH_RESULT' | translate }}</ion-text>
+  </ion-row>
+</ng-template>

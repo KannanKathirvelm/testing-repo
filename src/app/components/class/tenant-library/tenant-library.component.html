@@ -1,0 +1,43 @@
+<ion-item lines="none" class="ion-no-padding" *ngFor="let content of tenantLibraryContent">
+  <mat-expansion-panel class="domains-container" class="domain-competency-container">
+    <mat-expansion-panel-header  [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+      <mat-panel-title class="ellipsis">
+        <ion-text class="title ellipsis">
+          {{content.name}}
+        </ion-text>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ion-row class="library-content">
+      <ion-text class="description">
+        {{content.description}}
+      </ion-text>
+      <ion-row class="content-count">
+        <ion-col *ngIf="content.resourceCount > 0">
+          <ion-text class="material-icons">local_library</ion-text>
+          <ion-text class="collection-count">{{content.resourceCount}}</ion-text>
+        </ion-col>
+        <ion-col *ngIf="content.questionCount > 0">
+          <ion-text class="material-icons">help_outline</ion-text>
+          <ion-text class="collection-count">{{content.questionCount}}</ion-text>
+        </ion-col>
+        <ion-col *ngIf="content.unitCount > 0">
+          <ion-icon class="nav-course"></ion-icon>
+          <ion-text class="collection-count">{{content.unitCount}}</ion-text>
+        </ion-col>
+        <ion-col *ngIf="content.assessmentCount > 0">
+          <ion-icon class="nav-assessment"></ion-icon>
+          <ion-text class="collection-count">{{content.assessmentCount}}</ion-text>
+        </ion-col>
+        <ion-col *ngIf="content.collectionCount > 0">
+          <ion-icon class="nav-collection"></ion-icon>
+          <ion-text class="collection-count">{{content.collectionCount}}</ion-text>
+        </ion-col>
+        <ion-col class="forward" (click)="onSelectLibraryContents(content)">
+          <ion-text class="material-icons">
+            arrow_forward
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </mat-expansion-panel>
+</ion-item>

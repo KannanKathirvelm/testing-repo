@@ -1,0 +1,139 @@
+<ion-header class="milestone-with-performance-header">
+  <ion-toolbar>
+    <ion-row class="header-title">
+      <ion-row class="title-container">
+        <ion-col class="report-icon">
+          <i class="material-icons-outlined">
+            format_align_center
+          </i>
+        </ion-col>
+        <ion-col class="title-content">
+          <ion-text class="sub-title">
+            {{'UNIT' | translate}} {{unitIndex + 1}}
+          </ion-text>
+          <ion-text class="title ellipsis">{{unit.title}}</ion-text>
+        </ion-col>
+        <ion-row class="close-icon" (click)="closeReport()">
+          <ion-text class="material-icons">clear</ion-text>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="milestone-with-performance-content">
+  <ion-row class="milestone-content-container">
+    <ng-container *ngIf="performanceLoaded;else performanceSkeleton">
+      <ion-row class="performance-activity" ngClass="grade-range-{{scoreInPercentage | gradeRange}}">
+        <ion-row class="performance">
+          <ion-row class="score-container">
+            <ion-text class="score">{{scoreInPercentage | transformPerformanceScore}}</ion-text>
+          </ion-row>
+        </ion-row>
+        <div class="performance-img" ngClass="grade-range-{{scoreInPercentage | gradeRange}}" [ngStyle]="{'height': scoreInPercentage + '%'}">
+        </div>
+      </ion-row>
+    </ng-container>
+    <mat-accordion class="coursemap-container" *ngIf="lessonLoaded;else skeletonViewTemplate">
+      <ion-row class="ion-no-padding coursemap-milestone-container-row" *ngFor="let lesson of unit.lessons;let lessonIndex = index;let isFirstItem = first;">
+        <mat-expansion-panel class="coursemap-milestone-panel" [expanded]="isFirstItem" [hideToggle]="true" (opened)="onOpenlessonPanel(lesson)">
+          <mat-expansion-panel-header class="coursemap-milestone-panel-header" collapsedHeight="49px" expandedHeight="inherit">
+            <ion-grid class="ion-no-padding ellipsis">
+              <ion-row class="coursemap-milestone-row">
+                <ion-col class="collection-icon-wrapper">
+                  <i class="material-icons-outlined">
+                    more_horiz
+                  </i>
+                </ion-col>
+                <ion-col class="title-col milestone ellipsis">
+                  <ion-row class="milestone-name" *ngIf="lessonLabelValue; else noLessonLabel">
+                    <ion-text>{{tenantSettings.uiElementVisibilitySettings.lessonLabelCourseMap}} {{(lessonIndex +1)}}</ion-text>
+                  </ion-row>
+                  <ng-template #noLessonLabel>
+                    <ion-text>{{'LESSON' | translate}} {{(lessonIndex +1)}}</ion-text>
+                  </ng-template>
+                  <ion-row class="coursemap-milestone-title ellipsis">
+                    <ion-text class="ellipsis">{{lesson.title}}</ion-text>
+                  </ion-row>
+                </ion-col>
+                <ion-col class="toggle-icon-wrapper">
+                  <i class="material-icons arrow-dropdown"> arrow_drop_down </i>
+                  <i class="material-icons arrow-dropup"> arrow_drop_up </i>
+                </ion-col>
+                <ion-col *ngIf="lesson.performance; else noUnitPerformance" (click)="openCourseMapLessonReport($event, lesson, lessonIndex)"
+                  class="performance-col milestone-performance grade-range-{{lesson.performance.scoreInPercentage | gradeRange}}">
+                  <ion-row class="performance-row">
+                    <ion-text class="performance-score milestone-performance-score">{{lesson.performance.scoreInPercentage | transformScore}}</ion-text>
+                  </ion-row>
+                  <ion-row class="profile-count-row">
+                    <ion-icon class="profile-icon" name="person-circle"></ion-icon>
+                    <ion-row class="profile-count">{{lesson.performance.studentsCount}}</ion-row>
+                  </ion-row>
+                </ion-col>
+                <ng-template #noUnitPerformance>
+                  <ion-col class="performance-col milestone-performance grade-range-not-started"></ion-col>
+                </ng-template>
+              </ion-row>
+            </ion-grid>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <ng-container *ngIf="isStudentsLoaded; else skeletonViewTemplate">
+              <ion-grid class="ion-no-padding student-container ellipsis">
+                <ion-row class="coursemap-student-row" *ngFor="let student of lesson.studentList">
+                  <ion-col class="ion-no-padding student-title-container">
+                    <ion-row class="student-title-row">
+                      <ion-col class="ion-no-padding student-icon-col">
+                        <ion-avatar>
+                          <ion-img class="user-profile-img" *ngIf="student.avatarUrl && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.avatarUrl" [ngClass]="{'selected': student.selectedForSuggestion}">
+                          </ion-img>
+                          <ng-template #ngxAvatar>
+                            <ion-avatar class="profile avatar-icon">
+                              <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                            </ion-avatar>
+                          </ng-template>
+                        </ion-avatar>
+                      </ion-col>
+                      <ion-col class="ion-no-padding student-title-col ellipsis">
+                        <ion-text class="student-title">{{student.fullName}}</ion-text>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col *ngIf="student.performance; else noCollectionPerformance" class="performance-col ion-no-padding student-thumbnail-col no-padding grade-range-{{student.performance.scoreInPercentage | gradeRange}}">
+                    <ion-row class="score">
+                      <ion-row class="performance-row">
+                        <ion-text class="performance-score">
+                          {{student.performance.scoreInPercentage | transformScore}}
+                        </ion-text>
+                      </ion-row>
+                    </ion-row>
+                  </ion-col>
+                  <ng-template #noCollectionPerformance>
+                    <ion-col class="performance-col student-performance grade-range-not-started"></ion-col>
+                  </ng-template>
+                </ion-row>
+              </ion-grid>
+            </ng-container>
+          </ng-template>
+        </mat-expansion-panel>
+      </ion-row>
+    </mat-accordion>
+  </ion-row>
+  <ng-template #skeletonViewTemplate>
+    <ion-grid class="skeleton-grid">
+      <ion-row class="skeleton-row" *ngFor="let items of [].constructor(3)">
+        <ion-col class="title-col">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-col>
+        <ion-col class="performance-col">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <ng-template #performanceSkeleton>
+    <ion-grid class="skeleton-grid">
+      <ion-row class="skeleton-row performance-skeleton">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+</ion-content>

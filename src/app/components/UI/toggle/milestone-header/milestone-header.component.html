@@ -1,0 +1,11 @@
+<ion-grid class="journey-grid ion-no-padding">
+  <ion-row class="journey-tab-row">
+    <ion-col class="journey-button-col ion-no-padding">
+      <ion-segment class="journey-segment-button" (ionChange)="segmentChanged($event)" value="{{activeView}}">
+        <ion-segment-button class="segment-button" *ngFor="let tab of tabs" value="{{tab.type}}">
+          <ion-label class="segment-button-title">{{tab.label}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+  </ion-row>
+</ion-grid>

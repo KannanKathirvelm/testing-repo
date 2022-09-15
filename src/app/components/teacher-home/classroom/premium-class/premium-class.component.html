@@ -1,0 +1,117 @@
+<ion-card *ngIf="class;else showLoader" [ngClass]="{'disabled': !class.isOfflineAccessEnabled && !isOnline}"
+  class="premium-class">
+  <ion-card-header class="ion-no-padding">
+    <ion-row class="card-header">
+      <ion-col size="10" class="class-title ellipsis" [ngClass]="{'archived-class': class.isArchived}"
+        (click)="onClickCard()">
+        <ion-label class="class-name ellipsis">{{class.title}}</ion-label>
+      </ion-col>
+      <ion-col size="2" [ngClass]="{'disabled': !isOnline}" class="setting-icon"
+        [routerLink]="['/class/', class.id, 'settings']">
+        <i class="material-icons">settings</i>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+  <ion-card-content class="ion-no-padding">
+    <ion-grid class="ion-no-padding card-content">
+      <ion-row class="card-img"
+        [ngStyle]="{'background-image': class.course ? 'url(' + class.course.thumbnailUrl + ')' : ''}"
+        (click)="onClickCard()">
+        <ion-grid class="information" [ngClass]="course ? 'has-course' : 'has-no-course'">
+          <ion-row class="current-activity">
+            <ion-text *ngIf="course; else noCourseAssigned">{{'ASSIGNED_COURSE'| translate}}</ion-text>
+            <ng-template #noCourseAssigned>
+              <ion-text>{{'NO_COURSE_ASSIGNED' | translate}}</ion-text>
+              <ion-text>{{'GO_AHEAD_ADD_SOMETHING'| translate}}</ion-text>
+            </ng-template>
+          </ion-row>
+          <ion-row *ngIf="course" class="course-title" [ngClass]="{'archived-class': class.isArchived}">
+            <ion-text class="ellipsis">{{course.title}}</ion-text>
+          </ion-row>
+        </ion-grid>
+      </ion-row>
+      <ion-row class="class-actions">
+        <ion-col size="2" class="class-activity-container"
+          [routerLink]="['/class/', class.id, 'class-activities', 'scheduled-activities']">
+          <ion-icon class="nav-dca"></ion-icon>
+        </ion-col>
+        <ion-col size="2"  class="course-map-container"
+          (click)="onClickJourney()">
+          <i class="material-icons course-map">sort</i>
+        </ion-col>
+        <ion-col size="2" class="proficiency-container" (click)="redirectToProficiency()">
+          <ion-icon class="nav-proficiency"></ion-icon>
+        </ion-col>
+        <ion-col size="2" [ngClass]="{'disabled': !isOnline}" class="performance-overview-container"
+          [routerLink]="['/class/', class.id, 'atc']">
+          <ion-icon class="overview-icon"></ion-icon>
+        </ion-col>
+        <ion-col size="4" [ngClass]="{'disabled': !isOnline}" class="competency-container"
+          [ngClass]="{'has-competency' : class.competencyStats }" (click)="redirectToProficiency()">
+          <ion-row *ngIf="class.competencyStats; else showNoCompetency">
+            <ion-text class="completed-competency">{{class.competencyStats.completedCompetencies}}</ion-text>/
+            <ion-text class="total-competency">{{class.competencyStats.totalCompetencies}}</ion-text>
+          </ion-row>
+          <ng-template #showNoCompetency>
+            <ion-text>---</ion-text>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+      <ion-row class="class-code-container">
+        <ion-col class="class-code-wrapper ion-no-padding">
+          <span class="class-code-label">
+            {{'CLASSCODE' | translate}}
+          </span>
+          <span class="class-code">
+            {{class.code}}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
+<ng-template #showLoader>
+  <ion-card class="premium-class custom-skeleton">
+    <ion-card-header class="ion-no-padding">
+      <ion-row>
+        <ion-col size="10">
+          <ion-skeleton-text class="class-name" animated></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="2">
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <hr class="header-line">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-skeleton-text class="card-img"></ion-skeleton-text>
+        </ion-row>
+        <ion-row class="class-actions">
+          <ion-col class="class-action">
+            <ion-skeleton-text class="course-map" animated></ion-skeleton-text>
+          </ion-col>
+          <ion-col class="class-action">
+            <ion-skeleton-text class="course-map" animated></ion-skeleton-text>
+          </ion-col>
+          <ion-col class="class-action">
+            <ion-skeleton-text class="course-map" animated></ion-skeleton-text>
+          </ion-col>
+          <ion-col class="class-action">
+            <ion-skeleton-text class="course-map" animated></ion-skeleton-text>
+          </ion-col>
+          <ion-col class="class-action">
+            <ion-skeleton-text class="course-map" animated></ion-skeleton-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="class-code">
+          <ion-col size="3" class="ion-no-padding">
+            <div>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ng-template>

@@ -1,0 +1,34 @@
+.taxonomy-list {
+  display: flex;
+
+  &.show-count-only {
+    flex-wrap: inherit;
+
+    .item {
+      &.more-items {
+        min-width: max-content;
+        border-color: transparent;
+      }
+    }
+  }
+
+  .item {
+    min-width: 70px;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    background-color: var(--taxonomy-bg-color);
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    border: solid 1px var(--taxonomy-list-border);
+
+    .label {
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      color: var(--taxonomy-text-color);
+      text-transform: uppercase;
+    }
+  }
+}

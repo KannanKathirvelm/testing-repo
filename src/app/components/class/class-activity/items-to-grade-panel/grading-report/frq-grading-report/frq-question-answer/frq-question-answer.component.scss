@@ -1,0 +1,22 @@
+.row-question-answer-section {
+  display: grid;
+
+  .row-answer,
+  .row-question {
+    display: grid;
+    padding: 10px;
+
+    .title {
+      font-family: var(--sans);
+      font-size: 24px;
+      color: var(--dark-400);
+    }
+
+    .content-text {
+      font-size: 16px;
+      font-family: var(--sans);
+      color: var(--dark-400);
+      padding: 5px 0;
+    }
+  }
+}

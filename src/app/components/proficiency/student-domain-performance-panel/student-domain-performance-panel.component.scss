@@ -1,0 +1,128 @@
+.student-domain-performance-container {
+  width: 100%;
+
+  .student-domain-performance-header {
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    height: 62px;
+    padding: 0 10px 0 12px;
+
+    .student-domain-image {
+      margin: auto auto auto 0;
+
+      ion-avatar {
+        width: 32px;
+        height: 32px;
+      }
+
+      .profile {
+        padding: 0;
+        height: 46px;
+        width: 46px;
+
+        .profile-icon {
+          background-size: 100% 100%;
+          background-position: center;
+          width: 32px;
+          height: 32px;
+          margin: auto;
+          display: flex;
+          border-radius: 50%;
+        }
+      }
+
+      .avatar-icon {
+        ::ng-deep .avatar-container {
+          height: 32px !important;
+          width: 32px !important;
+
+          .avatar-content {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 16px / 30px Helvetica, Arial, sans-serif !important;
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    .student-domain-performance-progress-container {
+      margin: 12px auto auto;
+    }
+  }
+
+  .student-domain-performance-progress-bar {
+    width: 100%;
+    padding-left: 5px;
+
+    .student-domain-performance-title {
+      text-align: left;
+      margin-bottom: 3px;
+      text-transform: capitalize;
+
+      .last-name {
+        padding: 0 0 0 12px;
+      }
+
+      ion-skeleton-text {
+        width: 100px;
+        margin-left: 10px;
+      }
+    }
+
+    .progress-bar-skeleton {
+      margin: 0 10px;
+    }
+
+    .student-domain-performance-count {
+      .progressBar-count {
+        display: flex;
+        justify-content: flex-end;
+
+        ion-text {
+          padding: 0 5px;
+
+          &:last-child {
+            padding: 0 0 0 5px;
+          }
+        }
+
+        .mastered {
+          color: var(--proficiency-competency-status-3);
+        }
+
+        .in-progress {
+          color: var(--proficiency-competency-status-1);
+        }
+
+        .not-started {
+          color: var(--proficiency-competency-status-0);
+        }
+      }
+    }
+
+    ::ng-deep nav-student-competency-progress-bar {
+      width: 100%;
+    }
+  }
+}
+
+.domain-mastered-options {
+  background-color: var(--student-domain-mastered-color);
+
+  .domain-mastered-percentage {
+    font-size: 25px;
+    font-weight: 300;
+    margin: 10px;
+  }
+
+  .domain-mastered-title {
+    width: 70px;
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+}

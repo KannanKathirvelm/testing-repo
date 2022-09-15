@@ -1,0 +1,218 @@
+.class-navbar-container {
+  width: 100%;
+
+  ion-grid {
+    padding: 0;
+
+    .row-item {
+      min-height: 48px;
+      max-height: 100%;
+      border-bottom: 0.5px solid var(--class-navbar-border-color);
+
+      &.row-header {
+        display: grid;
+        grid-template-columns: 48px auto 90px;
+        overflow: hidden;
+      }
+
+      .col {
+        height: var(--toolbar-height);
+        border-right: 0.5px solid var(--class-navbar-border-color);
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        &.notification-tab {
+          &.disabled {
+            opacity: 0.4;
+          }
+
+          .notification-count {
+            border-radius: 50%;
+            border: 1px solid var(--notification-icon-active);
+            font-size: 7px;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            background: var(--notification-background);
+            border: 1px solid var(--notification-inactive);
+            color: var(--notification-inactive);
+            font-weight: bold;
+            color: var(--notification-count-color);
+            border-color: var(--notification-count-color);
+          }
+        }
+
+        &.notify-col {
+          border-left: 0.5px solid var(--class-navbar-border-color);
+        }
+
+        &.back-btn-col {
+          max-width: 46px;
+          justify-content: center;
+        }
+
+        &.title-col {
+          max-width: 100%;
+          padding-left: 10px;
+          overflow: hidden;
+
+          .title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--class-navbar-title-color);
+          }
+
+          .title-skeleton {
+            width: 80%;
+          }
+        }
+
+        &.competency-col {
+          max-width: 90px;
+          color: var(--class-navbar-competency-count-color);
+          justify-content: center;
+          background-color: var(--class-navbar-active-tab-bgcolor);
+
+          .competency-count {
+            font-weight: bold;
+            text-align: center;
+            min-height: 48px;
+            max-height: 100%;
+            font-size: 15px;
+
+            hr {
+              border-top: 2px solid var(--class-navbar-hr-color);
+              width: 100%;
+              margin: 0;
+              opacity: 1;
+            }
+          }
+
+          .competency-count-skeleton {
+            width: 50%;
+          }
+        }
+      }
+
+      &.nav-tabs {
+        .col {
+          justify-content: center;
+          max-width: max-content;
+          text-align: center;
+          outline: none;
+
+          &:not(.atc-tab) {
+            ion-text.tab-icon {
+              color: var(--class-navbar-tab-icon-color);
+            }
+          }
+
+          &.active.notification-tab {
+            .tab-icon {
+              color: var(--notification-count-color);
+            }
+          }
+
+          &:not(.active) {
+            background-color: transparent;
+
+            ion-icon.info-icon {
+              display: none;
+            }
+          }
+
+          &.dca-tab {
+            &.active {
+              &.grade-range-not-started {
+                .tab-icon {
+                  background: var(--icon-default-color);
+                }
+              }
+            }
+          }
+
+          &.atc-tab,
+          &.dca-tab,
+          &.journey-tab {
+            &.active {
+              ion-text.tab-icon {
+                color: var(--class-navbar-active-tab-icon-color);
+              }
+
+              ion-icon.info-icon {
+                color: var(--class-navbar-info-icon);
+                margin-right: 5px;
+                font-size: 20px;
+              }
+
+              .performance {
+                display: block;
+                font-weight: bold;
+                width: 100%;
+              }
+            }
+          }
+
+          &.journey-tab {
+            &.active {
+              ion-text.tab-icon {
+                color: var(--class-navbar-tab-icon-color);
+              }
+
+              ion-icon.info-icon {
+                color: var(--class-navbar-info-icon);
+                margin-right: 5px;
+                font-size: 20px;
+              }
+
+              .performance {
+                display: block;
+                font-weight: bold;
+              }
+            }
+          }
+
+          &.atc-tab,
+          &.proficiency-tab {
+            &.active {
+              background-color: var(--class-navbar-active-tab-bgcolor);
+
+              ion-icon.tab-icon {
+                background: var(--class-navbar-active-tab-icon-color);
+              }
+            }
+          }
+
+          &.settings-tab {
+            &.active {
+              ion-text.tab-icon {
+                color: var(--class-navbar-active-setting-icon-color);
+              }
+            }
+          }
+
+          .performance,
+          .tab-icon {
+            width: 45px;
+          }
+        }
+
+        .free-col {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .no-score {
+    margin: auto;
+    font-weight: bold;
+    height: 25px;
+  }
+}

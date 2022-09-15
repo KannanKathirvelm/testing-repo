@@ -1,0 +1,441 @@
+.create-classroom-header {
+  display: flex;
+
+  ion-toolbar {
+    --min-height: 42px;
+
+    .header-row {
+      width: 100%;
+      padding: 0 18px;
+      color: var(--create-classroom-text);
+
+      .header-text {
+        height: 100%;
+        align-items: center;
+        display: flex;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .close-modal {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        ion-icon {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
+ion-content {
+  --background: var(--ion-content-bg);
+
+  &.offline {
+    pointer-events: none;
+  }
+
+  .create-classroom-card {
+    width: calc(100% - 48px);
+    height: 76vw;
+    border-radius: 4px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.07);
+    background-color: var(--class-card-bg);
+    margin: 20px auto auto;
+
+    ion-card-content {
+      height: 100%;
+
+      .offline-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(184 191 196 / 70%);
+        pointer-events: none;
+        z-index: 11111;
+        top: 0;
+      }
+
+      .create-classroom-grid {
+        height: 100%;
+        grid-template-rows: auto 70px 40px;
+        display: grid;
+
+        .create-classroom-content {
+          display: block;
+
+          .classroom-img {
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: var(--create-classroom-bg);
+            background-color: var(--create-class-button);
+
+            .create-classroom-text {
+              text-transform: uppercase;
+              color: var(--create-class-content-color);
+              font-size: 34px;
+              line-height: 1.09;
+              font-family: var(--sans);
+              font-weight: 700;
+              text-align: center;
+            }
+          }
+        }
+
+        .enter-classname {
+          background: var(--create-class-content-color);
+          display: flex;
+
+          ion-input {
+            color: var(--create-class-button);
+            margin: 0 30px;
+
+            ::ng-deep input {
+              padding: 0 5px;
+              border-bottom: 1px solid var(--create-class-button);
+            }
+          }
+        }
+
+        .create-class {
+          background: var(--create-class-button);
+          color: var(--create-class-content-color);
+          font-size: 14px;
+          text-transform: uppercase;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          opacity: 0.5;
+          pointer-events: none;
+
+          &.active {
+            pointer-events: all;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .create-subject-classroom-card {
+    width: calc(100% - 48px);
+    height: 76vw;
+    border-radius: 4px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.07);
+    background-color: var(--class-card-bg);
+    display: grid;
+    margin: 20px auto auto;
+
+    ion-card-content {
+      height: 100%;
+
+      .offline-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(184 191 196 / 70%);
+        pointer-events: none;
+        z-index: 11111;
+        top: 0;
+      }
+
+      .create-subject-classroom-grid {
+        height: 100%;
+        display: grid;
+        padding: 5px 15px;
+
+        .set-grade-level {
+          display: flex;
+          font-size: 12px;
+          color: var(--create-classroom-text);
+          align-items: center;
+        }
+
+        .classification-list {
+          font-size: 14px;
+          padding: 0 15px;
+          color: var(--create-classroom-text);
+          height: 120px;
+          display: block;
+          overflow-y: scroll;
+
+          .classification {
+            padding: 3px 0;
+            width: 100%;
+            border-bottom: 1px solid var(--create-class-border);
+
+            &.grade-selected {
+              color: var(--selected-grade-content);
+            }
+
+            ion-text {
+              width: 100%;
+            }
+          }
+        }
+
+        .button-row {
+          width: 100%;
+          display: flex;
+          height: 40px;
+          padding-bottom: 5px;
+
+          .cancel-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            ion-button {
+              width: 50%;
+              margin: 0 8px;
+              height: 80%;
+            }
+          }
+
+          .confirm-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            ion-button {
+              width: 50%;
+              margin: 0 8px;
+              height: 80%;
+              pointer-events: none;
+              opacity: 0.5;
+
+              &.active {
+                pointer-events: all;
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        .select-subject-row {
+          display: grid;
+          font-weight: 600;
+          height: 50px;
+
+          ion-select {
+            font-size: 14px;
+            padding: 0;
+            --placeholder-opacity: 0.75;
+
+            &.do-not-select {
+              pointer-events: none;
+            }
+          }
+
+          ion-text {
+            font-size: 12px;
+          }
+        }
+
+        .subject-classroom-img {
+          width: 100%;
+          height: 120px;
+          background-position: center;
+          background-size: cover;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-image: var(--subject-classroom-bg-one);
+        }
+
+        .enter-classname {
+          height: 50px;
+
+          ion-input {
+            color: var(--create-classroom-text);
+
+            ::ng-deep input {
+              padding: 5px 0;
+              border-bottom: 1px solid var(--create-class-border);
+            }
+          }
+        }
+
+        .description-row {
+          height: 40px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: var(--create-classroom-text);
+          font-size: 14px;
+          padding: 0 10px;
+          text-align: center;
+          pointer-events: none;
+          opacity: 0.5;
+
+          &.active {
+            pointer-events: all;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .classification-grid {
+    height: 100%;
+
+    .classname-row {
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      color: var(--class-details-content);
+      border-bottom: 1px solid var(--class-details-header-view);
+      background-color: var(--class-details-header-view);
+      height: 40px;
+
+      .classname {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .close-icon {
+        font-size: 24px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .classification-list {
+      font-size: 16px;
+      padding: 0 15px;
+      color: var(--class-details-content);
+      background-color: var(--class-details-view);
+      height: calc(100% - 100px);
+      display: block;
+      overflow-y: scroll;
+
+      &.classification-list-panel {
+        height: calc(100% - 70px);
+      }
+
+      .classification {
+        padding: 3px 0;
+        width: 100%;
+
+        ion-text {
+          width: 100%;
+        }
+
+        .checkmark {
+          color: var(--blue-400);
+        }
+
+        .others {
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .choose-category {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: bold;
+      color: var(--create-classroom-text);
+      height: 30px;
+      border-top: 1px solid var(--create-class-border);
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      background-color: var(--class-details-content);
+    }
+
+    .nav-bar-row {
+      display: flex;
+      height: 30px;
+      background-color: var(--class-details-header-view);
+      color: var(--class-details-content);
+      border-bottom: 1px solid var(--class-details-header-view);
+
+      .back-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+      }
+
+      .category {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+      }
+    }
+
+    .cancel-confirm-row {
+      width: 100%;
+      position: absolute;
+      background-color: var(--class-details-content);
+      bottom: 0;
+      min-height: 80px;
+      overflow: scroll;
+      max-height: 100px;
+
+      .confirmation-text-row {
+        color: var(--create-classroom-text);
+        font-size: 13px;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        ion-text {
+          text-align: center;
+        }
+
+        .grade-value {
+          font-weight: bold;
+        }
+      }
+
+      .button-row {
+        width: 100%;
+        display: flex;
+        height: 40px;
+        padding-bottom: 5px;
+
+        .cancel-button {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+
+          ion-button {
+            width: 50%;
+            margin: 0 8px;
+            height: 80%;
+          }
+        }
+
+        .confirm-button {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          ion-button {
+            width: 50%;
+            margin: 0 8px;
+            height: 80%;
+          }
+        }
+      }
+    }
+  }
+}

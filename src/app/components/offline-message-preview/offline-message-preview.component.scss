@@ -1,0 +1,39 @@
+.offline-message-container {
+	background: var(--offline-bg-color);
+	height: 100%;
+	padding: 20px 40px;
+	grid-template-rows: 100px 80px 95px;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+
+	.offline-img-container {
+		display: flex;
+		justify-content: center;
+
+		ion-thumbnail {
+			width: 95px;
+			height: 72px;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
+			background-image: var(--offline-icon);
+			opacity: 0.3;
+		}
+	}
+
+	.offline-message-text {
+		text-align: center;
+		font-family: var(--montserrat);
+		font-size: 20px;
+		font-weight: 200;
+		line-height: 1.2;
+		color: var(--offline-name-text);
+		display: grid;
+	}
+
+	.title-name {
+		text-decoration: underline;
+	}
+}

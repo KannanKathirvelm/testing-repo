@@ -1,0 +1,155 @@
+.footer-container {
+  display: grid;
+  background-color: var(--dark-400);
+
+  .mark-complete-btn {
+    justify-self: center;
+    margin: 15px 0;
+  }
+
+  .player-grading {
+    margin-top: 15px;
+
+    .mat-accordion {
+      .mat-expansion-panel {
+        padding: 0;
+        margin-bottom: 2px;
+
+        .mat-expansion-panel-header {
+          padding: 0;
+
+          &.mat-expanded {
+            ::ng-deep {
+              .mat-content {
+                .row-rubric-header {
+                  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+                  margin-bottom: 6px;
+                }
+              }
+            }
+          }
+
+          ::ng-deep {
+            .mat-content {
+              .row-rubric-header {
+                display: grid;
+                grid-template-columns: 48px auto 48px;
+                width: 100%;
+                height: 48px;
+
+                ion-col {
+                  display: flex;
+                  align-items: center;
+
+                  &.col-icon,
+                  &.col-score {
+                    justify-content: center;
+
+                    &.grade-range-not-started {
+                      background-color: var(--add-data-performance-color);
+                      color: var(--white);
+
+                      &:before {
+                        content: '';
+                        width: 20px;
+                        height: 8px;
+                        background: var(--white);
+                        border-radius: 5px;
+                        position: absolute;
+                        text-align: center;
+                      }
+                    }
+
+                    ion-text {
+                      font-family: var(--sans);
+                      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                      font-size: 12px;
+                      font-weight: bold;
+                    }
+                  }
+
+                  &.col-title {
+                    justify-content: flex-start;
+                    .text-header {
+                      font-size: 16px;
+                      display: flex;
+                      align-items: center;
+                      i {
+                        margin-left: 10px;
+                      }
+                    }
+              
+                    .rubric-attachment {
+                      color: var(--attachment);
+                      margin-left: 5px;
+                      font-size: 20px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .mat-expansion-indicator {
+              display: none;
+            }
+          }
+        }
+
+        ::ng-deep .mat-expansion-panel-body {
+          padding: 0;
+
+          .grid-rubric {
+            padding-bottom: 20px;
+          }
+
+          .row-categories {
+            .mat-accordion {
+              .mat-expansion-panel {
+                .mat-expansion-panel-body {
+                  padding: 15px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.offline-container {
+  padding:10px;
+  
+  .offline-resource-icon {
+    background: var(--text-resource-icon);
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    filter: brightness(0) invert(1);
+  }
+  
+  .offline-desc-title {
+    color: var(--white);
+    padding-left: 10px;
+  }
+  
+  .offline-desc-text {
+    color: var(--white);
+    font-size: 14px;
+    padding-top: 6px;
+    padding-bottom: 10px;
+    width: 100%;
+    height: 26px;
+    overflow: hidden;
+  }
+
+  .show-more {
+    height: auto;
+  }
+
+  .show-text {
+    font-size: 13px;
+    color: var(--dodger-reblue);
+    text-decoration: underline;
+  }  
+}

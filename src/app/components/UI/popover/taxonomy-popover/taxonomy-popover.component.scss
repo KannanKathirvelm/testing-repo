@@ -1,0 +1,23 @@
+.taxonomy-list-container {
+  ion-row {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--taxonomy-text-color);
+    padding: 10px;
+    border-bottom: 1px solid var(--taxonomy-border-color);
+
+    .label {
+      text-align: left;
+      font-size: 10px;
+      font-weight: 400;
+      &.taxonomy-framework {
+        color: var(--grey)
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

@@ -1,0 +1,259 @@
+.mat-accordion {
+  width: 100%;
+
+  .mat-expansion-panel {
+    box-shadow: none;
+    border-radius: 0;
+    background: var(--very-light-grey);
+    margin-bottom: 0;
+    opacity: 0.5;
+
+    &.mat-expanded {
+      opacity: 1;
+    }
+
+    .mat-expansion-panel-header {
+      box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      border: 1px solid var(--light-grey);
+      background: var(--white);
+      position: relative;
+
+      &::after {
+        left: 0;
+        bottom: -5px;
+        background-position: left 0 top -2px;
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==");
+        background-repeat: repeat-x;
+        content: "";
+      }
+
+      ::ng-deep .mat-content {
+        display: grid;
+        grid-template-columns: auto 30px 56px;
+        align-items: center;
+
+        .title-topic {
+          font-size: 14px;
+          color: var(--dark-400);
+          font-family: var(--sans);
+        }
+
+        .topic-progress {
+          width: 32px;
+          height: 32px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+
+        .inprogress {
+          background-image: var(--sns-inprogress-icon);
+        }
+
+        .completed {
+          background-image: var(--sns-completed-icon);
+        }
+
+        .not-started {
+          background-image: var(--sns-notstarted-icon);
+        }
+
+        .col-header-competency {
+          overflow: hidden;
+        }
+
+        .material-icons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 24px;
+        }
+      }
+
+      ion-text {
+        &.title {
+          color: var(--dark-400);
+          font-family: var(--sans);
+          font-size: 14px;
+
+          &.domain-title {
+            font-weight: bold;
+          }
+        }
+      }
+
+      .row-competency-header-detail {
+        overflow: hidden;
+
+        ion-text {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          &.title-col {
+            font-size: 14px;
+            color: var(--dark-400);
+            font-family: var(--sans);
+          }
+
+          &.title-competency {
+            font-size: 12px;
+            color: var(--dark-400);
+            font-family: var(--sans);
+          }
+        }
+      }
+
+      .arrow-dropdown {
+        display: flex;
+      }
+
+      .arrow-dropup {
+        display: none;
+      }
+
+      &.mat-expanded {
+        .arrow-dropdown {
+          display: none;
+        }
+
+        .arrow-dropup {
+          display: flex;
+        }
+      }
+    }
+
+    .accordion-default-scope-domain {
+      .mat-expansion-panel {
+        .mat-expansion-panel-header {
+          ::ng-deep .mat-content {
+            grid-template-columns: auto 36px 42px;
+          }
+        }
+
+        ::ng-deep .mat-expansion-panel-content {
+          .mat-expansion-panel-body {
+            padding: 6px 2px;
+
+            .accordion-default-scope-topic {
+              .mat-expansion-panel {
+                .mat-expansion-panel-header {
+                  ::ng-deep .mat-content {
+                    grid-template-columns: auto 40px 36px;
+                  }
+                }
+
+                ::ng-deep .mat-expansion-panel-content {
+                  .mat-expansion-panel-body {
+                    padding: 6px 1px;
+
+                    .accordion-panel-student-resource {
+                      .mat-expansion-panel-header {
+                        ::ng-deep .mat-content {
+                          grid-template-columns: auto 32px;
+                        }
+                      }
+                    }
+                    .accordion-panel-teacher-resources{
+                      .mat-expansion-panel-header {
+                        ::ng-deep .mat-content {
+                          grid-template-columns: auto 32px;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    ::ng-deep .mat-expansion-panel-content {
+      background: var(--very-light-grey);
+    }
+
+    ::ng-deep .mat-expansion-panel-body {
+      margin-top: 5px;
+      background: var(--very-light-grey);
+      padding: 8px;
+
+      .text-no-records {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        text-transform: capitalize;
+        font-style: italic;
+        font-family: var(--sans);
+        font-size: 14px;
+      }
+
+      .spinner-bar {
+        width: 100%;
+      }
+
+      .row-title-heading {
+        overflow: hidden;
+
+        ion-text {
+          &.title-code {
+            font-size: 14px;
+            font-family: var(--sans);
+            color: var(--dark-400);
+          }
+
+          &.title-text {
+            font-size: 12px;
+            font-family: var(--sans);
+            color: var(--dark-400);
+          }
+        }
+      }
+
+      .row-icon {
+        display: flex;
+        justify-content: center;
+      }
+
+      ::ng-deep nav-default-view{
+        .row-student-body{
+          max-height: 300px;
+          overflow-y: auto;
+        }
+      }
+    }
+
+    &.accordion-panel-default-scope-topic {
+      ::ng-deep .mat-expansion-panel-body {
+        .row-student-content-container {
+          .grid-student-content-container {
+            .row-student-header {
+              ion-text {
+                color: var(--white);
+                font-weight: bold;
+                font-size: 16px;
+                letter-spacing: 1px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.row-skeleton {
+  background: var(--white);
+  height: 48px;
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto 48px;
+  width: 100%;
+}

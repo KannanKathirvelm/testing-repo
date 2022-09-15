@@ -1,0 +1,274 @@
+<ion-card [ngClass]="{ expanded: hideOtherMenusList, 'disabled': !isOnline && !isDownloaded}">
+  <ion-card-header
+    [ngStyle]="{ 'background-image': 'url(' + (isOnline ? activity.thumbnailXS : activity.collection.defaultImg) + ')' }">
+    <ion-grid class="grid-card-header">
+      <ion-row class="row-card-header">
+        <ion-col size="6" class="col-icon" (click)="onPreview()">
+          <ion-text class="text-icon">
+            <ion-icon class="nav-{{ activity.contentType }}"></ion-icon>
+          </ion-text>
+        </ion-col>
+        <ion-col size="6" class="col-taxonomy">
+          <nav-taxonomy-list
+            [taxonomy]="activity.taxonomy"
+            [showMore]="false"
+          ></nav-taxonomy-list>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-header-content" (click)="onPreview()">
+        <ion-text>{{ activity.title }}</ion-text>
+        <ion-col
+          class="ion-no-padding col-share-icon"
+          *ngIf="activity.isExternalCollection || activity.isExternalAssessment"
+        >
+          <ion-icon class="share-icon"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid class="grid-card-content">
+      <ion-row class="col-activated-date">
+        <ion-text *ngIf="activity.dcaAddedDate !== activity.endDate else currentDate">{{ activity.dcaAddedDate | formatDate: "DD MMM" }} - {{ activity.endDate | formatDate: "DD MMM" }}</ion-text>
+        <ng-template #currentDate>
+          <ion-text>{{ activity.dcaAddedDate | formatDate: "DD MMM" }}</ion-text>
+        </ng-template>
+      </ion-row>
+      <ion-row
+        class="row-count"
+        [ngClass]="{
+          'external-activity':
+            activity.isExternalCollection || activity.isExternalAssessment
+        }"
+      >
+        <ng-container
+          *ngIf="
+            activity.isAssessment ||
+            activity.isCollection; else offlineActivity
+          "
+        >
+          <ion-col class="col-student-count">
+            <ion-icon class="nav-resource"></ion-icon>
+            <ion-text>{{ activity.resourceCount }}</ion-text>
+          </ion-col>
+          <ion-col class="col-info-count">
+            <ion-icon class="nav-question"></ion-icon>
+            <ion-text>{{ activity.questionCount }}</ion-text>
+          </ion-col>
+        </ng-container>
+        <ng-template #offlineActivity>
+          <ion-col class="col-student-count">
+            <ion-icon class="nav-task"></ion-icon>
+            <ion-text>{{ activity.taskCount }}</ion-text>
+          </ion-col>
+          <ion-col class="col-info-count">
+          </ion-col>
+        </ng-template>
+        <!-- <ion-col class="col-activated-date">
+          <ion-text>{{activity.dcaAddedDate | formatDate:'DD MMM'}} - {{activity.endDate | formatDate:'DD MMM'}}</ion-text>
+        </ion-col> -->
+        <ion-col class="col-download">
+          <download-item *ngIf="isOnline"
+            [collectionTitle]="activity.title"
+            [collectionId]="activity.collection.id"
+            [collectionType]="activity.contentType"
+            (clickDownload)="clickDownload()"
+            [isOnline]="isOnline"
+            [isDownloaded]="isDownloaded"
+          ></download-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-desc">
+        <ion-text class="multi-line-ellipsis">{{
+          activityDescription
+        }}</ion-text>
+      </ion-row>
+      <ion-row class="row-footer" [ngClass]="{ offline: !isOnline }">
+        <ion-grid class="grid-menus-container">
+          <ion-row class="row-menus-container">
+            <ng-container
+              *ngIf="activity.videoConferenceEnable && !isActivityPast"
+            >
+              <ion-col
+                class="icon-meet"
+                [ngClass]="{ 'disabled-activity': !activity.meetingUrl }"
+              >
+                <ion-icon
+                  class="nav-meet"
+                  (click)="openVideoConference()"
+                ></ion-icon>
+                <ion-text class="label">{{ "VIDEO" | translate }}</ion-text>
+              </ion-col>
+            </ng-container>
+            <ion-col
+              class="col-activity-activate"
+              [ngClass]="{ disabled: activity.isActive }"
+            >
+              <ion-toggle
+                mode="md"
+                [checked]="activity.isActive"
+                (ionChange)="toggleEnableActivity($event)"
+              ></ion-toggle>
+              <ion-text class="label">{{ "ACTIVATE" | translate }}</ion-text>
+            </ion-col>
+            <ng-container
+              *ngIf="!activity.isCollection && !activity.isExternalCollection"
+            >
+              <ion-col class="col-mastery">
+                <ion-checkbox
+                  mode="md"
+                  [checked]="activity.allowMasteryAccrual"
+                  (ionChange)="changeMasteryAccural($event)"
+                ></ion-checkbox>
+                <ion-text class="label">{{ "MASTERY" | translate }}</ion-text>
+              </ion-col>
+            </ng-container>
+            <ion-col class="col-menu" (click)="toggleMenuItems()">
+              <ion-text class="material-icons">more_vert</ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row [@collapse]="hideOtherMenusList" class="menu-list-wrapper">
+            <ion-list class="menu-list">
+              <ion-row (click)="rescheduleActivity(activity)">
+                <ion-col class="col-text">
+                  <ion-text>{{ "RESCHEDULE_ACTIVITY" | translate }}</ion-text>
+                </ion-col>
+                <ion-col>
+                  <i class="material-icons">update</i>
+                </ion-col>
+              </ion-row>
+              <ion-row
+                class="col-activity-status"
+                (click)="updateClassActivityStatus()"
+                [ngClass]="{
+                  disabled: activity.isCompleted
+                }"
+              >
+                <ion-col class="col-text">
+                  <ng-container
+                    *ngIf="activity.isCompleted; else closedTemplate"
+                  >
+                    <ion-text class="text-completed">{{
+                      "COMPLETED" | translate
+                    }}</ion-text>
+                  </ng-container>
+                  <ng-template #closedTemplate>
+                    <ion-text class="text-mark-closed">{{
+                      "MARK_CLOSED" | translate
+                    }}</ion-text>
+                  </ng-template>
+                </ion-col>
+                <ion-col>
+                  <ion-text class="material-icons">
+                    check_circle_outline
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </ion-row>
+        </ion-grid>
+      </ion-row>
+      <ion-row class="row-activity-details">
+        <ion-grid
+          class="grid-activity-details"
+          [ngClass]="{ 'show-more-class': showMoreClasses }"
+        >
+          <ion-row
+            class="row-activity"
+            *ngFor="
+              let activityClass of activity.activityClasses;
+              let activityClassIndex = index
+            "
+          >
+            <ion-col class="col-class-title">
+              <ion-text class="ellipsis">{{ activityClass.title }}</ion-text>
+            </ion-col>
+            <ion-col class="col-delete" [ngClass]="{ offline: !isOnline }">
+              <ion-icon
+                name="trash-outline"
+                (click)="deleteClassActivity(activityClass, activityClassIndex)"
+              ></ion-icon>
+            </ion-col>
+            <ion-col class="col-student" [ngClass]="{ offline: !isOnline }">
+              <ion-icon
+                name="person-circle-outline"
+                (click)="openStudentList(activityClass)"
+              ></ion-icon>
+            </ion-col>
+            <ion-col
+              class="col-add-data"
+              [ngClass]="{ 'read-only': !activityClass.content.performance || (isOnline && offlineSynInProgress) }"
+            >
+              <ng-container
+                *ngIf="
+                  activityClass.content.performance &&
+                    activityClass.content.performance.hasStarted;
+                  else offlineActivity
+                "
+              >
+                <ion-row
+                  class="row-grade grade-range-{{
+                    activityClass.content.performance.score | gradeRange
+                  }}"
+                  (click)="onOpenAggregateReport()"
+                  [ngClass]="{
+                    'only-score': !activityClass.content.performance.timeSpent,
+                    'collection-performance':
+                      activityClass.isCollection ||
+                      activityClass.isExternalCollection
+                  }"
+                >
+                  <ion-text class="activity-score">{{
+                    activityClass.content.performance.score | transformScore
+                  }}</ion-text>
+                  <ion-text
+                    class="activity-timespent"
+                    *ngIf="activityClass.content.performance.timeSpent"
+                    >{{activityClass.content.performance.timeSpent | transformTimeSpent }}</ion-text
+                  >
+                </ion-row>
+              </ng-container>
+              <ng-template #offlineActivity>
+                <ng-container
+                  *ngIf="activityClass.isOfflineActivity; else addData"
+                >
+                  <ion-icon
+                    class="nav-rubric"
+                    [ngClass]="{ 'oa-completed': activityClass.isCompleted }"
+                    (click)="onEnableOaGrading(activityClass)"
+                  ></ion-icon>
+                </ng-container>
+                <ng-template #addData>
+                  <ion-row
+                    class="row-add-text"
+                    [ngClass]="{
+                      disabled:
+                        (activityClass.usersCount < 1 || !isAddDataEnable)
+                        || (!isOnline && !isDownloaded) || (isOnline && offlineSynInProgress) }"
+                    (click)="openAddData($event, activityClass)"
+                  >
+                    <ion-text class="text-add-data not-started">{{
+                      "ADD_DATA" | translate
+                    }}</ion-text>
+                  </ion-row>
+                </ng-template>
+              </ng-template>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-row>
+      <ion-row
+        class="row-more-classes"
+        (click)="toggleShowMore()"
+        *ngIf="activity.activityClasses.length > 1"
+      >
+        <ng-container *ngIf="showMoreClasses; else showLessIcon">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ng-container>
+        <ng-template #showLessIcon>
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ng-template>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

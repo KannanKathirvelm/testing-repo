@@ -1,0 +1,61 @@
+.pull-right {
+  margin: 0 0 0 auto !important;
+}
+
+.pull-left {
+  margin: 0 auto 0 0 !important;
+}
+
+.pull-center {
+  margin: auto !important;
+}
+
+.ion-no-padding {
+  padding: 0;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.read-only {
+  pointer-events: none !important;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.multi-line-ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.backdrop {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 13;
+  opacity: 0.6;
+  bottom: 0;
+  background-color: var(--backdrop);
+  position: fixed;
+}

@@ -1,0 +1,25 @@
+<ng-container *ngIf="isAssessment">
+  <div class="aggregated-score-panel">
+    <div *ngIf="activity.collection.performance && activity.collection.performance.hasStarted" class="performance-activity" ngClass="grade-range-{{totalScore | gradeRange}}">
+      <div class="performance">
+        <div class="score-container">
+          <div class="score">{{totalScore}}%</div>
+          <div class="assessment-time">{{totalTimespent | transformTimeSpent }}</div>
+        </div>
+      </div>
+      <div class="performance-img" ngClass="grade-range-{{totalScore | gradeRange}}" [ngStyle]="{'height': totalScore + '%'}">
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="isCollection">
+  <div class="aggregated-score-panel">
+    <div *ngIf="activity.collection.performance && activity.collection.performance.hasStarted" class="performance-activity timeSpent-row">
+      <div class="performance">
+        <div class="score-container">
+          <div class="collection-time">{{totalTimespent | transformTimeSpent }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

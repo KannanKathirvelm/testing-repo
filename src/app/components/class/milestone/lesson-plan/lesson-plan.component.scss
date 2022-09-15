@@ -1,0 +1,69 @@
+.lesson-plan-container {
+  .lesson-plan-container-row {
+    .lesson-plan-panel {
+      ::ng-deep .mat-expansion-panel-content {
+        ::ng-deep .mat-expansion-panel-body {
+          background: var(--lesson-plan-accordion-bgcolor);
+        }
+      }
+    }
+
+    .lesson-plan-panel {
+      width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+
+      ::ng-deep .mat-expansion-panel-body {
+        padding: 0;
+      }
+
+      .lesson-plan-panel-header {
+        padding: 0;
+
+        &.mat-expanded {
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+          border-radius: 0;
+        }
+      }
+
+      .lesson-plan-row {
+        .title-col {
+          padding: 16px 0;
+          color: var(--lesson-plan-text-color);
+
+          .lesson-plan-title {
+            ion-text {
+              font-family: var(--sans);
+              font-size: 12px;
+            }
+
+            &.lesson {
+              float: left;
+            }
+
+            &.sessions {
+              float: right;
+              padding-right: 15px;
+            }
+          }
+        }
+
+        .lesson-plan-icon-col {
+          max-width: 48px;
+          display: flex;
+          padding: 10px;
+
+          .lesson-plan-icon {
+            width: 24px;
+            height: 24px;
+            margin: auto;
+            font-size: 18px;
+            text-align: center;
+            line-height: 1.3;
+            color: var(--lesson-plan-icon-color);
+          }
+        }
+      }
+    }
+  }
+}

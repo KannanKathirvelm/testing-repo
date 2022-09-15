@@ -1,0 +1,57 @@
+<ion-grid class="grid-ca-video-conference">
+  <ion-row class="row-header">
+    <ion-col class="col-text">
+      <ion-text class="text-header">{{'VIDEO_CONFERENCE' | translate}}</ion-text>
+      <ion-text class="text-sub-header">{{'VIDEO_CONFERENCE_TITLE' | translate}}</ion-text>
+    </ion-col>
+    <ion-col class="col-icon">
+      <ion-icon name="close-outline" (click)="closeModal()"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="row-image-container" [ngStyle]="{'background-image': 'url(' + activity.thumbnail + ')'}">
+    <ion-text>{{activity.title}}</ion-text>
+  </ion-row>
+  <ion-row class="row-include-video-conference">
+    <ion-col class="col-icon">
+      <ion-icon class="nav-meet"></ion-icon>
+    </ion-col>
+    <ion-col class="col-text">
+      <ion-text>{{'INCLUDE_VIDEO_CONFERENCING' | translate}}</ion-text>
+    </ion-col>
+    <ion-col class="col-toggle">
+      <ion-toggle [disabled]="activity.meetingUrl" [checked]="isEnableConference" (ionChange)="toggleEnableConference($event)"></ion-toggle>
+    </ion-col>
+  </ion-row>
+  <ion-row class="row-time-container">
+    <ion-grid class="grid-time">
+      <ion-row class="row-start-end-time">
+        <ion-col class="col-start-time">
+          <ion-select [disabled]="!isEnableConference" [value]="startTime" (ionChange)="changeStartTime($event)" dropdownScrollIntoView>
+            <ion-select-option [value]="time" *ngFor="let time of timeList">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col class="col-end-time">
+          <ion-select [disabled]="!isEnableConference" [value]="endTime" (ionChange)="changeEndTime($event)" dropdownScrollIntoView>
+            <ion-select-option [value]="time" *ngFor="let time of timeList">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-text class="danger-text" *ngIf="isInvalidTime">{{'TIME_VALIDATION_MSG' | translate}}</ion-text>
+      </ion-row>
+      <ng-container *ngIf="activity.meetingUrl; else addConference">
+        <ion-row class="row-update-button">
+          <ion-col class="col-update">
+            <ion-button [disabled]="isInvalidTime || isTimeSame" (click)="updateMeeting()">{{'UPDATE' | translate}}</ion-button>
+          </ion-col>
+          <ion-col class="col-start">
+            <ion-button [disabled]="isInvalidTime || isFutureActivity" (click)="openMeeting()">{{'START' | translate}}</ion-button>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+      <ng-template #addConference>
+        <ion-row class="row-button">
+          <ion-button [disabled]="!isEnableConference || isInvalidTime" (click)="createVideoConference()">{{'ENABLE_VIDEO_CONFERENCE' | translate}}</ion-button>
+        </ion-row>
+      </ng-template>
+    </ion-grid>
+  </ion-row>
+</ion-grid>

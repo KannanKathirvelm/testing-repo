@@ -1,0 +1,71 @@
+<ion-row class="domain-slides" [@slideInLeft]="domainPrevSlideChanged" [@slideInRight]="domainNextSlideChanged">
+  <ng-container *ngIf="domainCoverageCount;else showDomainSkeletonView">
+    <ng-container *ngIf="domain">
+      <ion-grid class="domain-container ion-no-padding">
+        <ion-row class="domain-header">
+          <ion-col size="8" class="domain-title">
+            <ion-text>
+              {{domain.domainName}}
+            </ion-text>
+          </ion-col>
+          <ion-col size="4" class="domain-actions ion-no-padding">
+            <ion-row>
+              <ion-text class="material-icons" (click)="onSlidePrevStudent()">arrow_left</ion-text>
+              <ion-text class="material-icons" (click)="onSlideNextStudent()">arrow_right</ion-text>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row class="domain-progress-bar">
+          <nav-domain-competency-progress-bar [slideChanged]="slideChanged" [domain]="domain" [domainSeq]="domainSeq"></nav-domain-competency-progress-bar>
+        </ion-row>
+        <ion-row class="domain-count-container">
+          <ion-col size="10">
+            <ion-text class="domain-competency-title">COMPETENCIES</ion-text>
+            <ion-row class="domain-count">
+              <ion-text class="mastered">{{domain.mastered}} MASTERED</ion-text>
+              <ion-text class="in-progress">{{domain.inProgress}} IN PROGRESS</ion-text>
+              <ion-text class="not-started">{{domain.notStarted}} NOT STARTED</ion-text>
+            </ion-row>
+          </ion-col>
+          <ion-col size="2" class="info-icon ion-no-padding" *ngIf="domain">
+            <ion-text class="material-icons" *ngIf="showDomainPerformance;else infoIcon" (click)="toggleDomainPerformance()">close</ion-text>
+            <ng-template #infoIcon>
+              <ion-text class="material-icons" (click)="toggleDomainPerformance()">info_outlined</ion-text>
+            </ng-template>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </ng-container>
+  <!-- Here the domain container skeleton view will be loaded -->
+  <ng-template #showDomainSkeletonView>
+    <ion-grid class="domain-container ion-no-padding">
+      <ion-row class="domain-header">
+        <ion-col size="8" class="domain-title">
+          <ion-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-text>
+        </ion-col>
+        <ion-col size="4" class="domain-actions ion-no-padding">
+          <ion-row>
+            <ion-text class="material-icons">arrow_left</ion-text>
+            <ion-text class="material-icons">arrow_right</ion-text>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <!-- Here the progress bar skeleton will be loaded -->
+      <ion-row class="domain-progress-bar">
+        <ion-skeleton-text class="progress-bar-skeleton" animated></ion-skeleton-text>
+      </ion-row>
+      <!-- Here the progress bar.count skeleton will be loaded -->
+      <ion-row class="domain-count-container">
+        <ion-col size="10">
+          <ion-skeleton-text class="domain-competency-title" animated></ion-skeleton-text>
+          <ion-skeleton-text animated class="mastered"></ion-skeleton-text>
+          <ion-skeleton-text animated class="in-progress"></ion-skeleton-text>
+          <ion-skeleton-text animated class="not-started"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+</ion-row>

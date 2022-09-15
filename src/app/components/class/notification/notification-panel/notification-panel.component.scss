@@ -1,0 +1,54 @@
+.notification-panel {
+  height: 48px;
+  width: 100%;
+  background: var(--notification-background);
+  display: grid;
+  grid-template-columns: 48px auto 48px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ion-icon {
+      mask-size: auto;
+    }
+  }
+
+  .title-container {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    .notification-msg {
+      font-size: 12px;
+      color: var(--notification-msg-color);
+    }
+
+    .notification-title {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 13px;
+      color: var(--notification-title-color);
+    }
+  }
+
+  .arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: var(--notification-arrow-icon);
+
+    .play-icon {
+      font-size: 23px;
+      color: var(--notification-play-icon);
+    }
+  }
+}

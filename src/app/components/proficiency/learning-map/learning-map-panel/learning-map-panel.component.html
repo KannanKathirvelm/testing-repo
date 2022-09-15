@@ -1,0 +1,26 @@
+<ion-row class="competency-content-container">
+  <ion-row class="content-count-container" *ngIf="learningMapContent">
+    <ion-row class="content-count" *ngFor="let content of learningMapContent" (click)="onClickLearningMap(content)">
+      <ion-icon class="icon nav-{{content.type}}"></ion-icon>
+      <ion-text class="count">{{content.count}}</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-row *ngIf="signatureAssessments?.length" class="signature-content-container signature-assessments">
+    <ion-text class="title">{{'SIGNATURE_ASSESSMENT' | translate}}</ion-text>
+    <ion-row *ngFor="let signatureAssessment of signatureAssessments" class="signature-assessment">
+      <ion-img [src]="signatureAssessment.thumbnail"></ion-img>
+      <ion-text class="signature-assessment-title ellipsis">
+        {{signatureAssessment.title}}
+      </ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-row *ngIf="signatureCollections?.length" class="signature-content-container signature-collections">
+    <ion-text class="title">{{'SIGNATURE_COLLECTION' | translate}}</ion-text>
+    <ion-row *ngFor="let signatureCollection of signatureCollections" class="signature-collection">
+      <ion-img [src]="signatureCollection.thumbnail"></ion-img>
+      <ion-text class="signature-collection-title ellipsis">
+        {{signatureCollection.title}}
+      </ion-text>
+    </ion-row>
+  </ion-row>
+</ion-row>

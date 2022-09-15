@@ -1,0 +1,20 @@
+<ion-content class="proficiency-content-container">
+  <ion-tabs *ngIf="isShowProficiencyView;else noProficiencyView" #tabs>
+    <ion-tab-bar slot="top" [ngClass]="{'hide-tab': isFromATC }">
+      <ion-tab-button tab="class-proficiency">
+        <ion-label>{{'CLASS_PROFICIENCY' | translate}}</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="domain-competency" *ngIf="isPremiumClass">
+        <ion-label>{{'DOMAIN_COMPETENCY' | translate}}</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="students-proficiency" *ngIf="isPremiumClass">
+        <ion-label>{{'COMPETENCY_PROGRESS' | translate}}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+  <ng-template #noProficiencyView>
+    <ion-row class="no-data-msg">
+      {{'NO_PROFICIENCY' | translate}}
+    </ion-row>
+  </ng-template>
+</ion-content>

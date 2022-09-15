@@ -1,0 +1,205 @@
+<ng-container *ngIf="classDetails">
+  <ion-header class="settings-header" [ngClass]="{'archived-class': classDetails.isArchived}">
+    <ion-toolbar class="settings-toolbar">
+      <ion-row class="row-class-edit">
+        <ion-col size="12" class="col-class-detail">
+          <ion-row class="row-class-name">
+            <ion-col size="5" class="col-class-title">
+              <ion-text>{{ 'CLASS' | translate }}</ion-text>
+            </ion-col>
+            <ion-col size="7" class="col-class-edit">
+              <ion-input type="text" maxlength="25" [(ngModel)]="classDetails.title" [disabled]="!isClassEdit"></ion-input>
+              <ng-container *ngIf="isClassEdit; else showTick">
+                <ion-text class="material-icons" (click)="updateClassName()">
+                  done
+                </ion-text>
+              </ng-container>
+              <ng-template #showTick>
+                <ion-text class="material-icons" (click)="isClassEdit = !isClassEdit">
+                  mode_edit
+                </ion-text>
+              </ng-template>
+            </ion-col>
+          </ion-row>
+          <ion-row class="class-code">
+            <ion-col size="5" class="col-class-code-title">
+              <ion-text>{{ 'CLASSCODE' | translate }}</ion-text>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>{{classDetails.code}}</ion-text>
+              <ion-icon name="copy-outline" (click)="clickCopy()"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="settings-container" [ngClass]="{'archived-class': classDetails.isArchived}">
+    <ion-row class="basic-setting-container">
+      <ion-row class="basic-class-setting" *ngIf="selectedSubject">
+        <ion-col size="6" class="ion-no-padding class-setting">
+          <ion-text>{{ 'SUBJECT' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding setting-value">
+          <ion-text>{{selectedSubject}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="basic-class-setting" *ngIf="classDetails.preference && classDetails.preference.framework">
+        <ion-col size="6" class="ion-no-padding class-setting">
+          <ion-text>{{ 'FRAMEWORK' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding setting-value">
+          <ion-text>{{classDetails.preference.framework}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="basic-class-setting">
+        <ion-col size="6" class="ion-no-padding class-setting">
+          <ion-text>{{ 'MIN_SCORE_TO_EARN_DEMONSTRATE_MASTERY' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding setting-value">
+          <ion-text>{{competencyScore}} %</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="language-row" *ngIf="classGrades && classGrades.length && isPremiumClass">
+        <ion-col size="8" class="ion-no-padding language-col">
+          <ion-text>{{ 'CLASS_GRADE' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="4" class="ion-no-padding language-col lang-dropdown">
+          <ion-select [interfaceOptions]="gradeSelectHeader" disabled="classDetails.grade" [value]="classDetails.gradeCurrent" dropdownScrollIntoView>
+            <ion-select-option [value]="classGrade.id" *ngFor="let classGrade of classGrades">{{classGrade.grade}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row class="language-row">
+        <ion-col size="7" class="ion-no-padding language-col">
+          <ion-text>{{ 'LANG_INSTRUCTION' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="5" class="ion-no-padding language-col lang-dropdown" *ngIf="languages && languages.length">
+          <ion-select [interfaceOptions]="languageSelectHeader" [value]="classDetails.primaryLanguage" (ionChange)="changeLanguage($event)" dropdownScrollIntoView>
+            <ion-select-option [value]="language.id" *ngFor="let language of languages">{{language.displayName}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <hr />
+      <ion-row class="basic-class-setting">
+        <ion-col size="9" class="ion-no-padding class-setting">
+          <ion-text>{{ 'ENABLE_COMPETENCY' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding setting-value">
+          <ion-toggle (ionChange)="toggleMasteryCA($event)" [(ngModel)]="isMasteryApplicable"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngIf="classDetails && classDetails.courseId && classSubject && isPremiumClass && showPresentDiagnostic">
+        <ion-row class="basic-class-setting">
+          <ion-col size="9" class="ion-no-padding class-setting-diagnostic">
+            <ion-text>{{ 'DIAGNOSTIC_DETERMINE_NOT_KNOW' | translate }}</ion-text>
+            <ion-text>{{ 'DIAGNOSTIC_DETERMINE_KNOW' | translate }}</ion-text>
+          </ion-col>
+          <ion-col size="3" class="ion-no-padding setting-value">
+            <ion-toggle (ionChange)="toggleForceCalculateILPSetting($event)" checked={{!classDetails.forceCalculateIlp}}></ion-toggle>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+      <ion-row class="basic-class-setting" *ngIf="isShowRoster">
+        <ion-col size="9" class="ion-no-padding class-setting">
+          <ion-text>{{ 'SYNC_CLASS_WITH_INSTITUTIONS_ROASTERS' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding setting-value">
+          <ion-toggle (ionChange)="toggleRosterSync($event)" [checked]="isEnableRosterSync"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <ion-row class="basic-class-setting">
+        <ion-col size="9" class="ion-no-padding class-setting">
+          <ion-text>{{ 'SHOW_CORRECT_ANSWER_ON_MINIMUM_SCORE' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding setting-value">
+          <ion-toggle checked={{showCorrectAnswer}} (ionChange)="toggleShowCorrectAnswer($event)"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <ion-row class="basic-class-setting">
+        <ion-col size="9" class="ion-no-padding class-setting">
+          <ion-text>{{ 'SHOW_EVIDENCE' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding setting-value">
+          <ion-toggle checked={{showEvidence}} (ionChange)="toggleShowEvidence($event)"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isCaBaselineWorkflow" class="basic-class-setting">
+        <ion-col size="9" class="ion-no-padding class-setting">
+          <ion-text>{{ 'AUTO_ASSIGN' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding setting-value">
+          <ion-toggle checked={{autoAssign}} (ionChange)="toggleAutoAssign($event)"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <hr *ngIf="isShowCommunity"/>
+      <ion-row class="basic-class-setting"  *ngIf="isShowCommunity">
+        <ion-col size="9" class="ion-no-padding class-setting ask-question">
+          <ion-text class="title">
+            {{'COMMUNITY_ENABLE_MSG' | translate}}
+          </ion-text>
+          <ion-text class="label">{{'COMMUNITY_ENABLE_LABEL' | translate}}</ion-text>
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding setting-value">
+          <ion-toggle [checked]="allowStudentsToAsk" (ionChange)="toggleStudentAskQuestion($event)"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngIf="isPremiumClass && classSettingShowMultiGrade">
+        <hr />
+      </ng-container>
+      <ion-row class="basic-class-setting" *ngIf="isShowMultiGrade">
+        <ion-col size="8" class="ion-no-padding class-setting">
+          <ion-text>{{ 'MULTI_GRADE_CLASS_SETTINGS' | translate }}</ion-text>
+        </ion-col>
+        <ion-col size="4" class="ion-no-padding setting-value">
+          <ion-select class="select-class-list" [interfaceOptions]="gradeSelectHeader" multiple="true" (ionChange)="selectSecondaryClasses($event)" [(ngModel)]="selectedSecondaryClassIds" dropdownScrollIntoView>
+            <ion-select-option [value]="secondaryClass.id" *ngFor="let secondaryClass of secondaryClassList">{{secondaryClass.title}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngIf="classDetails.isPremiumClass && scopeAndSequencesList?.length">
+        <ion-row class="basic-class-setting">
+          <ion-col size="8" class="ion-no-padding class-setting">
+            <ion-text>{{ 'SCOPE_AND_SEQUENCE' | translate }}</ion-text>
+          </ion-col>
+          <ion-col size="4" class="ion-no-padding setting-value">
+            <ion-select class="select-grades" (ionChange)="selectGradeList($event)" [(ngModel)]="selectedGradeId" dropdownScrollIntoView>
+              <ion-select-option [value]="gradeList.id" *ngFor="let gradeList of scopeAndSequencesList">{{gradeList.grade}}</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+    </ion-row>
+    <ng-container *ngIf="classMembersDetails">
+      <teacher-list [classOwner]="classMembersDetails.owner" [classCollaborators]="classMembersDetails.collaborators" [classDetails]="classDetails" (updateCollaborator)="onUpdateCollaborator($event)"
+        (deleteCollaborator)="onDeleteCollaborator($event)" (applySetting)="onApplySettings($event)">
+      </teacher-list>
+      <student-list [isPremiumClass]="isPremiumClass" [hasShowGradeLevel]="hasShowGradeLevel" [userSession] = "userSession" [classOwner]="classMembersDetails.owner" [classMembers]="classMembersDetails.members" [destinationGrades]="destinationGrades" [sourceGrades]="sourceGrades" [classDetails]="classDetails" [tenantSettingShowInfo]="showStudentInfo" (studentStatus)="onStudentStatus($event)"
+        (mathLevelChange)="onMathLevelChange($event)" (destinationChange)="onDestionationChange($event)" (deletedStudent)="onDeletedStudent($event)" (addNewStudent)="onAddNewStudent($event)" (toggleStudentList)="onToggleStudentList()">
+      </student-list>
+    </ng-container>
+    <hr />
+    <ion-row class="delete-class-row">
+      <ion-col class="ion-no-padding delete-archive-class delete" (click)="deleteClassRoom()">
+        <ion-label class="delete-class">{{ 'DELETE_CLASS' | translate }}</ion-label>
+        <i class="material-icons">delete</i>
+      </ion-col>
+      <ion-col class="ion-no-padding delete-archive-class" (click)="archiveClassRoom()">
+        <ion-label class="archive-class">{{ 'ARCHIVE_CLASS' | translate }}</ion-label>
+        <i class="material-icons">archive</i>
+      </ion-col>
+    </ion-row>
+    <pullup-with-dynamic-height [isShowPullUp]="isShowDeleteClass">
+      <ng-container *ngIf="className">
+        <delete-or-archive-class [className]="className" [isShowDeleteOrArchiveClass]="isShowDeleteClass" [isDeleteClass]="true" (selectConfirm)="onConfirmDeleteClassRoom()" (closePopup)="closeDeleteClassPopup()" class="pull-up-dynamic-height">
+        </delete-or-archive-class>
+      </ng-container>
+    </pullup-with-dynamic-height>
+    <pullup-with-dynamic-height [isShowPullUp]="isShowArchiveClass">
+      <ng-container *ngIf="className">
+        <delete-or-archive-class [className]="className" [isShowDeleteOrArchiveClass]="isShowArchiveClass" [isDeleteClass]="false" (selectConfirm)="onConfirmArchiveClassRoom()" (closePopup)="closeDeleteClassPopup()" class="pull-up-dynamic-height">
+        </delete-or-archive-class>
+      </ng-container>
+    </pullup-with-dynamic-height>
+  </ion-content>
+</ng-container>

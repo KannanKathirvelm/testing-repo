@@ -1,0 +1,105 @@
+ion-header {
+  background: var(--white);
+
+  .row-header {
+    height: 48px;
+    display: grid;
+    grid-template-columns: 48px auto;
+
+    ion-col {
+      padding: 0;
+      display: flex;
+      align-items: center;
+
+      &.col-icon {
+        justify-content: center;
+      }
+
+      &.col-title {
+        ion-text {
+          font-size: 15px;
+          color: var(--dark-400);
+        }
+      }
+    }
+  }
+}
+
+ion-content {
+  proficiency-chart {
+    height: calc(100% - 56px);
+    display: flex;
+
+    ::ng-deep .learner-proficiency-chart {
+      .chart-view {
+        height: 100%;
+      }
+    }
+  }
+
+  .chart-graph-detail {
+    display: grid;
+    grid-template-columns: 34px auto;
+    height: 48px;
+
+    ion-col {
+      display: flex;
+      align-items: center;
+      padding: 0;
+
+      &.box {
+        justify-content: center;
+
+        ion-text {
+          width: 16px;
+          height: 16px;
+          transform: rotate(90deg);
+          background-color: var(--picton-blue);
+        }
+      }
+
+      &.title {
+        ion-text {
+          font-size: 14px;
+          line-height: 16px;
+          display: flex;
+          color: var(--dark-400);
+        }
+      }
+    }
+  }
+}
+
+ion-footer {
+  .row-competencies {
+    display: grid;
+    grid-template-columns: auto 48px;
+    height: 48px;
+
+    ion-col {
+      padding: 0;
+
+      &.col-text {
+        display: flex;
+        padding: 0 12px;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 17px;
+
+        ion-text {
+          color: var(--dark-400);
+        }
+      }
+
+      &.col-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-text {
+          color: var(--dark-400);
+        }
+      }
+    }
+  }
+}

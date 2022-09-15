@@ -1,0 +1,16 @@
+<ion-row class="atc-calendar" [ngClass]="showCalendar ? 'show' : 'hide'">
+  <p-calendar
+    view="month"
+    dateFormat="mm/yy"
+    styleClass="month-picker"
+    [maxDate]="maxDate"
+    [(ngModel)]="selectedMonth"
+    [inline]="true"
+    [yearNavigator]="true"
+    [yearRange]="years"
+    [readonlyInput]="true"
+    [showIcon]="false"
+    (onSelect)="onMonthChange($event)">
+  </p-calendar>
+</ion-row>
+<ion-row *ngIf="showCalendar" class="backdrop" (click)="onToggleCalendar()"></ion-row>

@@ -1,0 +1,41 @@
+<ion-row class="delete-or-archive-conatiner" [ngClass]="{'delete-class': isDeleteClass}">
+  <ion-row class="list-header">
+    <div class="modal-header">
+      <h5 class="header-title">{{(isDeleteClass? 'DELETE_ALERT_MSG' : 'ARCHIVE_ALERT_MSG') | translate}}</h5>
+    </div>
+    <ion-row class="close" (click)="onClosePopUp()">
+      <ion-text class="material-icons">close</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-grid class="content-container">
+    <ion-row class="delete-message">
+      <ion-text>
+        {{'ABOUT_TO' | translate}} {{(isDeleteClass ? 'DELETE' : 'ARCHIVE') | translate}} {{'YOUR_CLASSROOM' | translate}}
+      </ion-text>
+      &nbsp;
+      <ion-text class="class-name">
+        {{className}}
+      </ion-text>
+    </ion-row>
+    <ion-list class="action-confirm">
+      <ion-item lines="none">
+        <ion-label>{{'ALL_LINKS_MSG' | translate}}</ion-label>
+        <ion-checkbox (ionChange)="onChangeCheckbox()" [(ngModel)]="allLinks" color="primary" slot="start"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{'CLASSROOM_STUDENTS_MSG' | translate}}</ion-label>
+        <ion-checkbox (ionChange)="onChangeCheckbox()" [(ngModel)]="students" color="primary" slot="start"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{(isDeleteClass ? 'ALL_STUDENTS_DELETED_MSG' : 'ARCHIVE_CLASS_MSG') | translate}}</ion-label>
+        <ion-checkbox (ionChange)="onChangeCheckbox()" [(ngModel)]="studentsData" color="primary" slot="start"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <ion-row class="actions">
+      <ion-button (click)="onClosePopUp()" class="cancel-btn">{{'CANCEL' | translate}}</ion-button>
+      <ion-button (click)="onConfirm()" class="confirm-btn" [disabled]="!enableConfirm">{{(isDeleteClass ? 'DELETE' : 'ARCHIVE') | translate}}</ion-button>
+    </ion-row>
+  </ion-grid>
+</ion-row>
+<ion-row class="backdrop" (click)="onClosePopUp()" *ngIf="isShowDeleteOrArchiveClass">
+</ion-row>

@@ -1,0 +1,212 @@
+.mat-accordion {
+  .mat-expansion-panel {
+    box-shadow: none;
+    margin-bottom: 2px;
+
+    &.mat-expanded {
+      ::ng-deep .mat-content {
+        .header {
+          .col-dropdown {
+            .arrow-dropup {
+              display: flex;
+            }
+
+            .arrow-dropdown {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .mat-expansion-panel-header {
+      padding: 0;
+      background: transparent;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      margin-bottom: 1px;
+      border-radius: 0;
+    }
+
+    ::ng-deep .mat-expansion-panel-body {
+      padding-top: 15px;
+      font-family: var(--sans);
+
+      .question {
+        width: 300px;
+        margin: 12px 0;
+        display: grid;
+        grid-template-rows: min-content 1fr auto min-content;
+        grid-gap: 10px;
+        overflow: hidden;
+
+        .description {
+          color: var(--dark-400);
+          font-family: var(--sans);
+        }
+
+        .free-form-text {
+          display: grid;
+          grid-row-start: 2;
+          color: var(--dark-400);
+        }
+
+        .row-upload {
+          display: grid;
+        }
+
+        .row-urls {
+          display: grid;
+          color: var(--dark-400);
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .answer-type,
+        .row-url,
+        .uploads-label {
+          color: var(--dark-400);
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .answer-label {
+          font-size: 13px;
+          color: var(--dark-400);
+        }
+
+        .submitted-attachment {
+          width: 70px;
+          height: 70px;
+          border: 2px solid var(--oa-file-border-color);
+          border-radius: 5px;
+          text-align: center;
+          margin: 5px;
+          display: block;
+
+          .upload-icons {
+            color: var(--oa-file-color);
+            font-size: 4.2em;
+          }
+
+          .fa-file-powerpoint-o {
+            background: var(--oa-ppt-icon);
+          }
+
+          .fa-file-pdf-o {
+            background: var(--oa-pdf-icon);
+          }
+
+          .fa-file-word-o {
+            background: var(--oa-word-icon);
+          }
+
+          .fa-file-image-o {
+            background: var(--oa-image-icon);
+          }
+
+          .fa-file-pdf-o,
+          .oa-icons {
+            height: 48px;
+            background-repeat: no-repeat;
+            width: 48px;
+            display: block;
+            margin: 8px auto;
+            background-position: center;
+          }
+        }
+
+        .submission-urls {
+          .url-container {
+            display: grid;
+            grid-template-columns: 60px auto;
+
+            .url-label {
+              color: var(--oa-submission-header-color);
+              text-transform: uppercase;
+              font-size: 14px;
+            }
+
+            .url {
+              color: var(--oa-file-color);
+              font-size: 13px;
+              display: block;
+              max-width: 230px;
+            }
+          }
+        }
+      }
+    }
+
+    ::ng-deep .mat-expansion-indicator {
+      display: none;
+    }
+
+    ::ng-deep .mat-content {
+      height: 100%;
+
+      .header {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 48px auto 48px;
+
+        ion-col {
+          display: flex;
+          align-items: center;
+          padding: 0;
+
+          &.col-title {
+            ion-text {
+              color: var(--dark-400);
+            }
+          }
+
+          &.col-icon {
+            justify-content: center;
+          }
+
+          &.col-dropdown {
+            justify-content: center;
+
+            .arrow-dropup {
+              display: none;
+            }
+
+            .arrow-dropdown {
+              display: flex;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.oa-answer {
+  padding-top: 10px;
+
+  .nav-offline-activity {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+  }
+
+  .oa-task {
+    min-height: 150px;
+    margin-bottom: 20px;
+
+    .header {
+      display: flex;
+      color: var(--oa-submission-header-color);
+      font-weight: 700;
+
+      span {
+        margin-left: 5px;
+      }
+    }
+
+    .hz-line {
+      width: 90%;
+    }
+  }
+}

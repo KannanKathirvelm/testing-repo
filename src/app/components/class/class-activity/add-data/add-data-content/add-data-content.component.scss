@@ -1,0 +1,154 @@
+.add-data-content {
+  /*Important used here to overwrite the child component css */
+  ::ng-deep drag-and-drop,
+  ::ng-deep fill-in-the-blanks,
+  ::ng-deep free-response,
+  ::ng-deep hot-text-highlight,
+  ::ng-deep multiple-answer,
+  ::ng-deep multiple-choice,
+  ::ng-deep multiple-select-image,
+  ::ng-deep multiple-select-text,
+  ::ng-deep true-or-false {
+    .hz-line {
+      display: none;
+    }
+
+    .header-section {
+      .toggle-icon {
+        display: none;
+      }
+    }
+
+    .question-container {
+      .performance-content {
+        display: none !important;
+      }
+    }
+
+    ion-col,
+    ion-row,
+    ion-text {
+      color: var(--dark-400) !important;
+    }
+  }
+
+  ::ng-deep multiple-answer {
+    .multiple-answer-question {
+      .table > thead > tr > th {
+        color: var(--dark-400) !important;
+      }
+
+      .table > tbody > tr > td {
+        border-top: 1px solid var(--dark-400) !important;
+      }
+
+      .answer-container {
+        &.read-only {
+          .show-correct-answer-inactive {
+            input[type="radio"] {
+              &:after {
+                background: var(--dark-400) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep multiple-choice {
+    .multiple-choice-question {
+      .answer-container {
+        .answer-wrapper {
+          .answer {
+            .answer-text {
+              color: var(--dark-400) !important;
+            }
+
+            .answer-info {
+              border-color: var(--dark-400) !important;
+            }
+
+            input {
+              &:not(:checked) {
+                &:after {
+                  border-color: var(--dark-400) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep drag-and-drop {
+    .drag-and-drop-question {
+      .answer-container {
+        ion-reorder-group {
+          ion-item {
+            border: 1px solid var(--dark-400) !important;
+            --background: var(--white) !important;
+            --color: var(--dark-400) !important;
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep true-or-false {
+    .true-or-false-question {
+      .answer-container {
+        ion-row {
+          .answer {
+            input {
+              &:not(:checked) {
+                &:after {
+                  border-color: var(--dark-400) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep multiple-select-text {
+    .multiple-select-text-question {
+      .answer-container {
+        background-color: var(--white) !important;
+
+        .answer {
+          .answer-info {
+            border: 1px solid var(--dark-400) !important;
+
+            .dynamic-icon-wrapper {
+              .dynamic-icon {
+                background: var(--dark-400) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep free-response {
+    .free-response-question {
+      .answer-container {
+        .free-response-answer {
+          input {
+            color: var(--dark-400) !important;
+          }
+
+          .answer-info {
+            label {
+              color: var(--dark-400) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

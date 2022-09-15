@@ -1,0 +1,122 @@
+.row-assign-class-activity {
+  background: #fff;
+  display: grid;
+  grid-template-columns: 48px auto;
+  border-bottom: 1px solid var(--light-grey);
+
+  ion-col {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .col-icons {
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      align-content: center;
+      font-size: 24px;
+
+      ::ng-deep nav-taxonomy-list {
+        .taxonomy-list {
+          .item {
+            height: auto;
+            color: var(--taxonomy-text-color);
+            display: grid;
+            border-radius: 5px;
+
+            .label {
+              .sub-label {
+                display: none;
+              }
+            }
+            &.more-items {
+              &.no-more-text {
+                min-width: auto;
+                background-color: transparent;
+                border: none;
+              }
+            }
+          }
+        }
+        .label-txt {
+          display: none;
+        }
+      }
+    }
+
+    &.col-share-icon {
+      .share-icon {
+        width: 24px;
+        height: 24px;
+        background-image: var(--share-icon);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
+
+    &.col-image {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    &.col-icon {
+        font-size: 24px;
+    }
+
+    &.col-collection-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 7px;
+      font-size: 13px;
+      overflow: hidden;
+
+      .row-collection {
+        overflow: hidden;
+        width: 100%;
+
+        .col-info-count,
+        .col-student-count {
+          padding: 0 5px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          ion-icon {
+            width: 18px;
+            height: 18px;
+          }
+
+          ion-text {
+            margin-left: 5px;
+            font-size: 13px;
+          }
+        }
+      }
+
+      .collection-text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-bottom: 3px;
+        color: var(--dark-400);
+        font-size: 14px;
+      }
+
+      .external-row {
+        text-transform: capitalize;
+        opacity: 0.7;
+        font-size: 12px;
+      }
+
+      .offline-task-count {
+        color: var(--dark-400);
+        text-transform: lowercase;
+      }
+    }
+  }
+}

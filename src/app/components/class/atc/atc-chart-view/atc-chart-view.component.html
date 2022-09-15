@@ -1,0 +1,70 @@
+<ion-row class="atc-chart-view">
+  <ng-container *ngIf="!isInitialSkyline">
+    <ion-row [ngClass]="{'landscape-chart': !isPortrait}">
+    <ion-row *ngIf="classDetails" class="class-info-container">
+      <ng-container *ngIf="isPortrait;else classInfo"> 
+        <ion-row class="class-info-portrait">
+          <ion-row class="class-info ellipsis">
+            <ion-text class="class-name ellipsis">{{classDetails.title}}</ion-text>
+            <ion-text *ngIf="classDetails.course" class="class-msg">{{classDetails.course.title}} {{'COURSE' | translate}}</ion-text>
+          </ion-row>
+          <ion-row class="total-competencies" *ngIf="totalMasteredCompetencies">
+            <ion-text class="competency-count ellipsis">{{totalMasteredCompetencies}}</ion-text>
+            <ion-text class="competency-label">{{'COMPETENCIES' | translate}} {{'GAINED' | translate}}</ion-text>
+          </ion-row>
+        </ion-row>
+      </ng-container>
+      <ng-template #classInfo>
+        <ion-row class="class-info-landscape">
+          <ion-row class="class-info ellipsis">
+            <ion-text class="class-name ellipsis">{{classDetails.title}}</ion-text>
+            <ion-text *ngIf="classDetails.course" class="class-msg">{{classDetails.course.title}} {{'COURSE' | translate}}</ion-text>
+          </ion-row>
+          <ion-row class="total-competencies" *ngIf="totalMasteredCompetencies">
+            <ion-text class="competency-count ellipsis">{{totalMasteredCompetencies}}</ion-text>
+            <ion-text class="competency-label">{{'COMPETENCIES' | translate}} {{'GAINED' | translate}}</ion-text>
+          </ion-row>
+          <ion-row class="zoom-out">
+            <ion-text class="material-icons" *ngIf="isZoomed" (click)="onResetZoom()">cached</ion-text>
+          </ion-row>
+          <ion-row class="screen-rotate" *ngIf="isPortrait; else landscapeView" (click)="onRotateLandscape()">
+            <i class="material-icons">fullscreen</i>
+          </ion-row>
+          <ng-template #landscapeView>
+            <ion-row class="screen-rotate" (click)="onRotatePortrait()">
+              <i class="material-icons">fullscreen_exit</i>
+            </ion-row>
+          </ng-template>
+        </ion-row>
+      </ng-template>
+    </ion-row>
+    <ng-container *ngIf="isPortrait">
+      <ion-row class="chart-actions">
+        <ion-row class="zoom-out">
+          <ion-text class="material-icons" *ngIf="isZoomed" (click)="onResetZoom()">cached</ion-text>
+        </ion-row>
+        <ion-row class="screen-rotate" *ngIf="isPortrait; else landscapeView" (click)="onRotateLandscape()">
+          <i class="material-icons">fullscreen</i>
+        </ion-row>
+        <ng-template #landscapeView>
+          <ion-row class="screen-rotate" (click)="onRotatePortrait()">
+            <i class="material-icons">fullscreen_exit</i>
+          </ion-row>
+        </ng-template>
+      </ion-row>
+    </ng-container>
+    <ion-row class="atc-chart-container" [ngClass]="{'hidden': !isChartLoaded}">
+    </ion-row>
+    <ng-container *ngIf="!isChartLoaded">
+      <ion-grid class="skeleton-grid">
+        <ion-row class="skeleton-row atc-skeleton">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </ion-row>
+  </ng-container>
+  <ion-row *ngIf="isInitialSkyline">
+    <nav-initial-skyline-location  [classMembers]="classMembers" [initialCompetencySummary]="initialCompetencySummary" [atcPerformanceSummary]="atcPerformanceSummary" [gradeCompetencies]="gradeCompetencies" [selectedDate]="selectedDate" (emitInitialSkyline)="emitInitialSkyline($event)"></nav-initial-skyline-location>
+  </ion-row>
+</ion-row>

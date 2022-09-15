@@ -1,0 +1,54 @@
+       <ion-toolbar class="legend-pull-up-header" position="top">
+         <ion-row class="legend-header-container">
+           <ion-text class="title">{{'LEGEND' | translate}}</ion-text>
+           <ion-row class="close" (click)="onClose()">
+             <i class="close material-icons">close</i>
+           </ion-row>
+         </ion-row>
+       </ion-toolbar>
+       <ion-content class="legend-container">
+         <ion-row class="proficiency-legends-container">
+           <ion-row class="skyline legend">
+             <ion-text class="box-skyline line"></ion-text>
+             <ion-row class="legend-info">
+               <ion-text class="title">{{'SKYLINE' | translate}}</ion-text>
+               <ion-text class="title-msg">{{'SKYLINE_MESSAGE' | translate:translateParam}}</ion-text>
+             </ion-row>
+           </ion-row>
+           <ion-row class="class-grade-line legend">
+             <ion-text class="box-class-grade-line line"></ion-text>
+             <ion-row class="legend-info">
+               <ion-text class="title">{{'HIGHLINE' | translate}}</ion-text>
+               <ion-text class="title-msg">{{'HIGHLINE_MESSAGE' | translate}}</ion-text>
+             </ion-row>
+           </ion-row>
+           <ion-row class="not-started legend">
+             <ion-text class="box"></ion-text>
+             <ion-row class="legend-info">
+               <ion-text class="title">{{'NOT_STARTED' | translate}}</ion-text>
+               <ion-text class="title-msg">{{'GREY_CELL_MESSAGE' | translate}}</ion-text>
+             </ion-row>
+           </ion-row>
+           <ion-row class="mastered legend">
+             <ion-text class="box"></ion-text>
+             <ion-row class="legend-info">
+               <ion-text class="title">{{'MASTERED' | translate}}</ion-text>
+               <ion-text class="title-msg">{{'DARK_BLUE_CELL_MESSAGE' | translate}}</ion-text>
+             </ion-row>
+           </ion-row>
+           <ion-row class="in-progress legend">
+             <ion-text class="box"></ion-text>
+             <ion-row class="legend-info">
+               <ion-text class="title">{{'IN_PROGRESS' | translate}}</ion-text>
+               <ion-text class="title-msg">{{'LIGHT_BLUE_CELL_MESSAGE' | translate}}</ion-text>
+             </ion-row>
+           </ion-row>
+           <ion-row class="not-framework legend">
+            <ion-text class="box"></ion-text>
+            <ion-row class="legend-info">
+              <ion-text class="title">{{'NOT_IN_FRAMEWORK' | translate}}</ion-text>
+              <ion-text class="title-msg">{{'NOT_COVERED_MESSAGE' | translate}}</ion-text>
+            </ion-row>
+          </ion-row>
+         </ion-row>
+       </ion-content>

@@ -1,0 +1,65 @@
+<ion-row class="library-contains">
+  <ion-header class="search-header">
+    <ion-toolbar>
+      <ion-row class="search-panel">
+        <ion-col><i class="material-icons" (click)="closePullUP()">keyboard_backspace</i></ion-col>
+        <ion-col class="search-text-box">
+          <ion-select [value]="activeSource" class="select-course" [(ngModel)]="activeSource"
+            (ionChange)="changeCourse()">
+            <ion-select-option *ngFor="let source of contentSources" [value]="source">{{source.name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid class="library-course-head">
+    <ion-row class="search-student-row">
+      <ion-col size="10" class="ion-no-padding input-row">
+        <ion-input type="text" placeholder="{{'SEARCH_COURSE' | translate}}" [(ngModel)]="searchTerms"
+          (keyup.enter)="onSearchCourse()"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding search-icon">
+        <ion-icon name="search" (click)="onSearchCourse()"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="library-course-card-list" *ngIf="searchContent.length || !isLoading; else skeletonView" (scroll)="onScroll($event)">
+      <ng-container *ngIf="searchContent && searchContent.length ;else noContent">
+        <app-add-course-card *ngFor="let content of searchContent" [content]="content" [classDetail]="classDetail">
+        </app-add-course-card>
+      </ng-container>
+      <ng-template #noContent>
+        <ion-text class="no-content">{{'NO_COURSES' | translate}}</ion-text>
+      </ng-template>
+    </ion-row>
+  </ion-grid>
+</ion-row>
+<ng-template #skeletonView>
+  <ion-row class="skeleton-card-list">
+    <ng-container *ngFor="let item of [].constructor(3)">
+      <ion-card class="skeleton-card">
+        <ion-row class="row-header">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-row>
+        <ion-card-content class="row-body">
+          <ion-row class="row-count">
+            <ng-container *ngFor="let item of [].constructor(3)">
+              <ion-col>
+                <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+          <ion-row class="row-desc">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+          <ion-row class="row-desc row-desc-one">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+          <ion-row class="row-desc row-desc-two">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ion-row>
+</ng-template>

@@ -1,0 +1,131 @@
+<ion-grid class="search-filter-content">
+  <ion-row class="item-header" (click)="onClickHeader()">
+    <ion-col size="2" class="count-container">
+      <ion-row class="count-circle" [ngClass]="{'has-value': selectedItems && selectedItems.length}">
+        <ion-text class="count">
+          <ng-container *ngIf="selectedItems?.length;else zeroData">
+            {{selectedItems.length}}
+          </ng-container>
+          <ng-template #zeroData>
+            0
+          </ng-template>
+        </ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col size="8" class="label-container title">
+      <ion-text class="label">
+        {{title}}
+      </ion-text>
+      <ion-row *ngIf="selectedItems?.length;else noData" class="selected-item-container">
+        <ion-text class="selected-items multi-line-ellipsis">
+          <ng-container *ngFor="let item of selectedItems;index as itemSeq">
+            <ng-container *ngIf="isShowCode;else titleContainer">
+              {{item.code}}
+            </ng-container>
+            <ng-template #titleContainer>
+              {{item.label}}
+            </ng-template>
+            <ion-text class="comma" *ngIf="selectedItems?.length > 1">&#44;</ion-text> &nbsp;
+          </ng-container>
+        </ion-text>
+      </ion-row>
+      <ng-template #noData>
+        <ion-text *ngIf="!isToggle;else noData" class="no-selected-items">
+          &#45; {{'NONE' | translate}} &#45;
+        </ion-text>
+        <ng-template #noData>
+          <ion-text class="no-selected-items">No</ion-text>
+        </ng-template>
+      </ng-template>
+    </ion-col>
+    <ion-col size="2" class="label-container">
+      <ion-text class="dropdown-icon" *ngIf="!isToggle;else toggle">
+        <ng-template #downArrow>
+          <ion-text class="material-icons-outlined">
+            arrow_drop_down
+          </ion-text>
+        </ng-template>
+        <ion-text *ngIf="isExpand;else downArrow" class="material-icons-outlined">
+          arrow_drop_up
+        </ion-text>
+      </ion-text>
+      <ng-template #toggle>
+        <div *ngFor="let item of items">
+          <ion-toggle [checked]="item.isActive" (ionChange)="onDiagnosticToggle(item)"></ion-toggle>
+        </div>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+  <ng-container *ngIf="items && !isToggle">
+    <ion-row [@collapse]="!isExpand" class="items-container">
+      <ng-container *ngIf="isShowCode;else labelContainer">
+        <ion-row class="search-bar-container">
+          <ion-col size="2" class="icon-container">
+          </ion-col>
+          <ion-col size="8" class="icon-container">
+            <ion-input placeholder="{{'SEARCH_FOR_COMPETENCY' | translate}}" enterkeyhint="search" type="search" class="competency-searchbar" [(ngModel)]="searchText" (ionInput)="filterClassList($event)" searchIcon="false" clearIcon="false"></ion-input>
+          </ion-col>
+          <ion-col size="2" class="icon-container search-icon">
+            <ng-container *ngIf="searchText;else searchIcon">
+              <ion-text class="close material-icons" (click)="clearSearch()">close</ion-text>
+            </ng-container>
+            <ng-template #searchIcon>
+              <ion-text class="material-icons">search</ion-text>
+            </ng-template>
+          </ion-col>
+        </ion-row>
+        <ng-container *ngFor="let item of items | listFilter: searchText: 'code'">
+          <ion-row class="item-container" [ngClass]="{'show-code' : isShowCode}" (click)="onSelectItem(item)">
+            <ion-col size="2" class="icon-container">
+            </ion-col>
+            <ion-col size="2" class="icon-container">
+              <ng-container *ngIf="item.isActive;else circleIcon">
+                <ion-text class="selected material-icons-outlined">
+                  task_alt
+                </ion-text>
+              </ng-container>
+              <ng-template #circleIcon>
+                <ion-text class="material-icons-outlined">
+                  circle
+                </ion-text>
+              </ng-template>
+            </ion-col>
+            <ion-col size="8" class="label-container competency-code-container">
+              <ion-text class="competency-code">
+                {{item.code}}
+              </ion-text>
+              <ion-text class="label multi-line-ellipsis">
+                {{item.label}}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ng-container>
+      <ng-template #labelContainer>
+        <ng-container *ngFor="let item of items">
+          <ion-row class="item-container" [ngClass]="{'show-code' : isShowCode}" (click)="onSelectItem(item)">
+            <ion-col size="2" class="icon-container">
+            </ion-col>
+            <ion-col size="2" class="icon-container">
+              <ng-container *ngIf="item.isActive;else circleIcon">
+                <ion-text class="selected material-icons-outlined">
+                  task_alt
+                </ion-text>
+              </ng-container>
+              <ng-template #circleIcon>
+                <ion-text class="material-icons-outlined">
+                  circle
+                </ion-text>
+              </ng-template>
+            </ion-col>
+            <ion-col size="8" class="label-container">
+              <ion-text class="label">
+                {{item.label}}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ng-template>
+    </ion-row>
+  </ng-container>
+</ion-grid>

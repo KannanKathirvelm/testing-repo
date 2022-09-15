@@ -1,0 +1,231 @@
+.atc-content-container {
+  background-color: var(--atc-content-bgcolor);
+
+  atc-learning-gaps,
+  atc-learning-struggles-panel {
+    width: 100%;
+  }
+
+  .calendar-container {
+    display: grid;
+    grid-template-columns: 35px 1fr 35px;
+    text-align: center;
+    align-items: center;
+    height: 48px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+    background-color: var(--atc-calendar-container);
+    border-bottom: 1px solid var(--atc-calendar-ca-border);
+
+    .left-arrow,
+    .right-arrow {
+      color: var(--atc-calendar-arrow-color);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .calendar-panel {
+      position: relative;
+      width: 100%;
+      display: flex;
+
+      .label-conatiner {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+
+        .date-label {
+          font-size: 15px;
+          color: var(--date-label-color);
+          margin-right: 10px;
+        }
+
+        .dropdown-icon {
+          color: var(--atc-calendar-dropdown-icon);
+        }
+      }
+    }
+  }
+
+  .atc-learning-struggles-panel-row {
+    margin-bottom: 15px;
+  }
+
+  .atc-chart-content {
+    min-height: 400px;
+    width: 100%;
+
+    atc-chart-view {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .atc-container {
+    .atc-container-row {
+      .atc-panel {
+        width: 100%;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 0;
+        margin-bottom: 15px;
+
+        ::ng-deep .mat-expansion-panel-body {
+          padding: 0;
+        }
+
+        .atc-panel-header {
+          padding: 0;
+
+          &.mat-expanded {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 0;
+          }
+        }
+
+        .atc-calender-row {
+          height: 48px;
+          padding: 15px;
+
+          .atc-backward-arrow {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+          }
+
+          .atc-forward-arrow {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+          }
+
+          .atc-calender-arrow {
+            width: 15px;
+            height: 15px;
+            color: var(--atc-calender-arrow);
+          }
+
+          .atc-calender-title-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            ion-text {
+              font-size: 15px;
+              font-weight: bold;
+              text-align: center;
+              color: var(--atc-calender-text);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .atc-competency-container-grid {
+    margin: 10px;
+
+    .atc-learning-struggles-panel-container {
+      justify-content: center;
+
+      .atc-learning-struggles-panel-row {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .atc-progress-containers {
+      .progress-container {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+
+    .atc-overall-score-container {
+      justify-content: center;
+
+      .atc-overall-score-row {
+        padding: 10px;
+        width: 100%;
+        border-radius: 4px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+        background-color: var(--atc-learning-struggles-panel-container);
+        min-height: 90px;
+
+        ion-col {
+          margin: auto;
+        }
+
+        ion-skeleton-text {
+          height: 20px;
+          width: 50%;
+        }
+      }
+
+      .atc-overall-performance {
+        justify-content: center;
+
+        .performance-score {
+          line-height: 1.16;
+          text-align: center;
+          color: var(--atc-performance-score);
+
+          &.score {
+            font-size: 50px;
+            font-weight: bold;
+          }
+
+          &.percent {
+            font-size: 20px;
+            font-weight: 300;
+            margin-top: auto;
+            padding-bottom: 10px;
+          }
+        }
+      }
+
+      .atc-overall-score-title {
+        justify-content: center;
+
+        ion-text {
+          font-size: 12px;
+          font-weight: bold;
+          text-transform: capitalize;
+          color: var(--atc-overall-score-text);
+          margin-left: 5px;
+        }
+      }
+
+      .vertical-line {
+        border-right: 1px solid var(--atc-title-row-border-color);
+      }
+
+      .atc-overall-competency {
+        justify-content: center;
+
+        ion-text {
+          font-size: 50px;
+          font-weight: bold;
+          line-height: 1.16;
+          text-align: center;
+          color: var(--atc-overall-competency);
+        }
+      }
+    }
+  }
+}
+
+.no-chart-message {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+non-premium-atc-chart-view {
+  width: 100%;
+}

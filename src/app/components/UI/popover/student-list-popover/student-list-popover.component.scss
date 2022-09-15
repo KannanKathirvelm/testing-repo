@@ -1,0 +1,49 @@
+.student-list-container {
+  .user-detail {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    margin: auto;
+    height: 50px;
+
+    ion-avatar {
+      width: 34px;
+      height: 34px;
+      margin: auto;
+
+      .profile {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+      }
+
+      .avatar-icon {
+        ::ng-deep .avatar-container {
+          height: 34px !important;
+          width: 34px !important;
+
+          .avatar-content {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 12px / 30px Helvetica, Arial, sans-serif !important;
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    ion-text {
+      font-size: 14px;
+      text-align: center;
+      margin: auto auto auto 15px;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

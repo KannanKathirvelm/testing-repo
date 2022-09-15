@@ -1,0 +1,9 @@
+<div class="content-report-container" [ngClass]="{'ios': !isAndroid}">
+  <div class="setting-container" *ngIf="collection.isAssessment || collection.isCollection && performance">
+    <div *ngIf="isShowAnswerToggle && !isDownloadPdf" class="toggle-answer" color="light">
+      <ion-label>{{ 'SHOW_CORRECT_ANSWER' | translate }}</ion-label>
+      <ion-toggle (ionChange)="toggleShowCorrectAnswer($event)"></ion-toggle>
+    </div>
+  </div>
+  <ng-container #report_view></ng-container>
+</div>

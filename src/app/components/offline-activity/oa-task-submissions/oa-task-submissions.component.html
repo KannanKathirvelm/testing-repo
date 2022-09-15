@@ -1,0 +1,75 @@
+<mat-accordion [multi]="true" *ngIf="task">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+      <ion-row class="header">
+        <ion-col class="col-icon">
+          <ion-icon class="nav-offline-activity"></ion-icon>
+        </ion-col>
+        <ion-col class="col-title">
+          <ion-text>{{task.title}}</ion-text>
+        </ion-col>
+        <ion-col class="col-dropdown">
+          <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+          <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+        </ion-col>
+      </ion-row>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <ng-container *ngIf="!isPreview && typeBasedMandatoryUploads.length">
+        <div class="expected-submission-container">
+          <span class="expected-submission-label">Submissions Expected:</span>
+          <ng-container *ngFor="let mandatoryUpload of  typeBasedMandatoryUploads; let uploadIndex = index">
+            <span class="expected-submission-value">{{mandatoryUpload.pendingCount}} {{mandatoryUpload.type}}</span>
+            <ng-container *ngIf="(uploadIndex) > typeBasedMandatoryUploads.length">
+              <ion-text> | </ion-text>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+      <div class="question">
+        <div class="description" [innerHTML]="task.description">
+        </div>
+        <div class="free-form-text">
+          <span class="answer-type">{{'FREE_FORM_TEXT' | translate}}</span>
+          <ng-container *ngIf="task.submissionText; else noUrl">
+            <p class="answer-label" [innerHTML]="task.submissionText"></p>
+          </ng-container>
+        </div>
+
+        <div class="row-upload">
+          <span class="uploads-label">
+            {{'UPLOADS' | translate}}
+          </span>
+          <ng-container *ngIf="studentTaskUploadSubmission.length; else noUrl">
+            <ng-container *ngFor="let file of studentTaskUploadSubmission">
+              <div *ngIf="file">
+                <div class="submitted-attachment" inAppBrowser url="{{file.submissionInfo}}">
+                  <img *ngIf="checkSubmissionImage(file);else fileTemplate" [src]="file.submissionInfo" />
+                  <ng-template #fileTemplate>
+                    <i *ngIf="checkSubmissionIcons(file);else loadIcons" class="pi pi-file upload-icons"></i>
+                    <ng-template #loadIcons>
+                      <i [ngClass]="file.submissionIcon" class="oa-icons"></i>
+                    </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <div class="row-urls">
+          <span class="row-url">
+            {{'URLS' | translate}}
+          </span>
+          <ng-container *ngIf="studentTaskUrlSubmission.length; else noUrl">
+            <ng-container *ngFor=" let taskUrl of studentTaskUrlSubmission;index as remoteIndex">
+              <div class="submission-urls" *ngIf="taskUrl;else noUrl">
+                <div class="url-container"><span class="url-label">{{'URLS' | translate}}{{remoteIndex+1}}:</span><span class="url" inAppBrowser url="{{taskUrl.submissionInfo}}">{{taskUrl.submissionInfo}}</span></div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <ng-template #noUrl><span class="no-url">&#45;&#45;</span></ng-template>
+      </div>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

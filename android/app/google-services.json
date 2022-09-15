@@ -1,0 +1,84 @@
+{
+  "project_info": {
+    "project_number": "223541271048",
+    "project_id": "navigator-apps",
+    "storage_bucket": "navigator-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223541271048:android:160d8a5e47b98ce6244fbd",
+        "android_client_info": {
+          "package_name": "org.gooru.navigator.instructor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223541271048-f594i239chblrd64bfejndioqv8irtg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiRnoEhSbmej5R3nugYQZRFuFlDyPA_LE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223541271048-f594i239chblrd64bfejndioqv8irtg9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "223541271048-94vdofuh51p2mib9gi8v7gdbmgekl46m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.gooru.navigator.instructor",
+                "app_store_id": "1573599932"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223541271048:android:2426ed77b09decca244fbd",
+        "android_client_info": {
+          "package_name": "org.gooru.student.navigator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223541271048-f594i239chblrd64bfejndioqv8irtg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiRnoEhSbmej5R3nugYQZRFuFlDyPA_LE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223541271048-f594i239chblrd64bfejndioqv8irtg9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "223541271048-94vdofuh51p2mib9gi8v7gdbmgekl46m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.gooru.navigator.instructor",
+                "app_store_id": "1573599932"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

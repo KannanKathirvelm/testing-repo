@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="report-header-row">
+      <ion-col class="ion-no-padding header-icon">
+        <ion-icon [ngClass]="'nav-' + activity.contentType"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding player-header">
+        <ion-text class="ellipsis">{{activity.title}}</ion-text>
+        <i *ngIf="competency" class="material-icons right-arrow">keyboard_arrow_right</i>
+        <ion-text *ngIf="competency" class="competency-code">{{competency.standard.code}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-no-padding header-icon">
+        <ion-text class="material-icons" (click)="closeReport()">clear</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="ion-no-padding aggregate-report-container">
+    <aggregated-score-panel [totalScore]="totalScore" [totalTimespent]="totalTimespent" [activity]="activity"></aggregated-score-panel>
+    <ion-row class="student-count-row">
+      <ion-row *ngIf="competency" class="competency-row" [ngClass]="{'competency-show-more' : !showMore}">
+        <ion-text class="competency-name" [ngClass]="{'ellipsis' : !showMore, 'show-more': showMore}">{{ competency.standard.title }}</ion-text>
+        <ion-text class="show-text" *ngIf="competency.standard.title.length >20" (click)="showMore = !showMore">{{ showMore ? ('SHOW_LESS' | translate): ('SHOW_MORE' | translate) }}</ion-text>
+      </ion-row>
+      <ion-row class="student-update-data">
+        <ion-col class="ion-no-padding conducted-date-col">
+          <ion-row class="conducted-date date-header-text">{{ 'CONDUCTED_ON' | translate }}</ion-row>
+          <ion-row class="conducted-date date">{{activity.activationDate || activity.dcaAddedDate | formatDate:'DD MMM YY'}}
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="!competency"  class="col-updated-data" (click)="updateData()">
+          <ion-text>{{ 'UPDATE_DATA' | translate }}</ion-text>
+        </ion-col>
+        <ion-col *ngIf="competency && isShowUpdateData"  class="col-updated-data" (click)="updateData(true)">
+          <ion-text>{{ 'UPDATE_DATA' | translate }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!(selectedStudentListCount > 0)" [ngClass]="{'competency-count-row' : competency,'show-check-box': isShowCheckBox && !competency,'assessment-type': activity.contentType === 'assessment'}" class="student-row" >
+        <ion-col class="ion-no-padding col-student-circle-img">
+          <ion-checkbox [ngClass]="{'disabled': !isOnline}" *ngIf="isShowCheckBox" (ionChange)="onCheckAll()"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-no-padding total-student">
+          <ion-text>{{studentListCount}} {{ 'STUDENTS' | translate }}</ion-text>
+        </ion-col>
+        <ion-col class="filter-student" *ngIf="activity.contentType === 'assessment'">
+          <ion-item>
+            <ion-select (ionChange)="onSelectFilter($event)" [value]="selectedFilter">
+              <ion-label>{{'FILTERS' | translate}}</ion-label>
+              <ng-container *ngFor="let filter of filters">
+                <ion-select-option >{{filter.title}}</ion-select-option>
+              </ng-container>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col class="col-sort" (click)="onSortByScore()">
+          <ion-text>{{ 'SORT_BY_SCORE' | translate }}</ion-text>
+          <ion-icon *ngIf="isSortBy;else defaultSort" name="chevron-down-outline" class="down-arrow"></ion-icon>
+          <ng-template #defaultSort>
+            <ion-icon name="chevron-up-outline" class="down-arrow"></ion-icon>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+    <ion-row *ngIf="selectedStudentListCount && (selectedStudentListCount > 0)" class="suggestion-row">
+      <ion-col class="ion-no-padding col-student-circle-img" (click)="clearSelectedStudent()">
+        <ion-thumbnail class="clear-img"></ion-thumbnail>
+      </ion-col>
+      <ion-col class="ion-no-padding total-student">
+        <ion-text>{{selectedStudentListCount}} {{ 'STUDENT_SELECTED' | translate }}</ion-text>
+      </ion-col>
+      <ion-col *ngIf="isCaBaselineWorkflow && !competency" class="ion-no-padding col-suggestion-icon" (click)="openSignatureSuggestion('collection')">
+        <ion-icon name="compass" class="rotate-90"></ion-icon>
+        <ion-text>{{ 'SUGGESTION_COLLECTION' | translate }}</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-col *ngIf="isCaBaselineWorkflow && !competency" class="ion-no-padding col-suggestion-icon" (click)="openSignatureSuggestion('assessment')">
+          <ion-icon name="compass" class="rotate-90"></ion-icon>
+          <ion-text>{{ 'SIGNATURE_ASSESSMENT' | translate }}</ion-text>
+        </ion-col>
+      </ion-col>
+      <ion-col *ngIf="isCaBaselineWorkflow && competency" class="ion-no-padding col-suggestion-icon" (click)="openSuggestion(competency)">
+        <ion-icon name="compass" class="rotate-90"></ion-icon>
+        <ion-text>{{ 'SUGGESTION' | translate }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="caStudentData && caStudentData.length">
+      <ion-list class="student-list ion-no-padding">
+        <ion-row class="student-detail-row" [ngClass]="{'show-check-box': isShowCheckBox}" *ngFor="let student of caStudentData">
+          <ion-col class="ion-no-padding student-profile-img">
+            <ion-checkbox *ngIf="isShowCheckBox" [ngClass]="{'hide-checkbox': !student.performance, 'disabled': !isOnline}" [checked]="student.isSelected" (ionChange)="onChangeCheckbox($event, student)"></ion-checkbox>
+            <ion-thumbnail [ngClass]="{'selected-student': student.isSelected && !isCaBaselineWorkflow}" (click)="toggleStudentSelection(student)">
+              <ng-container *ngIf="student.isSelected && !isCaBaselineWorkflow; else imageAvatar">
+                <ion-text class="material-icons">done_all</ion-text>
+              </ng-container>
+              <ng-template #imageAvatar>
+                <ion-img *ngIf="student.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.thumbnail"></ion-img>
+                <ng-template #ngxAvatar>
+                  <ion-avatar class="profile avatar-icon">
+                    <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                  </ion-avatar>
+                </ng-template>
+              </ng-template>
+            </ion-thumbnail>
+          </ion-col>
+          <ion-col class="ion-no-padding student-name" (click)="onClickStudentReport(student)">
+            <ion-text>{{student.lastName}}, {{student.firstName}}</ion-text>
+          </ion-col>
+          <ion-row [ngClass]="{'disabled': !isOnline}">
+            <ng-container *ngIf="student.performance; else notStarted">
+              <ion-col class="ion-no-padding student-performance"
+                *ngIf="competency; else assessment"
+                ngClass="grade-range-{{student.performanceScore | gradeRange}}"
+                (click)="onClickStudentReport(student)">
+                <ion-text>{{student.performanceScore}}%</ion-text>
+              </ion-col>
+              <ng-template #assessment>
+                <ion-col class="ion-no-padding student-performance"
+                  *ngIf="activity.contentType === 'assessment' || activity.contentType === 'assessment-external'; else isCollection"
+                  ngClass="grade-range-{{student.performance.assessment.score | gradeRange}}" (click)="onClickStudentReport(student)">
+                  <ion-text>{{student.performance.assessment.score}}%</ion-text>
+                </ion-col>
+                <ng-template #isCollection>
+                  <ion-col class="ion-no-padding student-performance collection-col" (click)="onClickStudentReport(student)">
+                    <ion-text>{{student.performance.collection.timespent | transformTimeSpent}}</ion-text>
+                  </ion-col>
+                </ng-template>
+              </ng-template>
+            </ng-container>
+          </ion-row>
+          <ng-template #notStarted>
+            <ion-col class="student-performance grade-range-not-started"></ion-col>
+          </ng-template>
+        </ion-row>
+      </ion-list>
+    </ng-container>
+  </ion-grid>
+</ion-content>

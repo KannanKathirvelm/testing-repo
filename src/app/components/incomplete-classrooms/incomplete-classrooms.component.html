@@ -1,0 +1,54 @@
+<ion-card class="incomplete-classroom">
+  <ion-card-header class="ion-no-padding classroom-header">
+    <ion-row class="card-header">
+      <ion-text class="class-grade">{{ selectedGrade ? selectedGrade.gradeName : ('NO_GRADE' | translate) }}</ion-text>
+      <ion-text class="class-name">{{incompleteClass.title}}</ion-text>
+    </ion-row>
+  </ion-card-header>
+  <ion-card-content class="ion-no-padding">
+    <ion-row class="classroom-title">
+      <ion-text class="classroom-title-txt">{{ 'CLASSES_TITLE' | translate }}</ion-text>
+    </ion-row>
+    <ion-grid class="classroom-content">
+      <ion-row class="classroom-img-content">
+        <ion-col class="ion-no-padding">
+          <ion-row>
+            <ion-img src="/assets/images/image-container.png"></ion-img>
+          </ion-row>
+        </ion-col>
+        <ion-col class="class-code">
+          <ion-label>{{ 'CLASS_CODE' | translate }}</ion-label>
+          <ion-label>{{incompleteClass.code}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ng-container *ngIf="subjectList.length; else noSubject;">
+          <ion-row class="incomplete-classroom-course" *ngFor="let class of subjectList" (click)="onSelectGrade(class)">
+            <ion-col class="classroom-course">
+              <ion-label class="course-code">{{class.fwCode}}</ion-label>
+              <ion-label class="course-subject">{{class.code}}</ion-label>
+            </ion-col>
+            <ion-col class="incomplete-icon-content">
+              <ion-label
+                [ngClass]="selectedGrade && selectedGrade.gradeId === class.gradeId ? 'classroom-select-icon' :'classroom-unselect-icon' ">
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+        <ng-template #noSubject>
+          <ion-row>
+            <ion-text>{{ 'NO_SUBJECT' | translate }}</ion-text>
+          </ion-row>
+        </ng-template>
+      </ion-row>
+    </ion-grid>
+    <ion-row class="delete-classroom" (click)="deleteClass()">
+      <ion-label>{{ 'DELETE_CLASSROOM' | translate }}</ion-label>
+      <span class="material-icons delete-icon" (click)="deleteClassRooms()" *ngIf="isConfirmDelete">delete_outline</span>
+      <ion-label *ngIf="!isConfirmDelete" class="classroom-unselect-icon" ></ion-label>
+    </ion-row>
+    <ion-row class="confirm-delete-classroom" *ngIf="isConfirmUpdate || isConfirmDelete">
+      <ion-label class="confirm-txt" (click)="onConfirm()">{{ 'CONFIRM' | translate }}</ion-label>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

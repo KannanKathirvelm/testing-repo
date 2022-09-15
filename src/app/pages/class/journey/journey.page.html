@@ -1,0 +1,93 @@
+<ng-container *ngIf="activeView && classDetail?.isPremiumClass && isShowToggle">
+    <nav-milestone-header
+      *ngIf="isLoaded"
+      (segmentEventChanged)="segmentChanged($event)"
+      (toggleLessonEvent)="toggleLesson($event)"
+      [isPremiumClass]="isPremiumClass"
+      [activeView]="activeView">
+    </nav-milestone-header>
+  </ng-container>
+  <ion-content class="journey-content">
+    <ion-row class="container" [ngClass]="activeView" *ngIf="isShowLearningJourney;else noJourneyMsg">
+      <ng-container *ngIf="isCourseMapActive">
+        <course-map
+          *ngIf="unitLoaded; else skeletonView"
+          [units]="units"
+          [isOnline]="isOnline"
+          [tenantSettings]="tenantSettings"
+          (openUnitPanel)="onOpenUnitPanel($event)"
+          (openLessonPanel)="onOpenLessonPanel($event)"
+          [isUnitLoaded]="unitLoaded"
+          [isLessonLoaded]="lessonLoaded"
+          [isCollectionLoaded]="collectionLoaded"
+          (openUnitReport)="openCourseMapUnitReport($event)"
+          (scrollToView)="scrollToContent($event)"
+          (openCollectionReport)="openCourseMapCollectionReport($event)"
+          (openLessonReport)="openCourseMapLessonReport($event)"
+          (toggleVisibility)="onToggleVisibility($event)">
+        </course-map>
+      </ng-container>
+      <ng-container *ngIf="!isCourseMapActive">
+        <milestone
+          *ngIf="milestoneLoaded; else skeletonView"
+          [subjectDetails]="subjectDetails"
+          [tenantSettings]="tenantSettings"
+          [isOnline]="isOnline"
+          [milestones]="milestones"
+          [classGrade]="classGrade"
+          (openMilestonePanel)="onOpenMilestonePanel($event)"
+          (openMilestoneLessonPanel)="onOpenMilestoneLessonPanel($event)"
+          [isLessonLoaded]="milestoneLessonLoaded"
+          [isCollectionLoaded]="milestoneCollectionLoaded"
+          (scrollToCollection)="scrollToContent($event)"
+          (openLessonReport)="openLessonReport($event)"
+          (openCollectionReport)="onOpenCollectionReport($event)"
+          (openMilestoneReport)="openMilestoneReport($event)"
+          (toggleVisibility)="onToggleVisibility($event)">
+        </milestone>
+      </ng-container>
+    </ion-row>
+    <ng-template #noJourneyMsg>
+      <ion-row class="no-journey-message">
+        {{'NO_COURSE_FOR_CLASS' | translate}}
+      </ion-row>
+    </ng-template>
+  </ion-content>
+  <ng-template #skeletonView>
+    <ion-row class="skeleton-panel-header" *ngFor="let item of [].constructor(3)">
+      <ion-col class="horiz-vert-center">
+        <ion-skeleton-text animated class="skeleton-header-text" *ngFor="let item of [].constructor(2)"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+  <ion-footer class="journey-footer" [ngClass]="{'active': isToggledList, 'student-and-grade': showStudentList && showItemsToGrade, 'student-or-grade': showStudentList || showItemsToGrade}"
+    *ngIf="showStudentList || showItemsToGrade">
+    <ion-row class="list-container">
+      <ion-toolbar *ngIf="showStudentList" class="student-list-toolbar" (click)="openStudentList()">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="title-col">
+            <ion-col class="title">
+              <ion-text>{{ 'STUDENTS'| translate }}</ion-text>
+            </ion-col>
+            <ion-col class="arrow-col">
+              <ion-icon class="arrow-icon" name="caret-down-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+      <ion-toolbar *ngIf="itemsToGradeList && itemsToGradeList.length" class="student-list-toolbar" (click)="openItemsToGradeList()">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="title-col">
+            <ion-col class="title">
+              <ion-text>{{ 'ITEMS_TO_GRADE'| translate }}</ion-text>
+            </ion-col>
+            <ion-col class="arrow-col">
+              <ion-icon class="arrow-icon" name="caret-down-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-row>
+  </ion-footer>
+
+

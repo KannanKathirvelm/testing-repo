@@ -1,0 +1,80 @@
+  <ion-row class="class-navbar-container">
+    <ion-grid>
+      <ion-row class="row-item row-header">
+        <ion-col class="col back-btn-col" [routerLink]="['/teacher-home']">
+          <ion-text class="material-icons">arrow_back</ion-text>
+        </ion-col>
+        <ion-col class="col title-col ion-no-border">
+          <ion-text class="title ellipsis" *ngIf="class; else showTitleSkeleton">{{class.title}}
+            <ion-text *ngIf="class.isArchived"> ({{'ARCHIVED' | translate}})</ion-text>
+          </ion-text>
+          <ng-template #showTitleSkeleton>
+            <ion-skeleton-text class="title-skeleton" animated></ion-skeleton-text>
+          </ng-template>
+        </ion-col>
+        <ng-container *ngIf="class | checkIsUndefined; else showCompetencySkeleton">
+          <ion-col *ngIf="class.isPremiumClass && competencyScore" class="col competency-col ion-no-border" [routerLink]="['/class/', class?.id, 'proficiency/class-proficiency']">
+            <ng-container *ngIf="competencyScore | checkIsUndefined; else showCompetencySkeleton">
+              <ng-container *ngIf="competencyScore | checkIsNull; else noScore">
+                <ion-text class="competency-count pull-center">
+                  {{competencyScore.completedCompetencies}}
+                  <hr />
+                  {{competencyScore.totalCompetencies}}
+                </ion-text>
+              </ng-container>
+            </ng-container>
+          </ion-col>
+        </ng-container>
+        <ng-template #showCompetencySkeleton>
+          <ion-skeleton-text class="competency-count-skeleton pull-center" animated> </ion-skeleton-text>
+        </ng-template>
+      </ion-row>
+      <ion-row class="row-item nav-tabs">
+        <ion-col class="col dca-tab grade-range-{{classActivityScore | gradeRange}}" (click)="redirectToClassActivities()" [ngClass]="{'active': activeRoute === 'class-activities'}">
+          <ion-icon class="tab-icon nav-dca"></ion-icon>
+          <ng-container *ngIf="activeRoute === 'class-activities'">
+            <ng-container *ngIf="classActivityScore | checkIsUndefined; else showScoreSkeleton">
+              <ng-container *ngIf="classActivityScore | checkIsNull; else noScore">
+                <ion-text class=" performance">{{classActivityScore | transformScore}}</ion-text>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ion-col>
+        <ion-col class="col journey-tab grade-range-{{classScore | gradeRange}}" (click)="redirectToJourney()" [ngClass]="{'active': activeRoute === 'journey'}">
+          <ion-text class="tab-icon material-icons course-map">sort</ion-text>
+          <ng-container *ngIf="activeRoute === 'journey'">
+            <ng-container *ngIf="classScore | checkIsUndefined; else showScoreSkeleton">
+              <ng-container *ngIf="classScore | checkIsNull; else noScore">
+                <ion-text class="performance" (click)="onOpenMilestoneCourseReport($event)">
+                  {{classScore | transformScore}}
+                </ion-text>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ion-col>
+        <ion-col class="col proficiency-tab" (click)="redirectToProficiency()" [ngClass]="{'active': activeRoute === 'proficiency'}">
+          <ion-icon class="tab-icon nav-proficiency"></ion-icon>
+        </ion-col>
+        <ion-col class="col atc-tab" (click)="redirectToATC()" [ngClass]="{'active': activeRoute === 'atc', 'disabled': !isOnline}">
+          <ion-icon class="tab-icon nav-performance-overview-blue"></ion-icon>
+        </ion-col>
+        <ion-col class="free-col ion-no-padding"> </ion-col>
+        <ion-col class="col notification-tab notify-col" (click)="showNotification($event)" [ngClass]="notificationCount ? 'active' : 'disabled'">
+          <ion-text class="material-icons tab-icon">notifications</ion-text>
+          <ion-text class="notification-count" *ngIf="notificationCount">{{ notificationCount }} <span *ngIf="moreItemsRemaining">+</span></ion-text>
+        </ion-col>
+        <ion-col class="col settings-tab pull-right ion-no-border" (click)="redirectToSettings()" [ngClass]="{'active': activeRoute === 'settings', 'disabled': !isOnline}">
+          <ion-text class="material-icons tab-icon">settings</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-row>
+  <ng-template #noScore>
+    <ion-text class="performance no-score">&ndash;&ndash;&ndash;</ion-text>
+  </ng-template>
+  <ng-template #noCompetencyStats>
+    <ion-text class="no-score">&ndash;&ndash;&ndash;</ion-text>
+  </ng-template>
+  <ng-template #showScoreSkeleton>
+    <ion-skeleton-text class="performance" animated></ion-skeleton-text>
+  </ng-template>

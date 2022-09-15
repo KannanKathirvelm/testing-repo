@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-grid class="header-container">
+    <ion-row class="row-header">
+      <ion-col class="close-icon">
+        <ion-text class="material-icons" (click)="navigateToAtcPage()">arrow_back</ion-text>
+      </ion-col>
+      <ion-col class="title">
+        <ion-text>{{'DATA_BY_MILESTONE' | translate}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-dropdown" *ngIf="selectedMilestone">
+      <ion-select #milestoneSelect hidden="true" [interfaceOptions]="milestoneSelectHeader" [value]="selectedMilestone.gradeId" (ionChange)="onSelectMilestone($event)" dropdownScrollIntoView>
+        <ng-container *ngFor="let milestone of milestones">
+          <ion-select-option [value]="milestone.gradeId">{{milestone.title}}</ion-select-option>
+        </ng-container>
+      </ion-select>
+      <ion-col class="col-icon">
+        <ion-row class="row-flag-icon">
+          <ion-text class="flag-icon material-icons">flag</ion-text>
+        </ion-row>
+      </ion-col>
+      <ion-col class="col-title">
+        <ion-text class="ellipsis">{{selectedMilestone.title}}</ion-text>
+        <ion-text class="ellipsis">
+          <ng-container *ngFor="let student of selectedMilestone.students; let studentIndex = index;">
+            <ng-container *ngIf="studentIndex < 2">
+              {{student.lastName}} {{student.firstName}}
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="selectedMilestone.students.length > 2">
+            & {{selectedMilestone.students.length - 2}} {{'OTHERS' | translate}}
+          </ng-container>
+        </ion-text>
+        <ion-text class="ellipsis">{{selectedMilestone.domainCount}} {{'DOMAINS' | translate}} | {{selectedMilestone.topicCount}} {{'TOPICS' | translate}} | {{selectedMilestone.competencyCount}} {{'COMPETENCIES' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="col-dropdown-icon" (click)="openMilestoneList()">
+        <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-search">
+      <ion-col size="10" class="ion-no-padding">
+        <ion-input type="text" placeholder="{{ 'SEARCH' | translate }}" (ionInput)="filterStudentList($event)"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding search-icon">
+        <ion-icon name="search"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+<ion-content>
+  <ion-grid class="grid-table">
+    <ion-row class="row-table-header">
+      <ion-col class="trow-col col-header-1">
+        <ion-text>{{'STUDENT' | translate}}</ion-text>
+      </ion-col>
+      <ion-col></ion-col>
+      <ion-col class="trow-col col-header-2">
+        <ion-text>{{'HIGHEST_COMPETENCY_MASTERED' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="trow-col col-header-3">
+        <ion-text>{{'COMPETENCIES_MASTERED' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="trow-col col-header-4">
+        <ion-text>{{'AVERAGE_CFU' | translate}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="selectedMilestone">
+      <ion-row class="row-table-body">
+        <ng-container *ngIf="selectedMilestone.students.length; else noStudent">
+          <ng-container *ngFor="let student of selectedMilestone.students | listFilter: searchText: 'firstName'">
+            <ion-row class="row-table-data">
+              <ion-col class="trow-col col-data-1">
+                <ion-item class="student-info-container">
+                  <ion-avatar class="profile avatar-icon" *ngIf="student.thumbnail; else avatarIcon">
+                    <img [src]="student.thumbnail" class="profile-icon">
+                  </ion-avatar>
+                  <ng-template #avatarIcon>
+                    <ion-avatar class="profile avatar-icon">
+                      <ngx-avatar size="30" [name]="student.firstName"></ngx-avatar>
+                    </ion-avatar>
+                  </ng-template>
+                  <ion-label>{{student.lastName}} {{student.firstName}}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col class="trow-col col-data-2">
+                <ion-text class="tab-icon material-icons course-map" (click)="navigateToMilestone(student.id)">sort</ion-text>
+              </ion-col>
+              <ion-col class="trow-col col-data-3">
+                <ion-text>{{student.highestCompetency}}</ion-text>
+              </ion-col>
+              <ion-col class="trow-col col-data-4">
+                <ion-text>{{student.completedCompetencies}}/{{student.totalCompetencies}}</ion-text>
+              </ion-col>
+              <ion-col class="trow-col col-data-5">
+                <ion-text class="score-range grade-range-{{student.averageScore | gradeRange}}">{{student.averageScore | transformScore}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </ng-container>
+        <ng-template #noStudent>
+          <ion-row class="row-no-records">
+            <ion-text class="no-text">{{'NO_RECORD_FOUND' | translate}}</ion-text>
+          </ion-row>
+        </ng-template>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>

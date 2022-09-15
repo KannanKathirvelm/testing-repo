@@ -1,0 +1,20 @@
+<ng-container *ngIf="isLoaded;else classSkeleton">
+  <ng-container *ngIf="classList && classList?.length; else noClassesMsg">
+    <ng-container *ngFor="let class of classList | listFilter: searchText: 'title': 'code'">
+      <nav-premium-class *ngIf="class.isPremiumClass; else nonPremiumClassTemplate" [isOnline]="isOnline" [course]="class.course" [class]="class"></nav-premium-class>
+      <ng-template #nonPremiumClassTemplate>
+        <nav-non-premium-class [isOnline]="isOnline" [course]="class.course" [class]="class"></nav-non-premium-class>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-template #classSkeleton>
+  <ng-container *ngFor="let item of [].constructor(3)">
+    <nav-premium-class></nav-premium-class>
+  </ng-container>
+</ng-template>
+<ng-template #noClassesMsg>
+  <ion-row class="no-class-view">
+    <ion-text>{{ 'NO_CLASSES_MSG' | translate }}</ion-text>
+  </ion-row>
+</ng-template>

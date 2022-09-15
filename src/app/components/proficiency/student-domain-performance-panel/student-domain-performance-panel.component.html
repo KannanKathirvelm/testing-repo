@@ -1,0 +1,64 @@
+<ion-item-sliding no-lines [@slideInLeft]="prevSlideChanged" [@slideInRight]="nextSlideChanged">
+  <ion-item class="ion-no-padding" lines="none">
+    <ion-grid class="student-domain-performance-container ion-no-padding">
+      <ion-row class="student-domain-performance-header">
+        <ion-col class="student-domain-image ion-no-padding" size="1">
+          <ion-avatar *ngIf="domain;else skeletonAvatar">
+            <ion-img *ngIf="studentDomainPerformance.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="studentDomainPerformance.thumbnail"></ion-img>
+            <ng-template #ngxAvatar>
+              <ion-avatar class="profile avatar-icon">
+                <ngx-avatar [name]="studentDomainPerformance.firstName"></ngx-avatar>
+              </ion-avatar>
+            </ng-template>
+          </ion-avatar>
+          <!-- Here the Avatar skeleton will be loaded -->
+          <ng-template #skeletonAvatar>
+            <ion-avatar>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+          </ng-template>
+        </ion-col>
+        <ion-col class="student-domain-performance-progress-container" size="11">
+          <ion-row class="student-domain-performance-progress-bar">
+            <ion-col size="8" class="student-domain-performance-title">
+              <ion-text *ngIf="domain;else userNameSkeleton" class="last-name">
+                {{studentDomainPerformance.lastName}},
+              </ion-text>
+              <ion-text *ngIf="domain" class="first-name">
+                {{studentDomainPerformance.firstName}}
+              </ion-text>
+              <!-- Here the user name skeleton will be loaded -->
+              <ng-template #userNameSkeleton>
+                <ion-skeleton-text class="first-name" animated></ion-skeleton-text>
+              </ng-template>
+            </ion-col>
+            <ion-col size="4" class="student-domain-performance-count">
+              <ion-row class="progressBar-count" *ngIf="domain">
+                <ion-text class="mastered">{{domain.mastered}}</ion-text>/
+                <ion-text class="in-progress">{{domain.inProgress}}</ion-text>/
+                <ion-text class="not-started">{{domain.notStarted}}</ion-text>
+              </ion-row>
+            </ion-col>
+            <nav-student-competency-progress-bar *ngIf="domain;else studentprogressBarSkeleton"
+              [progressBarName]="'student-domain-performance'"
+              [domain]="domain"
+              [domainSeq]="domain.domainSeq"
+              [studentSeq]="studentSeq"
+              (progressBarLoaded)="progressBarLoaded()">
+            </nav-student-competency-progress-bar>
+            <!-- Here the progress bar skeleton will be loaded -->
+            <ng-template #studentprogressBarSkeleton>
+              <ion-skeleton-text class="progress-bar-skeleton" animated></ion-skeleton-text>
+            </ng-template>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item-options>
+    <ion-item-option *ngIf="domain" class="domain-mastered-options">
+      <ion-text class="domain-mastered-percentage">{{domain.totalCoverage |transformDomainPercentage: domain.mastered}}</ion-text>
+      <ion-text class="domain-mastered-title">Domain Mastery</ion-text>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

@@ -1,0 +1,147 @@
+.student-list-header {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  height: 40px;
+  width: 100%;
+
+  &::after {
+    display: none;
+  }
+
+  .student-list-toolbar {
+    --min-height: 40px;
+    padding: 0;
+
+    ion-grid {
+      display: flex;
+      align-items: center;
+
+      .title-col {
+        width: 100%;
+        padding-left: 16px;
+        font-size: 12px;
+        text-transform: capitalize;
+        font-family: var(--sans);
+        color: var(--students-list-title);
+      }
+
+      .icon-col {
+        width: 48px;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.student-list-container {
+  margin: 0;
+  overflow: scroll;
+
+  .download-text-row {
+    padding: 10px;
+
+    .download-text-col {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: flex-start;
+      align-items: center;
+
+      .download-user {
+        color: var(--students-list-title);
+        font-style: italic;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .info-student {
+    color: var(--students-list-title);
+  }
+
+  .student-list {
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--milestone-border-color);
+
+    .profile {
+      padding: 5px 0;
+      display: flex;
+      justify-content: center;
+      height: 40px;
+      width: 100%;
+    }
+
+    .profile-icon {
+      background-size: 100% 100%;
+      background-position: center;
+      width: 30px;
+      height: 30px;
+      margin: auto;
+      display: flex;
+      border-radius: 50%;
+    }
+
+    .avatar-icon {
+      ::ng-deep .avatar-container {
+        height: 30px !important;
+
+        ::ng-deep .avatar-content {
+          width: 30px;
+          height: 30px;
+          font: 16px / 30px Helvetica, Arial, sans-serif !important;
+          margin: auto;
+        }
+      }
+    }
+
+    .student-name {
+      text-transform: capitalize;
+      font-size: 12px;
+      font-style: var(--sans);
+      color: var(--students-list-title);
+    }
+
+    .student-list-container {
+      &.visible {
+        display: grid;
+        align-items: center;
+        height: 40px;
+      }
+    }
+  }
+
+  .download-student-container {
+    display: flex;
+    flex-direction: initial;
+    justify-content: flex-end;
+    padding: 10px;
+
+    .student-journey-download-button {
+      font-size: 12px;
+      --border-radius: 5px;
+      --background: var(--iris-blue);
+      --padding-start: 5px;
+      --padding-end: 5px;
+    }
+
+    .progress-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 0px 10px 10px 10px;
+
+      ion-text {
+        color: black;
+      }
+
+      .progress-bar {
+        height: 5px;
+        margin-top: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+<ion-header class="suggestion-pullup-header">
+  <ion-toolbar class="ion-no-padding">
+    <ion-row class="suggestion-header-container">
+      <ion-col size="1">
+        <ion-icon name="compass" class="rotate-90 suggestion-icon"></ion-icon>
+      </ion-col>
+      <ion-col size="5" class="col-suggestion">
+        <ion-text class="title" *ngIf="activeSuggestion">
+          <ion-item lines="none">
+            <ion-label>{{ 'CHOOSE_FILTERS' | translate }}</ion-label>
+            <ion-select [compareWith]="compareWithFilterKey" (ionChange)="onSelectSuggestion($event)" [value]="activeSuggestion" dropdownScrollIntoView>
+              <ion-select-option *ngFor="let suggestion of suggestionFilters" [value]="suggestion.key">{{ suggestion.title }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-text>
+      </ion-col>
+      <ion-col size="4" class="col-search">
+        <ion-searchbar #search enterkeyhint="search" [(ngModel)]="searchTerms" (ionFocus)="onSearchFocus()" (ionBlur)="onSearchBlur()" (search)="onSearch()" (ionClear)="onSearchClear($event)"></ion-searchbar>
+        <ion-icon name="search-outline" (click)="onSearch()"></ion-icon>
+      </ion-col>
+      <ion-col size="1" class="col-filter">
+        <ion-icon *ngIf="isShowFilter" name="filter-outline" (click)="openFilter()"></ion-icon>
+        <ion-text *ngIf="filterCount" class="filter-count">
+          {{filterCount}}
+        </ion-text>
+      </ion-col>
+      <ion-col size="1">
+        <ion-text class="close-icon material-icons" (click)="onClosePullUp()">
+          clear
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="suggestion-pullup-container">
+  <mat-accordion [ngClass]="{'student-list': studentsPerfomance && studentsPerfomance.length > 4}">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" *ngIf="studentsPerfomance && studentsPerfomance.length > 1">
+        <mat-panel-title>
+          <ion-row *ngFor="let student of studentsPerfomance">
+            <ion-thumbnail class="student-icon">
+              <ion-img *ngIf="student.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.thumbnail" class="student-img"></ion-img>
+              <ng-template #ngxAvatar>
+                <ion-avatar class="profile avatar-icon">
+                  <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                </ion-avatar>
+              </ng-template>
+            </ion-thumbnail>
+          </ion-row>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ion-row  class="student-container" *ngFor="let student of studentsPerfomance">
+        <ion-row>
+          <ion-thumbnail class="student-icon">
+            <ion-img *ngIf="student.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.thumbnail" class="student-img"></ion-img>
+            <ng-template #ngxAvatar>
+              <ion-avatar class="profile avatar-icon">
+                <ngx-avatar [name]="student.firstName"></ngx-avatar>
+              </ion-avatar>
+            </ng-template>
+          </ion-thumbnail>
+        </ion-row>
+          <ion-row class="student-name" *ngIf="student; else loader">{{student.lastName}}, {{student.firstName}}</ion-row>
+          <ion-row class="student-score" *ngIf="(student.performanceScore || (student.performanceScore === 0)); else loader" ngClass="grade-range-{{student.performanceScore | gradeRange}}">{{student.performanceScore | transformPerformanceScore}}</ion-row>
+        </ion-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <ion-row class="content-type-actions" *ngIf="!isShowLibrary">
+      <ion-row class="collection" [ngClass]="{'active': !isShowAssessment}">
+        <ion-icon class="nav-collection" (click)="toggleActionsTab('collection')">
+        </ion-icon>
+      </ion-row>
+      <ion-row class="collection" [ngClass]="{'active': isShowAssessment}">
+        <ion-icon class="nav-assessment" (click)="toggleActionsTab('assessment')">
+        </ion-icon>
+      </ion-row>
+   </ion-row>
+   <ion-row class="tenant-library-container" *ngIf="tenantLibrary">
+     <ion-row (click)="onClosePullUp()">
+       <ion-text class="material-icons">arrow_back</ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-thumbnail class="tenant-library-icon">
+          <ion-img *ngIf="tenantLibrary.image" [src]="tenantLibrary.image"></ion-img>
+        </ion-thumbnail>
+      </ion-row>
+      <ion-row>{{tenantLibrary.name}}</ion-row>
+    </ion-row>
+    <ng-container *ngIf="isShowLibrary else teacherSuggestion">
+      <tenant-library [tenantLibraryContent]="tenantLibraryContent" (selectLibraryContent)="onClickLibraryContent($event)">
+      </tenant-library>
+  </ng-container>
+  <ng-template #teacherSuggestion>
+    <ng-template #noData>
+      <ion-row  class="no-suggest-result-content">
+        <ion-text class="suggest-message">{{'SUGGEST_MSG' | translate}}</ion-text>
+      </ion-row>
+    </ng-template>
+    <ng-container *ngIf="suggestions?.length;else noData">
+      <ion-row class="activity-panel" *ngFor="let suggestion of suggestions">
+        <suggestion-panel
+          [showAddActions]="true"
+          [content]="suggestion"
+          [showTeacherSuggestion]="true"
+          (addActivityToClass)="addActivityToClass($event)"
+          (rescheduleClassActivity)="openCalender($event)"
+          (selectSuggestion)="onClickSuggestion($event)">
+        </suggestion-panel>
+      </ion-row>
+    </ng-container>
+  </ng-template>
+  <pullup-with-dynamic-height [isShowPullUp]="showSuggestionPopup">
+    <ng-container *ngIf="selectedSuggestion">
+      <suggestion-pop-up
+        class="pull-up-dynamic-height"
+        [studentList]="studentsPerfomance"
+        [content]="selectedSuggestion"
+        [showSuggestionPopup]="showSuggestionPopup"
+        (confirmSuggestion)="onConfirmSuggestion()"
+        (cancelSuggestion)="onCancelSuggestion()">
+      </suggestion-pop-up>
+    </ng-container>
+  </pullup-with-dynamic-height>
+  <ion-row class="backdrop" *ngIf="showSuggestionPopup" (click)="onCancelSuggestion()"></ion-row>
+  <ng-template #loader>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ng-template>
+</ion-content>

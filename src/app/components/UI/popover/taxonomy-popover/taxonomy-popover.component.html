@@ -1,0 +1,11 @@
+<ion-list class="taxonomy-list-container">
+  <ion-row *ngFor="let taxonomy of taxonomyList">
+    <ng-container  *ngIf="!showFrameworkInfo; else showFramework;">
+      <ion-text >{{taxonomy.code}}</ion-text>
+    </ng-container>
+    <ng-template #showFramework>
+      <ion-text class="label">{{taxonomy.title}}</ion-text>
+      <ion-text class="label taxonomy-framework">{{taxonomy.frameworkCode}} {{taxonomy.parentTitle}}</ion-text> 
+    </ng-template>
+  </ion-row>
+</ion-list>

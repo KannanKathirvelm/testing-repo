@@ -1,0 +1,221 @@
+<ion-row class="rescope-toggle-row">
+  <ion-col class="ion-no-padding">
+    <ion-text class="toggle-title main-title ellipsis">{{'LEARNING_JOURNEY' | translate}}</ion-text>
+    <ion-text class="material-icons info" (click)="toggleRescopedInfo()">info_outlined</ion-text>
+  </ion-col>
+  <!-- NILEMOBILE-113 hide show complete course toggle -->
+  <!-- <ion-col size="6" class="ion-no-padding">
+    <ion-row class="toggle-row ellipsis" [ngClass]="{'hidden' : isToggleRescopedInfo}">
+      <ion-text class="toggle-title title ellipsis">{{'SHOW_COMPLETE_COURSE' | translate}}</ion-text>
+      <ion-toggle class="toggle-icon ion-no-padding" (ionChange)="onToggleToShowFullCourse($event)"></ion-toggle>
+    </ion-row>
+  </ion-col> -->
+</ion-row>
+<ion-row class="rescope-content-row" [@collapse]="isToggleRescopedInfo">
+  <ion-row class="toggle-msg ion-no-padding">
+    <ion-text class="toggle-title">{{'RESCOPED_CONTENT_PREVIEW_MSG' | translate}}</ion-text>
+  </ion-row>
+</ion-row>
+<mat-accordion class="milestone-container">
+  <ng-container *ngIf="isAllContentsAreRescoped && !showFullCourse;else milestoneContent">
+    <ion-row class="no-milestone-view">
+      <ion-text>{{'MILESTONE_RESCOPED_CONTENT_MSG' | translate }}</ion-text>
+    </ion-row>
+  </ng-container>
+  <ng-container *ngIf="isMilestoneNotReady && !isAllContentsAreRescoped">
+    <ion-row class="no-milestone-view">
+      <ion-text>{{'STUDENT_MILESTONE_NOT_READY' | translate }}</ion-text>
+    </ion-row>
+  </ng-container>
+  <ng-template #milestoneContent>
+    <div  [ngClass]="{'disabled': !isOnline}" class="milestone-panel" *ngFor="let milestone of milestoneList;let milestoneIndex=index; let isLastMilestone=last">
+      <mat-expansion-panel
+        [ngClass]="{'highlighted': milestone.performance && ((milestone.performance.scoreInPercentage && milestone.performance.scoreInPercentage !== null) || milestone.performance.timeSpent), 'rescoped-milestone': milestone.isRescoped, 'show-rescoped': showFullCourse}"
+        [expanded]="showDefaultExpanded && (milestoneIndex === 0) || milestone.isCurrentMilestone" [hideToggle]="true" (closed)="onCloseMilestonePanel()" (opened)="onOpenMilestonePanel(milestoneIndex, milestone.isRoute0)"
+        class="milestone-expansion-panel milestone-{{milestoneIndex}}">
+        <mat-expansion-panel-header class="no-padding milestone-list milestone-header-panel" collapsedHeight="32px" expandedHeight="inherit">
+          <div class="milestone-header">
+            <div class="milestone-icon text-center">
+              <div class="milestone-icon-downward-line" [ngClass]="{'last-milestone': isLastMilestone || (!showFullCourse && milestone.nextMilestoneIsRescope)}">
+                <svg height="17" width="20">
+                  <line x1="0" y1="0" x2="0" y2="30" />
+                </svg>
+              </div>
+              <i class="flag-icon material-icons">flag</i>
+            </div>
+            <div class="milestone-title">
+              <ng-container *ngIf="milestone.isUnit0; else milestoneList">
+                <ion-text class="ellipsis">{{  milestone.milestoneTitle }}</ion-text>
+              </ng-container>
+              <ng-template #milestoneList>
+                <ng-container *ngIf="!showFullCourse; else rescopedMilestone">
+                  <ion-text class="ellipsis">{{'MILESTONE' | translate}} {{hasUnit0 ? milestone.sequenceId - 1 :  milestone.sequenceId }} - {{ milestone.isRoute0 ? milestone.milestoneTitle : milestone.gradeName }}</ion-text>
+                </ng-container>
+                <ng-template #rescopedMilestone>
+                  <ion-text class="ellipsis">{{'MILESTONE' | translate}} {{milestoneIndex + 1}} - {{milestone.gradeName}}</ion-text>
+                </ng-template>
+              </ng-template>
+              <ng-container *ngIf="milestone.performance && milestone.performance.completedInPrecentage;else initialPerformance">
+                <ion-text class="milestone-completed-performance">({{milestone.performance.completedInPrecentage | transformPerformanceScore}}
+                  {{'COMPLETED' | translate}})
+                </ion-text>
+              </ng-container>
+              <ng-template #initialPerformance>
+                <ion-text class="milestone-completed-performance">({{initialPerformance | transformPerformanceScore}} {{'COMPLETED' | translate}})
+                </ion-text>
+              </ng-template>
+            </div>
+            <div *ngIf="milestone.performance && milestone.performance.scoreInPercentage !==null; else noPerformance"
+              class="milestone-score grade-range-{{milestone.performance.scoreInPercentage | gradeRange}}">
+              {{ milestone.performance.scoreInPercentage | transformPerformanceScore }}
+            </div>
+            <ng-template #noPerformance>
+              <div class="no-performance-score grade-range-not-started">
+                &mdash;
+              </div>
+            </ng-template>
+          </div>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <ng-container *ngIf="!isLessonLoading; else lessonSkeletonView">
+            <mat-accordion>
+              <div class="lesson-panel" *ngFor="let lesson of milestone.lessons;let lessonIndex=index" [ngClass]="{'rescoped-lesson': lesson.isRescoped, 'show-rescoped': (showFullCourse || milestone.isClassGrade)}">
+                <mat-expansion-panel
+                  [ngClass]="{'highlighted': lesson.performance && ((lesson.performance.scoreInPercentage && lesson.performance.scoreInPercentage !== null) || lesson.performance.timeSpent), 'current-lesson': lesson.isCurrentLesson}"
+                  [expanded]="showDefaultExpanded && !disableDefaultLessonToggle && (milestoneIndex === 0 && lessonIndex === 0) || lesson.isCurrentLesson" class="lesson-expansion-panel lesson-{{lessonIndex}}" [hideToggle]="true"
+                  (closed)="onCloseLessonPanel(milestoneIndex, lessonIndex, lesson)" (opened)="onOpenLessonPanel(milestoneIndex, lessonIndex, lesson, milestone.isRoute0)" (afterExpand)="onExpandLesson(milestoneIndex, lessonIndex)">
+                  <mat-expansion-panel-header class="no-padding lesson-list" expandedHeight="inherit">
+                    <div class="lesson-header">
+                      <div class="lesson-icon">
+                        <div class="lesson-icon-downward-line {{lesson.firstSuggestedPathType}}" [ngClass]="{'expanded': lessonIndex === currentLessonExpandedIndex, 'suggested': lesson.isFirstSuggestedCollection, 'last-lesson': lesson.isLastLesson}">
+                          <svg height="31" width="20">
+                            <line class="hide" x1="0" [ngClass]="{'show': !lesson.isFirstSuggestedCollection}" y1="0" x2="0" y2="42" />
+                            <path class="path-right hide" [ngClass]="{'show': lesson.isFirstSuggestedCollection && lesson.isFirstTeacherSuggested}" d="M 0 0  t 8 17 -5 60" />
+                            <path class="path-left hide" [ngClass]="{'show': lesson.isFirstSuggestedCollection && lesson.isFirstSystemSuggested}" d="M 15 0  t -6 17 6 60" />
+                          </svg>
+                        </div>
+                        <div class="icon-content-follow-container milestone-competency-status milestone-competency-status-{{lesson.status}}">
+                          <ion-icon class="milestone-icon milestone-lesson-icon-color" name="ellipsis-horizontal-circle"></ion-icon>
+                        </div>
+                      </div>
+                      <div class="lesson-title ellipsis">
+                        <ion-text class="domain-name ellipsis">
+                          {{milestone.isRoute0 ? lesson.unitTitle :lesson.txDomainName}}
+                        </ion-text>
+                        <ion-text class="title-text ellipsis">{{lesson.lessonTitle}}</ion-text>
+                      </div>
+                      <div class="toggle-icon-wrapper">
+                        <i class="material-icons arrow-dropdown"> arrow_drop_down </i>
+                        <i class="material-icons arrow-dropup"> arrow_drop_up </i>
+                      </div>
+                      <div *ngIf="lesson.performance && lesson.performance.scoreInPercentage !== null; else noPerformance" class="lesson-score grade-range-{{lesson.performance.scoreInPercentage | gradeRange}}">
+                        {{ lesson.performance.scoreInPercentage | transformPerformanceScore }}
+                      </div>
+                      <ng-template #noPerformance>
+                        <div class="no-performance-score grade-range-not-started">&mdash;</div>
+                      </ng-template>
+                    </div>
+                  </mat-expansion-panel-header>
+                  <ng-template matExpansionPanelContent>
+                    <ng-container *ngIf="!isCollectionLoading; else collectionSkeletonView">
+                      <div class="collection-panel {{collection.pathType}} collection-{{collectionIndex}}" *ngFor="let collection of lesson.collections; let collectionIndex=index"
+                        [ngClass]="{'suggested-item' : collection.isSuggestedContent,'last-played-collection' : collection.id === lastPlayedCollectionId, 'last-collection': collection.isLastCollectionInLesson, 'rescoped-collection': collection.isRescoped,
+                         'show-rescoped': (showFullCourse || milestone.isClassGrade), 'show-info': collection.isInfoOpen, 'highlighted': collection.performance && ((collection.performance.scoreInPercentage && collection.performance.scoreInPercentage !== null) || collection.performance.timeSpent),'read-only': !collection.isVisible ||  !lesson.isVisible}">
+                        <div class="collection-icon-wrapper milestone-competency-status milestone-competency-status-{{collection.status}}"
+                          [ngClass]="{'highlighted': collection.performance && ((collection.performance.scoreInPercentage && collection.performance.scoreInPercentage !== null) || collection.performance.timeSpent) }">
+                          <div class="collection-icon-downward-line {{collection.pathType}}"
+                            [ngClass]="{'suggested': collection.isNextSuggestedCollection || collection.isSuggestedContent, 'next-teacher': collection.isNextTeacherSuggested, 'next-system': collection.isNextSystemSuggested,'hide': collection.isLastCollectionInMilestone}">
+                            <svg height="36" width="20">
+                              <line x1="0" y1="0" x2="0" [attr.y2]="collection.isLastCollectionInLesson ? 42 : 36" [ngClass]="{'hide': collection.nextCollectionPathType !== collection.pathType,
+                              'show': (collection.isTeacherSuggested && collection.isInfoOpen && !collection.isNextTeacherSuggested) || (!collection.isSuggestedContent && collection.isInfoOpen && collection.isNextSystemSuggested || milestone.isUnit0)}" />
+                              <path class="path-right hide" [ngClass]="{'show': !collection.isInfoOpen && (collection.isNextSuggestedCollection || collection.isSuggestedContent) &&
+                             (collection.nextCollectionPathType !== collection.pathType) && (collection.isNextSystemSuggested || collection.isTeacherSuggested)}" d="M 0 0  t 7 17 -10 60" />
+                              <path class="path-left hide" [ngClass]="{'show': (collection.isNextSuggestedCollection || collection.isSuggestedContent)  &&
+                            (collection.nextCollectionPathType !== collection.pathType) && (collection.isNextTeacherSuggested || collection.isSystemSuggested)}" d="M 12 0  t -6 17 5 60" />
+                            </svg>
+                          </div>
+                          <ion-icon class="nav-{{collection.format}} collection-img"></ion-icon>
+                        </div>
+                        <div class="collection-title ellipsis" (click)="onPreview($event, collection, lesson)">
+                          <ion-text class="ellipsis">{{collection.title}}</ion-text>
+                        </div>
+                        <div class="show-attempt-info" [ngClass]="{'disabled': !collection.isShowAttempts }" (click)="onShowAttemptInfo($event, collection, lesson, milestone)">
+                          <ng-container *ngIf="collection.isInfoOpen; else infoTemplate">
+                            <ion-text class="material-icons info">close</ion-text>
+                          </ng-container>
+                          <ng-template #infoTemplate>
+                            <ion-text class="material-icons info">info_outlined</ion-text>
+                          </ng-template>
+                        </div>
+                        <div *ngIf="collection.performance && collection.performance.gradingStatus !== 'in-progress'; else noPerformance" (click)="onOpenCollectionReport($event, collection, lesson)" class="collection-score no-padding format-{{collection.format}} grade-range-{{collection.performance.scoreInPercentage | gradeRange}}">
+                          <div class="score" *ngIf="collection.format === 'assessment' || collection.format === 'offline-activity' || collection.format === 'assessment-external'; else showTimeSpent"
+                            [ngClass]="{'read-only' : collection.performance.scoreInPercentage === null }">
+                            <ion-text>
+                              {{collection.performance.scoreInPercentage | transformPerformanceScore}}
+                            </ion-text>
+                          </div>
+                          <ng-template #showTimeSpent>
+                            <div class="timespent" *ngIf="collection.performance.timespent; else noPerformance" [ngClass]="{'read-only' : !collection.performance.timespent }">
+                              <ion-text>{{collection.performance.timespent | transformTimeSpent }}</ion-text>
+                            </div>
+                          </ng-template>
+                        </div>
+                        <ng-template #noPerformance>
+                          <img [src]="collection.thumbnailXS" class="thumbnail-image" *ngIf="!collection.performance;else inProgress"/>
+                        </ng-template>
+                        <ng-template #inProgress>
+                          <ion-text class="inprogress-txt">{{'IN_PROGRESS' | translate}}</ion-text>
+                        </ng-template>
+                        <div class="collection-info-container {{collection.pathType}}" *ngIf="collection.isInfoOpen">
+                          <ng-container *ngIf="collection.activityAttempts; else lessonSkeletonView">
+                            <show-attempt
+                            [isLastCollectionInMilestone]="collection.isLastCollectionInMilestone"
+                            [isCurrentSystemSuggested]="collection.isSystemSuggested"
+                            [isCurrentTeacherSuggested]="collection.isTeacherSuggested"
+                            [isNextTeacherSuggested]="collection.isNextTeacherSuggested"
+                            [isNextSystemSuggested]="collection.isNextSystemSuggested"
+                            [isCurrentSuggestedCollection]="collection.isSuggestedContent"
+                            [isNextSuggestedCollection]="collection.isNextSuggestedCollection"
+                            [activityAttempts]="collection.activityAttempts"
+                            [collection]="collection">
+                            </show-attempt>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-template #collectionSkeletonView>
+                      <div class="skeleton-panel-header">
+                        <div class="horiz-vert-center">
+                          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+                        </div>
+                        <div class="horiz-vert-center">
+                          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+                        </div>
+                        <div class="horiz-vert-center">
+                          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </ng-container>
+          <ng-template #lessonSkeletonView>
+            <div class="skeleton-panel-header">
+              <div class="horiz-vert-center">
+                <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+              </div>
+              <div class="horiz-vert-center">
+                <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+              </div>
+              <div class="horiz-vert-center">
+                <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+              </div>
+            </div>
+          </ng-template>
+        </ng-template>
+      </mat-expansion-panel>
+    </div>
+  </ng-template>
+</mat-accordion>

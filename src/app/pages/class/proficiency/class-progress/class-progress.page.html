@@ -1,0 +1,225 @@
+<ion-content>
+  <ion-row class="search-student-row">
+    <ion-col size="10" class="ion-no-padding input-row">
+      <ion-input type="text" placeholder="{{ 'SEARCH_USERNAME_MSG' | translate }}" (ionInput)="filterStudentList($event)"></ion-input>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding search-icon">
+      <ion-icon name="search"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ng-container *ngIf="isLoaded;else skeletonLoader">
+    <ng-container *ngIf="isShowProficiencyView;else noProficiencyView">
+      <ion-grid class="class-progress-report">
+        <ion-row class="header-container">
+          <ion-col class="header-left">
+            <ion-grid>
+              <ion-row class="dropdown">
+                <ion-select [value]="selectedPeriod" class="select-period" (ionChange)="changeReportPeriod($event)">
+                  <ion-select-option [value]="period.type" *ngFor="let period of reportPeriod">{{period.text}}</ion-select-option>
+                </ion-select>
+                <!-- <ion-text class="material-icons-outlined" (click)="downloadReport()">
+                file_download
+              </ion-text> -->
+              </ion-row>
+              <ion-row class="name">
+                <ion-label>{{'NAME'| translate}}</ion-label>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col class="header-right">
+            <ion-row class="row-header-right">
+              <ion-col class="col-header col-competencies ion-no-padding">
+                <ion-text class="header-title">{{'COMPETENCY_GAINS' | translate}}</ion-text>
+                <ion-row class="sub-header">
+                  <ion-col class="col-width">
+                    <ion-text>{{'DIAGNOSTIC'| translate}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-width">
+                    <ion-text>{{'NEW'| translate}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-width">
+                    <ion-text>{{'REINFORCED'| translate}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-width">
+                    <ion-text>{{'INFERRED'| translate}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-width">
+                    <ion-text>{{'IN_PROGRESS'| translate}}</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col class="col-header col-timespent ion-no-padding">
+                <ion-text class="header-title">{{'TIMESPENT'| translate}}</ion-text>
+                <ion-row class="sub-header">
+                  <ion-col class="col-width">
+                    <ion-text>{{'COLLECTIONS'| translate}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-width">
+                    <ion-text>{{'ASSESSMENTS' | translate}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-width">
+                    <ion-text>{{'TOTAL'| translate}}</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>             
+              <ion-col class="col-width ion-no-padding">
+                <ion-text class="col-header header-title">{{'AVERAGE_SCORE'| translate}}</ion-text>
+              </ion-col>
+              <ion-col class="col-width ion-no-padding">
+                <ion-text class="col-header header-title">{{'BADGES_EARNED'| translate}}</ion-text>
+              </ion-col>
+              <ion-col class="col-width ion-no-padding">
+                <ion-text class="col-header header-title">{{'SUGGESTIONS_TAKEN'| translate}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row class="body-container">
+          <ion-col class="body-left">
+            <ion-item class="student-info-container" *ngFor="let studentReport of studentProgressReport | listFilter: searchText: 'studentName' | sortBy: 'studentFirstName'">
+              <ng-container *ngIf="studentReport" >
+                <ion-avatar slot="start">
+                  <ion-img *ngIf="studentReport.student.thumbnailUrl && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="studentReport.student.thumbnailUrl"></ion-img>
+                  <ng-template #ngxAvatar>
+                    <ion-avatar class="avatar-icon" >
+                      <ngx-avatar [name]="studentReport.student.firstName"></ngx-avatar>
+                    </ion-avatar>
+                  </ng-template>
+                </ion-avatar>
+                <ion-label dataVisibility [asteriskInLeft]="true" [showLearnerData]="studentReport.student.isShowLearnerData">{{studentReport.student.lastName}}, {{studentReport.student.firstName}}</ion-label>
+              </ng-container>
+            </ion-item>
+          </ion-col>
+          <ion-col class="body-right">
+            <ion-row class="student-summary-container" *ngFor="let studentReport of studentProgressReport | listFilter: searchText: 'studentName' | sortBy: 'studentFirstName'">
+              <ion-row class="summary-container">
+                <ion-col >
+                  <ng-container  *ngIf="studentReport.weeklyReportData.diagonticsCompetencies; else noData" >
+                    <i class="competency-status-2 competency-status"></i>
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.diagonticsCompetencies}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col >
+                  <ng-container *ngIf="studentReport.weeklyReportData.newMasteredCompetenciesCount; else noData">
+                    <i class="competency-status-2 competency-status"></i>
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.newMasteredCompetenciesCount}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col >
+                  <ng-container *ngIf="studentReport.weeklyReportData.reInForcedMasteryCount; else noData">
+                    <i class="competency-status-2 competency-status"></i>
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.reInForcedMasteryCount}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.inferredCompetenciesCount; else noData">
+                    <i class="competency-status-5 competency-status"></i>
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.inferredCompetenciesCount}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.inprogressCompetenciesCount; else noData">
+                    <i class="competency-status-1 competency-status"></i>
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.inprogressCompetenciesCount}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.collectionTimespent; else noData">
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.collectionTimespent | transformTimeSpent}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.assessmentTimespent; else noData">
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.assessmentTimespent | transformTimeSpent}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.totalTimespent; else noData">
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.totalTimespent | transformTimeSpent}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="!studentReport.weeklyReportData.isNotStarted; else noData">
+                    <ion-text ngClass="score-range grade-range-{{studentReport.weeklyReportData.averageScore | gradeRange}}" (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.averageScore}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.badgeEarned; else noData">
+                    <ion-text (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.badgeEarned}}</ion-text>
+                  </ng-container>
+                </ion-col>
+                <ion-col>
+                  <ng-container *ngIf="studentReport.weeklyReportData.suggestionTaken; else noData">
+                    <ion-text class="suggestion-taken" (click)="openStudentProgressReport(studentReport)">{{studentReport.weeklyReportData.suggestionTaken}}</ion-text>
+                  </ng-container>
+                </ion-col>
+              </ion-row>
+              <ng-template #noData >
+                <ion-text>&ndash;</ion-text>
+              </ng-template>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </ng-container>
+  <ng-template #skeletonLoader>
+    <ion-grid class="class-progress-report">
+      <ion-row class="header-container">
+        <ion-col class="header-left">
+          <ion-grid>
+            <ion-row class="dropdown">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-row>
+            <ion-row class="name">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col class="header-right">
+          <ion-row class="row-header-right">
+            <ion-col class="col-header col-competencies ion-no-padding">
+              <ion-skeleton-text class="header-title" animated></ion-skeleton-text>
+              <ion-row class="sub-header">
+                <ion-col class="col-width" *ngFor="let item of [].constructor(3)">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="body-container">
+        <ion-col class="body-left">
+          <ion-item class="student-info-container" *ngFor="let item of [].constructor(8)">
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-item>
+        </ion-col>
+        <ion-col class="body-right">
+          <ion-row class="student-summary-container" *ngFor="let item of [].constructor(8)">
+            <ion-row class="summary-container">
+              <ion-col *ngFor="let item of [].constructor(3)">
+                <ion-skeleton-text class="skeleton-col-value" animated></ion-skeleton-text>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <ng-template #noProficiencyView>
+    <ion-row class="no-data-msg">
+      {{'NO_PROFICIENCY' | translate}}
+    </ion-row>
+  </ng-template>
+  <!-- alert -->
+  <ion-row *ngIf="showAlert" class="download-prompt-container">
+    <ion-row class="message">
+      <ion-text>{{'PDF_LOADING_MSG' | translate}}</ion-text>
+      <ion-spinner class="spinner-dots" color="primary" name="dots"></ion-spinner>
+    </ion-row>
+  </ion-row>
+</ion-content>

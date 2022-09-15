@@ -1,0 +1,83 @@
+<ion-header class="teacher-home-header">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-menu-button autoHide="false"></ion-menu-button>
+          </ion-buttons>
+        </ion-col>
+        <ng-container *ngIf="!isShowSearchBar">
+          <ion-col size="8">
+            <ion-title>{{'CLASSROOM' | translate}}</ion-title>
+          </ion-col>
+          <ion-col class="actions" size="2" (click)="toggleSearchBar()">
+            <i class="material-icons">search</i>
+          </ion-col>
+        </ng-container>
+        <ng-container *ngIf="isShowSearchBar">
+          <ion-col size="8">
+            <ion-input placeholder="{{'SEARCH' | translate}}" type="search" enterkeyhint="search"
+              class="classroom-searchbar" (ionInput)="filterClassList($event)" searchIcon="false" clearIcon="false">
+            </ion-input>
+          </ion-col>
+          <ion-col class="actions" size="2">
+            <i class="close material-icons" (click)="toggleSearchBar()">close</i>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-row class="teacher-home-tabs">
+    <ion-col [size]="hasInCompleteClassrooms ? 4 : 6" class="ion-no-padding" [ngClass]="{'journey-tab-border': isShowClassRooms}"
+      (click)="onClickClassRoomTab()">
+      <ion-item class="tab-item">
+        <ion-label class="tab-label"> {{'CURRENTLY_TEACHING' | translate}} </ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4" class="ion-no-padding" *ngIf="hasInCompleteClassrooms" [ngClass]="{'journey-tab-border': isShowInCompleteClassrooms}"
+    (click)="onInCompleteClassroomsTab()">
+    <ion-item class="tab-item">
+      <ion-label class="tab-label"> {{'INCOMPLETE_CLASSROOMS' | translate}} </ion-label>
+    </ion-item>
+  </ion-col>
+    <ion-col [size]="hasInCompleteClassrooms ? 4 : 6" class="ion-no-padding" [ngClass]="{'journey-tab-border': isShowArchivedClass}"
+      (click)="onClickArchivedClassTab()">
+      <ion-item class="tab-item">
+        <ion-label class="tab-label"> {{'ARCHIVED_CLASSROOMS' | translate}} </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content class="teacher-home-container">
+  <ion-refresher slot="fixed" id="ion-refresher" pullFactor="0.5" pullMin="100" pullMax="200"
+    (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="isShowClassRooms">
+    <nav-classroom [isOnline]="isOnline" [searchText]="searchText" [classList]="classList" [isLoaded]="isLoaded"></nav-classroom>
+  </ng-container>
+  <ng-container *ngIf="isShowInCompleteClassrooms">
+      <nav-incomplete-classrooms [isOnline]="isOnline" *ngFor="let incompleteClass of incompleteClasses" (deleteClassRoom) = "onDeleteClass($event)" [incompleteClass] ="incompleteClass"></nav-incomplete-classrooms>
+  </ng-container>
+  <ng-container *ngIf="isShowArchivedClass">
+    <archived-classrooms [isOnline]="isOnline" [searchText]="searchText" [isLoaded]="isLoaded" [archivedClass]="archivedClass">
+    </archived-classrooms>
+  </ng-container>
+</ion-content>
+<ion-footer class="teacher-homepage-footer" *ngIf="isShowClassRooms && isOnline">
+  <ion-toolbar class="create-classroom-toolbar" (click)="openCreateClassroom()">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="title-col">
+        <ion-col class="title">
+          <ion-text>{{ 'CREATE_CLASSROOM' | translate }}</ion-text>
+        </ion-col>
+        <ion-col class="arrow-col">
+          <ion-icon class="arrow-icon" name="caret-down-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

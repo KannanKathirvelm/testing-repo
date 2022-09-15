@@ -1,0 +1,29 @@
+<ion-row class="general-preference-container">
+  <ion-row class="general-preference-header">
+    <ion-row class="title">
+      <ion-text class="label">{{ 'GENERAL_PREFERENCE' | translate }}</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-row class="general-preference-card-panel">
+    <ion-row class="header-bar">
+      <ion-col class="general-preference-title" size="7">
+        <ion-text class="title">{{ 'SORT_PREFERENCE_MSG' | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="general-preference-option general-preference" size="5">
+        <ion-select [interfaceOptions]="sortPreferenceHeader" (ionChange)="onChangeSortPreference($event)" [value]="updatedSortPreference" dropdownScrollIntoView>
+          <ion-select-option [value]="sortPreference.key" *ngFor="let sortPreference of sortPreferences">{{sortPreference.name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row class="header-bar last-row">
+      <ion-col class="general-preference-title" size="7">
+        <ion-text class="title">{{ 'CLASS_REPORT_DEFAULT_LANDING' | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="general-preference-option general-preference" size="5">
+        <ion-select [interfaceOptions]="defaultLandingHeader" (ionChange)="onChangeDefaultLandingRoute($event)" [value]="updatedLandingRoute" dropdownScrollIntoView>
+          <ion-select-option [value]="landingRoute.key" *ngFor="let landingRoute of reportDefaultLanding">{{landingRoute.name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

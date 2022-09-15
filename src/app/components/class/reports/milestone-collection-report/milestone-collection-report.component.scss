@@ -1,0 +1,590 @@
+@import "src/theme/grade-mixin.scss";
+
+.milestone-with-performance-header {
+  .header-title {
+    height: 48px;
+
+    .close-icon {
+      position: absolute;
+      width: 50px;
+      height: 48px;
+      right: 0;
+
+      ion-text {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-size: 24px;
+      }
+    }
+
+    .title-container {
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      padding-left: 10px;
+      display: grid;
+      grid-template-columns: 50px 1fr 50px;
+
+      .collection-img {
+        background-color: var(--milestone-panel-bg);
+        width: 26px;
+        height: 26px;
+      }
+
+      .title-content {
+        display: grid;
+
+        .sub-title {
+          opacity: 0.7;
+          font-family: var(--sans);
+          font-size: 12px;
+          color: var(--coursemap-title-color);
+        }
+      }
+
+      .report-icon {
+        width: 30px;
+        height: 30px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        background: var(--journey-thumbnail-col-bg);
+        border-radius: 50px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        margin: auto;
+      }
+
+      .title {
+        font-weight: 700;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+.milestone-with-performance-content {
+  .skeleton-grid {
+    width: 100%;
+    background-color: var(--ms-coursemap-report-color);
+
+    .skeleton-row {
+      display: grid;
+      grid-template-columns: auto 48px;
+      min-height: 48px;
+      align-items: center;
+
+      &.performance-skeleton {
+        width: 100%;
+        display: flex;
+        height: 240px;
+
+        ion-skeleton-text {
+          height: 100%;
+        }
+      }
+
+      .performance-col,
+      .title-col {
+        height: 100%;
+
+        ion-skeleton-text {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .coursemap-container {
+    width: 100%;
+
+    .mat-expansion-panel-spacing {
+      margin: 0 0 8px;
+    }
+
+    .coursemap-lesson-container-row {
+      padding: 0 8px;
+      background-color: var(--coursemap-accordion-bgcolor);
+
+      &:first-child {
+        padding-top: 8px;
+      }
+
+      &:last-child {
+        padding-bottom: 8px;
+      }
+    }
+
+    .coursemap-lesson-container-row,
+    .coursemap-milestone-container-row {
+      .coursemap-lesson-panel,
+      .coursemap-milestone-panel {
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+
+        ::ng-deep .mat-expansion-panel-body {
+          background-image: linear-gradient(to top, var(--ms-coursemap-report-gradient-1), var(--ms-coursemap-report-gradient-2) 7%);
+          padding: 0;
+        }
+
+        .coursemap-lesson-panel-header,
+        .coursemap-milestone-panel-header {
+          padding: 0;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+          margin-bottom: 1px;
+
+          &.mat-expanded {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 0;
+
+            .toggle-icon-wrapper {
+              .arrow-dropup {
+                display: block;
+              }
+
+              .arrow-dropdown {
+                display: none;
+              }
+            }
+          }
+        }
+
+        .coursemap-milestone-row {
+          display: grid;
+          grid-template-columns: 42px 48px 1fr 48px;
+          height: 49px;
+          align-items: center;
+
+          .suggestion-checkbox {
+            text-align: center;
+            margin-left: 5px;
+            ion-row {
+              justify-content: center;
+            }
+          }
+
+          .collection-icon-wrapper {
+            display: flex;
+            margin: auto;
+            justify-content: center;
+          
+            ion-icon {
+              background-color: var(--milestone-panel-bg);
+              width: 22px;
+              height: 22px;
+            }
+          }
+        }
+
+        .coursemap-lesson-row,
+        .coursemap-milestone-row,
+        .coursemap-student-row {
+          .title-col {
+            float: left;
+            display: grid;
+            margin: auto;
+
+            &.milestone {
+              padding: 6px 0 6px 5px;
+            }
+
+            &.lesson {
+              padding: 4px 0 4px 16px;
+            }
+
+            .lesson-name,
+            .milestone-name {
+              ion-text {
+                opacity: 0.7;
+                font-family: var(--sans);
+                font-size: 12px;
+                color: var(--coursemap-title-color);
+              }
+            }
+
+            .coursemap-lesson-title,
+            .coursemap-milestone-title {
+              ion-text {
+                font-family: var(--sans);
+                font-size: 15px;
+                color: var(--coursemap-title-color);
+              }
+            }
+          }
+
+          .coursemap-suggestion-col {
+            max-width: 48px;
+            padding: 0;
+            display: flex;
+
+            .coursemap-suggestion-icon {
+              width: 24px;
+              height: 24px;
+              margin: auto;
+              color: var(--coursemap-suggestion-icon-color);
+            }
+
+            .rotate-90 {
+              transform: rotate(90deg);
+            }
+          }
+
+          .toggle-icon-wrapper {
+            width: 24px;
+            margin: auto;
+            color: var(--milestone-toggle-icon-color);
+            font-size: 20px;
+
+            .arrow-dropdown {
+              font-size: 24px;
+              display: block;
+            }
+
+            .arrow-dropup {
+              font-size: 24px;
+              display: none;
+            }
+          }
+
+          .performance-col {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            &.collection-performance {
+              background-color: var(--milestone-collection-score);
+
+              .timespent {
+                color: var(--milestone-timespent-score-color);
+                font-size: 12px;
+
+                .collection-timespent {
+                  text-align: center;
+                  white-space: pre-wrap;
+                  margin: auto;
+                }
+              }
+
+              .profile-count-row {
+                .profile-count,
+                .profile-icon {
+                  color: var(--milestone-timespent-score-color);
+                }
+              }
+            }
+
+            &.grade-range-not-started {
+              &.no-performance {
+                background-color: var(--coursemap-unit-no-score);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+
+                &:before {
+                  content: "";
+                  width: 20px;
+                  height: 8px;
+                  background: var(--ms-coursemap-report-color);
+                  border-radius: 5px;
+                  position: absolute;
+                  text-align: center;
+                }
+              }
+            }
+
+            &.milestone-performance {
+              max-width: 56px;
+              height: 49px;
+            }
+
+            &.lesson-performance {
+              max-width: 48px;
+              height: 48px;
+            }
+
+            .score {
+              height: 100%;
+            }
+
+            .performance-row {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+
+              .performance-score {
+                width: 25px;
+                height: 12px;
+                font-family: var(--sans);
+                font-size: 12px;
+                font-weight: bold;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &.milestone-performance-score {
+                  color: var(--coursemap-unit-performance-score);
+                }
+              }
+            }
+
+            .profile-count-row {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              padding-top: 5px;
+
+              .profile-icon {
+                width: 16px;
+                height: 16px;
+                color: var(--coursemap-profile-icon-color);
+              }
+
+              .profile-count {
+                width: 14px;
+                height: 16px;
+                margin-left: 3px;
+                font-family: var(--sans);
+                font-size: 12px;
+                font-weight: bold;
+                text-align: right;
+                color: var(--coursemap-profile-count);
+              }
+            }
+          }
+        }
+      }
+
+      .student-container {
+        margin: 10px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        background-color: var(--ms-coursemap-report-color);
+
+        .coursemap-student-row {
+          height: 48px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+          .suggestion-checkbox{
+            max-width: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .student-title-container {
+            .student-title-row {
+              display: flex;
+              align-items: center;
+
+              .student-icon-col {
+                display: flex;
+                margin: auto;
+                max-width: 48px;
+                height: 48px;
+
+                ion-avatar {
+                  display: flex;
+                  width: 29px;
+                  height: 29px;
+                  margin: auto;
+
+                  .profile {
+                    padding: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 2px;
+                  }
+
+                  .avatar-icon {
+                    ::ng-deep .avatar-container {
+                      height: 29px !important;
+                      width: 29px !important;
+
+                      .avatar-content {
+                        width: 29px;
+                        height: 29px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font: 12px / 30px Helvetica, Arial, sans-serif !important;
+                        margin: auto;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .student-title-col {
+                .student-title {
+                  font-size: 12px;
+                  color: var(--coursemap-title-color);
+                  font-family: var(--sans);
+                  text-transform: capitalize;
+                }
+              }
+            }
+          }
+
+          .resource-status {
+            max-width: 80px;
+            margin: auto;
+            justify-content: center;
+            display: grid;
+
+            ion-text {
+              margin: auto;
+            }
+
+            .correct {
+              color: var(--correct-answer);
+            }
+
+            .in-correct {
+              color: var(--wrong-answer);
+            }
+          }
+
+          .student-thumbnail-col {
+            max-width: 48px;
+            height: 48px;
+            object-fit: contain;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .student-performance {
+            max-width: 48px;
+            height: 48px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+    }
+  }
+
+  .milestone-content-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: max-content auto 1fr;
+
+    .suggestion-container {
+      .suggestion-actions {
+        display: flex;
+        align-items: center;
+        color: var(--white);
+        background-color: var(--carrot-orange);
+        font-size: 12px;
+        font-weight: bold;
+        justify-content: flex-end;
+        padding: 10px 15px;
+        i {
+          font-size: 20px;
+          margin-right: 5px;
+        }
+      }
+    }
+
+    milestone-accordion {
+      height: calc(100% - 240px);
+      width: 100%;
+    }
+  }
+
+  .performance-activity {
+    display: grid;
+    position: relative;
+    height: 240px;
+    grid-template-rows: 20px 1fr;
+    width: 100%;
+
+    &.collection {
+      background-color: var(--border-gray);
+    }
+
+    &.no-performance {
+      background-color: var(--no-performance-bg);
+
+      .performance {
+        .score-container {
+          margin: auto;
+        }
+      }
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      opacity: 0.3;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(242, 235, 235);
+    }
+
+    %webkit-container {
+      -webkit-mask-size: cover;
+      -webkit-mask-repeat: no-repeat;
+      background: currentColor;
+      -webkit-mask-image: var(--performance-score-fill-bg);
+    }
+
+    %container {
+      mask-size: cover;
+      mask-repeat: no-repeat;
+      background: currentColor;
+      mask-image: var(--performance-score-fill-bg);
+    }
+
+    .performance {
+      text-align: center;
+      display: flex;
+      font-weight: bold;
+      justify-content: center;
+      z-index: 1;
+      height: 240px;
+      flex-direction: column;
+      margin: auto;
+      color: var(--dark-400);
+
+      .score-container {
+        display: grid;
+        justify-content: center;
+
+        .label {
+          font-size: 16px;
+          color: var(--assessment-summary-report-text-color);
+          margin-bottom: 15px;
+        }
+
+        .time-spent {
+          margin: auto;
+          font-size: 32px;
+        }
+
+        .score {
+          font-size: 56px;
+          font-weight: bold;
+          line-height: 1.14;
+          color: var(--assessment-summary-report-text-color);
+          align-self: end;
+        }
+      }
+    }
+    @include grade-range();
+
+    .performance-img {
+      grid-row-start: 2;
+      @extend %webkit-container;
+      @extend %container;
+      display: grid;
+      align-self: end;
+    }
+  }
+}

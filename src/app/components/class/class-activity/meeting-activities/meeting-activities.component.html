@@ -1,0 +1,30 @@
+<ion-row class="row-meeting-slider">
+  <ion-col size="1" class="left-arrow">
+    <ion-icon name="arrow-back-outline" (click)="slidePrev(meetingSlider,slideWithNav)" [class.disabled]="meetingSlider.isBeginningSlide"></ion-icon>
+  </ion-col>
+  <ion-col size="10" class="slider-content">
+    <ion-slides pager="false" class="meeting-list" [options]="meetingSlideOpts" #slideWithNav>
+      <ion-slide *ngFor="let meetingClassContent of meetingClassContents; let meetingClassIndex = index">
+        <ion-row class="row-meeting">
+          <ion-col class="col-meeting-icon"></ion-col>
+          <ion-col class="col-title">
+            <ion-text class="text-time">{{meetingClassContent.meetingStartTime | date:'h:mm a'}} - {{meetingClassContent.meetingEndTime | date:'h:mm a'}} </ion-text>
+            <ion-text class="text-title ellipsis">{{meetingClassContent.title}}</ion-text>
+          </ion-col>
+          <ion-col class="col-video-icon">
+            <ion-icon class="nav-meet" (click)="openVideoConference(meetingClassContent)"></ion-icon>
+          </ion-col>
+          <ion-col class="col-activate-icon">
+            <ion-toggle [checked]="meetingClassContent.isActive" [disabled]="meetingClassContent.isActive" (ionChange)="enableMeetingActivity(meetingClassContent)"></ion-toggle>
+          </ion-col>
+          <ion-col class="col-delete-icon">
+            <ion-icon name="trash-outline" (click)="deleteMeetingActivity(meetingClassIndex)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+    </ion-slides>
+  </ion-col>
+  <ion-col size="1" class="right-arrow">
+    <ion-icon name="arrow-forward-outline" (click)="slideNext(meetingSlider,slideWithNav)" [class.disabled]="meetingSlider.isEndSlide"></ion-icon>
+  </ion-col>
+</ion-row>

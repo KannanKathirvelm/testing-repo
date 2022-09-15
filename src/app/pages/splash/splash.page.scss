@@ -1,0 +1,14 @@
+ion-content {
+  --background: var(--splash-bg-color);
+  width: 100%;
+  height: 100%;
+
+  .splash-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: var(--splash-screen-image);
+    background-position: center;
+    background-size: cover;
+  }
+}

@@ -1,0 +1,255 @@
+ion-header {
+  ion-toolbar {
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+
+    .row-rubric-header {
+      display: grid;
+      grid-template-columns: 48px auto 48px;
+      height: 48px;
+      box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,0);
+
+      ion-col {
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        &.col-icon {
+          justify-content: center;
+        }
+
+        &.col-close {
+          justify-content: center;
+        }
+
+        &.col-title {
+          ion-text {
+            font-family: var(--sans);
+            font-size: 14px;
+            color: var(--dark-400);
+          }
+        }
+      }
+    }
+  }
+
+  .student-list-row {
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid gray;
+
+    &.temp-disable {
+      .col-score,
+      .left-arrow {
+        opacity: 0.3;
+        pointer-events: none;
+        visibility: hidden;
+      }
+    }
+
+    .left-arrow {
+      display: flex;
+      padding: 0;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+
+      ion-icon {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+
+      &.disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+    }
+
+    .right-arrow {
+      display: flex;
+      padding: 0;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+
+      ion-icon {
+        font-size: 24px;
+        margin-left: 10px;
+      }
+      ion-text{
+        margin-left: 10px;
+      }
+
+      &.disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+    }
+
+    .col-score {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.grade-range-not-started {
+        background: var(--dark-200-opacity);
+        color: #fff;
+      }
+    }
+
+    .student-list-slide-col {
+      height: 50px;
+      padding: 0;
+
+      .student-list {
+        .student-name-slide-row {
+          justify-content: center;
+          height: 50px;
+          display: grid;
+          grid-template-columns: 48px auto 36px;
+          grid-column-gap: 10px;
+
+          .profile-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .profile {
+              display: grid;
+              align-items: center;
+              justify-content: center;
+              width: 49px;
+              height: 49px;
+              .profile {
+                height: 100%;
+                width: 100%;
+              }
+            }
+
+            .avatar-icon {
+              ::ng-deep .avatar-container {
+                height: 30px !important;
+                width: 30px !important;
+
+                .avatar-content {
+                  width: 30px;
+                  height: 30px;
+                  font: 16px / 30px Helvetica, Arial, sans-serif !important;
+                  margin: auto;
+                }
+              }
+            }
+          }
+
+          .student-name-row {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: flex-start;
+
+            ion-text {
+              font-family: var(--sans);
+              font-size: 14px;
+              color: var(--dark-400);
+              text-transform: capitalize;
+              font-family: var(--sans);
+
+              &.text-student-count {
+                font-size: 11px;
+              }
+            }
+          }
+
+          .col-dropdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+
+  .tabs {
+    height: 40px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: var(--white);
+    display: flex;
+    border-bottom: 1px solid #dadada;
+
+    .tab-content {
+      width: calc(100% - 200px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.active {
+        border-bottom: solid 3px var(--rubric-active-tab);
+
+        ion-text {
+          color: var(--rubric-active-tab);
+        }
+      }
+
+      ion-text {
+        color: var(--black);
+        height: 15px;
+        opacity: 0.5;
+        font-size: 13px;
+        margin: auto;
+      }
+    }
+  }
+}
+
+ion-content {
+  --background: var(--light-grey);
+}
+
+.backdrop {
+  top: 104px;
+}
+
+nav-oa-student-list {
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  z-index: 14;
+  max-height: calc(100vh - 104px);
+  overflow-y: auto !important;
+}
+
+.skeleton-student {
+  .student-name-slide-row {
+    justify-content: center;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 48px auto;
+
+    ion-col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      ion-avatar {
+        display: grid;
+        align-items: center;
+        height: 30px;
+        width: 30px;
+
+        ion-skeleton-text {
+          width: 30px;
+        }
+      }
+
+      ion-skeleton-text {
+        width: 100px;
+      }
+    }
+  }
+}

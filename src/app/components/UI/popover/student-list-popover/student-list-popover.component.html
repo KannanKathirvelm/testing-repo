@@ -1,0 +1,14 @@
+<ion-list class="student-list-container">
+  <ion-row class="user-detail" *ngFor="let student of studentList">
+    <ion-avatar>
+      <ion-img *ngIf="(student.avatarUrl || student.thumbnail) && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.avatarUrl || student.thumbnail">
+      </ion-img>
+      <ng-template #ngxAvatar>
+        <ion-avatar class="profile avatar-icon">
+          <ngx-avatar [name]="student.firstName"></ngx-avatar>
+        </ion-avatar>
+      </ng-template>
+    </ion-avatar>
+    <ion-text class="ellipsis">{{student.firstName}}</ion-text>
+  </ion-row>
+</ion-list>

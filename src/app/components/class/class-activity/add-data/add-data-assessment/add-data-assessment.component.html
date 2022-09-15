@@ -1,0 +1,126 @@
+<ion-header class="ion-no-padding add-data-assessment-container">
+  <ion-toolbar>
+    <ion-row class="report-header-row">
+      <ion-col class="ion-no-padding header-icon">
+        <ion-icon class="nav-assessment"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding header-text">
+        <ion-text class="ellipsis">{{title}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-no-padding header-icon">
+        <ion-text class="material-icons" (click)="closeReport()">clear</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="grid-assessment-container">
+      <ng-container  *ngIf="isTimespentAdd; else studentListTemplate">
+        <ng-container *ngIf="isAssessment; else maxScoreTemplate">
+          <nav-timepicker [hours]="0" [minutes]="0" (hoursMinutes)="submitAssessmentTimeSpent($event)"></nav-timepicker>
+        </ng-container>
+        <ng-template #maxScoreTemplate>
+          <ion-grid class="grid-max-score">
+            <ion-row class="row-header-text">
+              <ion-text>{{'INPUT_MAX_SCORE' | translate}}</ion-text>
+            </ion-row>
+            <nav-ca-max-score [maxScore]="100" [minScore]="1" [scoreLabel]="'MAXSCORE' | translate" [buttonText]="'CONFIRM' | translate" (userScore)="onOverallMaxScore($event)"></nav-ca-max-score>
+          </ion-grid>
+        </ng-template>
+      </ng-container>
+    <ng-template #studentListTemplate>
+      <ion-grid class="grid-container">
+        <ion-row class="row-search">
+          <ion-searchbar placeholder="{{'SEARCH_STUDENT' | translate}}" enterkeyhint="search" [(ngModel)]="searchText"></ion-searchbar>
+        </ion-row>
+        <ion-row class="row-max-score" *ngIf="!isAssessment">
+          <ion-col class="col-text">
+            <ion-text class="text-max-score">{{'MAXSCORE' | translate}}</ion-text>
+          </ion-col>
+          <ion-col class="col-score">
+            <ion-text class="text-score">{{maxScore}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-student-list">
+          <mat-accordion class="accordion-container">
+            <ng-container *ngFor="let student of students | listFilter: searchText: 'username'; let studentIndex = index; let isLastStudent = last; let isFirstStudent = first">
+              <mat-expansion-panel class="accordion-panel" [hideToggle]="true" [expanded]="isFirstStudent || student.isExpanded" (opened)="openStudent(studentIndex)" (closed)="closedStudent(studentIndex)">
+                <mat-expansion-panel-header class="accordion-panel-header main-header" collapsedHeight="48px" expandedHeight="48px">
+                  <ion-row class="row-header">
+                    <ion-col class="col-profile-icon">
+                      <ion-avatar class="profile avatar-icon" *ngIf="student.thumbnail && !isThumbnailError; else avatarIcon">
+                        <img  (error)="onImgError()" [src]="student.thumbnail" class="profile-icon">
+                      </ion-avatar>
+                      <ng-template #avatarIcon>
+                        <ion-avatar class="profile avatar-icon">
+                          <ngx-avatar [name]="student.username"></ngx-avatar>
+                        </ion-avatar>
+                      </ng-template>
+                    </ion-col>
+                    <ion-col class="col-text">
+                      <ion-text class="ellipsis">{{student.lastName}}, {{student.firstName}}</ion-text>
+                    </ion-col>
+                    <ion-col class="col-dropdown">
+                      <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                      <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                    </ion-col>
+                    <ion-col class="col-performance" [ngClass]="{'has-timespent': student.performance}">
+                      <ion-text *ngIf="student.performance" ngClass="grade-range-{{student.performance.assessment.score | gradeRange}}">{{student.performance.assessment.score | transformPerformanceScore}}</ion-text>
+                    </ion-col>
+                  </ion-row>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                  <ng-container *ngIf="isAssessment; else studentMaxScoreTemplate">
+                    <mat-accordion class="accordion-container content-accordion">
+                      <ng-container *ngFor="let content of student.content; let contentIndex = index; let isFirstContent = first">
+                        <mat-expansion-panel class="accordion-panel content-accordion-panel" [hideToggle]="true" [expanded]="isFirstContent || content.isExpanded" (opened)="openedContent(content)">
+                          <mat-expansion-panel-header class="accordion-panel-header content-accordion-panel-header" collapsedHeight="48px" expandedHeight="48px">
+                            <ion-row class="row-header">
+                              <ion-col class="col-text">
+                                <ion-text class="ellipsis" >Q{{contentIndex + 1}}. <span  [innerHTML]="content.title"></span></ion-text>
+                              </ion-col>
+                              <ion-col class="col-dropdown">
+                                <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                                <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                              </ion-col>
+                              <ion-col class="col-performance" [ngClass]="{'has-score': content.scoreInPercentage !== null}">
+                                <ion-row *ngIf="content.scoreInPercentage !== null" class="score-row grade-range-{{content.scoreInPercentage | gradeRange}}">
+                                  <ion-text>{{content.score}}<ng-container *ngIf="content.score !== 'NA'">/{{content.maxScore}}</ng-container></ion-text>
+                                </ion-row>
+                              </ion-col>
+                            </ion-row>
+                          </mat-expansion-panel-header>
+                          <ng-template matExpansionPanelContent>
+                            <nav-add-data-content [content]="content" [contentIndex]="contentIndex"></nav-add-data-content>
+                            <ion-row class="row-buttons">
+                              <ion-row class="add-data-content">
+                                <ion-button class="btn-correct" [ngClass]="{'active': content.score && content.scoreInPercentage !== null}" (click)="addScoreForQuestion(studentIndex, contentIndex, 1)">{{'CORRECT'| translate}}</ion-button>
+                                <ion-button class="btn-wrong" [ngClass]="{'active': !content.score && content.scoreInPercentage !== null}" (click)="addScoreForQuestion(studentIndex, contentIndex, 0)">{{'WRONG' | translate}}</ion-button>
+                              </ion-row>
+                            </ion-row>
+                          </ng-template>
+                        </mat-expansion-panel>
+                      </ng-container>
+                    </mat-accordion>
+                    <ion-row class="row-buttons">
+                      <ion-button *ngIf="student.performance; else saveBtnTemplate" class="btn-save" (click)="onAcceptUpdate(studentIndex)">{{'UPDATE' | translate}}</ion-button>
+                      <ng-template #saveBtnTemplate>
+                        <ion-button class="btn-save" (click)="onAcceptSaveAndNext(studentIndex)">{{'SAVE' | translate}}</ion-button>
+                      </ng-template>
+                      <ion-button class="btn-cancel" (click)="onCancelSave(studentIndex)">{{'CANCEL' | translate}}</ion-button>
+                    </ion-row>
+                  </ng-container>
+                  <ng-template #studentMaxScoreTemplate>
+                    <nav-ca-max-score [minScore]="0" [maxScore]="maxScore" [scoreLabel]="'ENTER_STUDENT_SCORE' | translate" [buttonText]="isLastStudent ? ('FINISH' | translate) : ('NEXT' | translate)"
+                      (userScore)="onStudentScore($event, studentIndex)">
+                    </nav-ca-max-score>
+                  </ng-template>
+                </ng-template>
+              </mat-expansion-panel>
+            </ng-container>
+          </mat-accordion>
+        </ion-row>
+      </ion-grid>
+    </ng-template>
+  </ion-grid>
+</ion-content>

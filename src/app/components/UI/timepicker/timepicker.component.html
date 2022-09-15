@@ -1,0 +1,38 @@
+<ion-grid class="grid-timepicker-container">
+  <ion-row class="row-timepicker">
+    <ion-col class="col-left-time">
+      <ion-row class="row-up-left-arrow" (click)="incrementHour()">
+        <ion-icon name="chevron-up-outline"></ion-icon>
+      </ion-row>
+      <ion-row class="row-time-hrs">
+        <ion-input placeholder="00" integerInput min={{minHour}} max={{maxHour}} inputmode="numeric" [(ngModel)]="hours" (keypress)="setHours($event)"></ion-input>
+      </ion-row>
+      <ion-row class="row-down-left-arrow">
+        <ion-icon name="chevron-down-outline" (click)="decrementHour()"></ion-icon>
+      </ion-row>
+      <ion-row class="row-time-type">
+        <ion-text>HH</ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col class="col-colon">
+      <ion-text>:</ion-text>
+    </ion-col>
+    <ion-col class="col-right-time">
+      <ion-row class="row-up-right-arrow" (click)="incrementMinute()">
+        <ion-icon name="chevron-up-outline"></ion-icon>
+      </ion-row>
+      <ion-row class="row-time-hrs">
+        <ion-input placeholder="00" integerInput [min]="minMinute" [max]="maxMinute" inputmode="numeric" [(ngModel)]="minutes" (keypress)="setMinutes($event)"></ion-input>
+      </ion-row>
+      <ion-row class="row-down-right-arrow">
+        <ion-icon name="chevron-down-outline" (click)="decrementMinute()"></ion-icon>
+      </ion-row>
+      <ion-row class="row-time-type">
+        <ion-text>MM</ion-text>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="row-submit">
+    <ion-button (click)="confirmTime()" class="save-next" [disabled]="isTimeValid">{{'SAVE_NEXT' | translate}}</ion-button>
+  </ion-row>
+</ion-grid>

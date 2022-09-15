@@ -1,0 +1,226 @@
+<ion-header class="create-classroom-header">
+  <ion-toolbar>
+    <ion-row class="header-row">
+      <ion-col size="10" class="ion-no-padding header-text">
+        <ion-label>{{ 'CREATE_CLASSROOM' | translate }}</ion-label>
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding close-modal">
+        <ion-icon name="close" (click)="closeModal()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content [ngClass]="{'offline': !isOnline}">
+  <!-- #create classroom based on subjects# -->
+  <ng-container *ngIf="classCreateShowSubjectCards">
+    <ion-card class="create-subject-classroom-card">
+      <ion-card-content class="ion-no-padding">
+        <ion-grid class="create-subject-classroom-grid ion-no-padding" *ngIf="!showSubjectGradeList; else subjectGradeListView">
+          <ion-row class="select-subject-row" *ngIf="subjects">
+            <ion-select placeholder="{{'SELECT_A_SUBJECT' | translate}}" (ionChange)="changeSubject($event)" [interfaceOptions]="subjectSelecttHeader">
+              <ion-select-option *ngFor="let subject of subjects" [value]="subject.id">{{subject.title}} {{'NAVIGATOR' | translate}}</ion-select-option>
+            </ion-select>
+            <ion-text>{{'BY_GOORU' | translate}}</ion-text>
+          </ion-row>
+          <ion-row class="subject-classroom-img" [ngStyle]="{'background-image': selectedSubject ? 'url(' + selectedSubject.thumbnailUrl + ')' : ''}">
+          </ion-row>
+          <ion-row class="enter-classname">
+            <ion-input placeholder="{{'NAME_YOUR_CLASSROOM' | translate}}" type="text" minlenght=2 maxlenght=25 [(ngModel)]="inputSubjectClassname"></ion-input>
+          </ion-row>
+          <ng-container *ngIf="selectedSubject">
+            <ion-row class="description-row" (click)="onClickSubjectClass()" [ngClass]="{'active' : inputSubjectClassname && inputSubjectClassname.length >= 2}">
+              <ion-text>{{'CLICK_TO_START_CLASS'|translate}} {{selectedSubject.title}} {{'NAVIGATOR'|translate}} {{'CLASS'|translate}}</ion-text>
+            </ion-row>
+          </ng-container>
+        </ion-grid>
+        <ion-row *ngIf="!isOnline" class="offline-overlay"></ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  <!-- #list grades based on subject class# -->
+  <ng-template #subjectGradeListView>
+    <ion-grid class="ion-no-padding create-subject-classroom-grid" *ngIf="!showSubjectView; else subjectGrid">
+      <ion-row class="select-subject-row" *ngIf="subjects">
+        <ion-select placeholder="{{'SELECT_A_SUBJECT' | translate}}" [(ngModel)]="selectedSubject.id" [interfaceOptions]="subjectSelecttHeader" [ngClass]="{'do-not-select' : showSubjectGradeList}">
+          <ion-select-option *ngFor="let subject of subjects" [value]="subject.id">{{subject.title}} {{'NAVIGATOR' | translate}}</ion-select-option>
+        </ion-select>
+        <ion-text>{{'BY_GOORU' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="set-grade-level">
+        <ion-text>{{'SET_GRADE_LEVEL_CLASS' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="classification-list">
+        <ion-row *ngFor="let grade of grades" class="classification" (click)="onClickSubjectBasedGrade(grade)" [ngClass]="{'grade-selected' : selectGradeId === grade.id}">
+          <ion-text>{{grade.grade}}</ion-text>
+        </ion-row>
+      </ion-row>
+      <ion-row class="button-row">
+        <ion-col size="6" class="ion-no-padding cancel-button">
+          <ion-button expand="block" fill="solid" (click)="onClickCancel()">{{'CANCEL' | translate}}</ion-button>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding confirm-button">
+          <ion-button expand="block" fill="solid" (click)="onClickConfirm()" [ngClass]="{'active' : userSelectedSubjectGrade}">{{'CREATE' | translate}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <!-- #create classroom# -->
+  <ion-card class="create-classroom-card">
+    <ion-card-content class="ion-no-padding">
+      <ion-grid class="create-classroom-grid ion-no-padding" *ngIf="!createClassroom; else classificationGrid">
+        <ion-row class="create-classroom-content">
+          <ion-row class="classroom-img">
+            <ion-row class="create-classroom-text">
+              <ion-text>{{ 'CREATE_CLASSROOM' | translate }}</ion-text>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+        <ion-row class="enter-classname">
+          <ion-input placeholder="{{'NAME_YOUR_CLASSROOM' | translate}}" type="text" minlenght=2 maxlength=25 [(ngModel)]="inputClassname"></ion-input>
+        </ion-row>
+        <ion-row class="create-class" (click)="onClickCreateClassroom()" [ngClass]="{'active' : inputClassname && inputClassname.length >= 2}">
+          <ion-text>{{ 'CREATE_CLASS' | translate }}</ion-text>
+        </ion-row>
+      </ion-grid>
+      <ion-row *ngIf="!isOnline" class="offline-overlay"></ion-row>
+    </ion-card-content>
+  </ion-card>
+  <!-- #list categories# -->
+  <ng-template #classificationGrid>
+    <ion-grid class="ion-no-padding classification-grid" *ngIf="!showSubjectView; else subjectGrid">
+      <ion-row class="classname-row">
+        <ion-col size="10" class="ion-no-padding classname">
+          <ion-text>{{inputClassname}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-no-padding close-icon">
+          <ion-icon name="close" (click)="closeClassCreation()"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="classification-list classification-list-panel">
+        <ion-row *ngFor="let category of categories" class="classification" (click)="onClickCategory(category)">
+          <ion-text>{{category.title}}</ion-text>
+        </ion-row>
+        <ion-row class="classification">
+          <ion-text class="others" (click)="onClickConfirm()">{{ 'OTHERS' | translate }}</ion-text>
+        </ion-row>
+      </ion-row>
+      <ion-row class="choose-category">
+        <ion-text>{{'CHOOSE_CATEGORY' | translate}}</ion-text>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <!-- #list subjects based on category# -->
+  <ng-template #subjectGrid>
+    <ion-grid class="ion-no-padding classification-grid" *ngIf="!showFrameworkView; else frameworkGrid">
+      <ion-row class="classname-row">
+        <ion-col size="10" class="ion-no-padding classname">
+          <ion-text>{{inputClassname}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-no-padding close-icon">
+          <ion-icon name="close" (click)="closeClassCreation()"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="nav-bar-row">
+        <ion-col size="2" class="ion-no-padding back-arrow">
+          <ion-icon name="arrow-back" (click)="closeSubjectListView()"></ion-icon>
+        </ion-col>
+        <ion-col size="10" class="ion-no-padding category">
+          <ion-text>{{userSelectedCategory.title}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="classification-list">
+        <ion-row *ngFor="let subject of categorySubjects; let i = index" class="classification" (click)="onClickSubject(subject)">
+          <ion-text>{{subject.title}}</ion-text>
+        </ion-row>
+        <ion-row class="classification">
+          <ion-text class="others" (click)="onClickConfirm()">{{ 'OTHERS' | translate }}</ion-text>
+        </ion-row>
+      </ion-row>
+      <ion-row class="choose-category">
+        <ion-text>{{'CHOOSE_CATEGORY' | translate}}</ion-text>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <!-- #list frameworks based on subject# -->
+  <ng-template #frameworkGrid>
+    <ion-grid class="ion-no-padding classification-grid" *ngIf="!showGradeView; else gradesGrid">
+      <ion-row class="classname-row">
+        <ion-col size="10" class="ion-no-padding classname">
+          <ion-text>{{inputClassname}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-no-padding close-icon">
+          <ion-icon name="close" (click)="closeClassCreation()"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="nav-bar-row">
+        <ion-col size="2" class="ion-no-padding back-arrow">
+          <ion-icon name="arrow-back" (click)="closeFrameworkListView()"></ion-icon>
+        </ion-col>
+        <ion-col size="10" class="ion-no-padding category ellipsis">
+          <ion-text class="ellipsis">{{userSelectedCategory.title}} > {{userSelectedSubject.title}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="classification-list">
+        <ion-row *ngFor="let framework of userSelectedSubject.frameworks; let i = index" class="classification" (click)="onClickFramework(framework)">
+          <ion-text>{{framework.title}}</ion-text>
+        </ion-row>
+        <ion-row class="classification">
+          <ion-text class="others" (click)="onClickConfirm()">{{ 'OTHERS' | translate }}</ion-text>
+        </ion-row>
+      </ion-row>
+      <ion-row class="choose-category">
+        <ion-text>{{'CHOOSE_CATEGORY' | translate}}</ion-text>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <!-- #list grade based on framework# -->
+  <ng-template #gradesGrid>
+    <ion-grid class="ion-no-padding classification-grid">
+      <ion-row class="classname-row">
+        <ion-col size="10" class="ion-no-padding classname">
+          <ion-text>{{inputClassname}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-no-padding close-icon">
+          <ion-icon name="close" (click)="closeClassCreation()"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="nav-bar-row">
+        <ion-col size="2" class="ion-no-padding back-arrow">
+          <ion-icon name="arrow-back" (click)="closeGradeListView()"></ion-icon>
+        </ion-col>
+        <ion-col size="10" class="ion-no-padding category ellipsis">
+          <ion-text class="ellipsis">{{userSelectedCategory.title}} > {{userSelectedSubject.title}} > {{userSelectedFramework.title}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="classification-list">
+        <ion-row *ngFor="let grade of grades; let i = index" class="classification" (click)="onClickGrade(grade)">
+          <ion-text>{{grade.grade}}</ion-text>
+        </ion-row>
+        <ion-row class="classification">
+          <ion-text class="others" (click)="onClickConfirm()">{{ 'OTHERS' | translate }}</ion-text>
+        </ion-row>
+      </ion-row>
+      <ion-row class="choose-category" *ngIf="!gradeSelected; else showConfirmButton">
+        <ion-text>{{'CHOOSE_CATEGORY' | translate}}</ion-text>
+      </ion-row>
+      <ng-template #showConfirmButton>
+        <ion-row class="cancel-confirm-row">
+          <ion-row class="confirmation-text-row">
+            <ion-text>{{ 'YOU_SELECTED_GRADE' | translate }}
+              <ion-text class="grade-value">{{userSelectedGrade.grade}}</ion-text>
+            </ion-text>
+            <ion-text>{{ 'PLEASE_CONFIRM' | translate }}</ion-text>
+          </ion-row>
+          <ion-row class="button-row">
+            <ion-col size="6" class="ion-no-padding cancel-button">
+              <ion-button expand="block" fill="solid" (click)="onClickCancel()">{{'CANCEL' | translate}}</ion-button>
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding confirm-button">
+              <ion-button [disabled]="isClicked" expand="block" fill="solid" (click)="onClickConfirm()">{{'CONFIRM' | translate}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ng-template>
+    </ion-grid>
+  </ng-template>
+</ion-content>

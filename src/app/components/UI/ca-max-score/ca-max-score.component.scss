@@ -1,0 +1,36 @@
+.row-input {
+  display: grid;
+  max-width: 257px;
+  margin: auto;
+
+  ion-input {
+    border-bottom: 1px solid var(--line-gray);
+    max-width: 257px;
+    font-size: 100px;
+    text-align: center;
+    font-weight: bold;
+    font-family: var(--sans);
+    color: var(--abbey);
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+  }
+
+  .row-score-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ion-text {
+      color: var(--abbey);
+      font-size: 14px;
+      padding: 10px 0;
+    }
+  }
+}
+
+.row-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

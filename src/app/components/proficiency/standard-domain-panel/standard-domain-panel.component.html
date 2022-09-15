@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="row-competencies">
+      <ion-col class="col-text">
+        <ion-text>{{activeSubject.title}}</ion-text>
+        <ion-text>{{frameworkId}}</ion-text>
+      </ion-col>
+      <ion-col class="col-icon">
+        <ion-searchbar [value]="searchText" placeholder="{{'SEARCH' | translate}}" (ionInput)="handleInputEvent($event)"></ion-searchbar>
+      </ion-col>
+      <ion-col class="col-icon">
+        <ion-text class="material-icons" (click)="closeModal()">arrow_downward</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row class="row-domain-list-container">
+    <mat-accordion class="accordion-domain">
+      <ion-row class="row-domain-list">
+        <ng-container *ngFor="let domain of domains | listFilter: searchText: 'domainName'">
+          <mat-expansion-panel [hideToggle]="true" class="accordion-panel">
+            <mat-expansion-panel-header expandedHeight="56px" collapsedHeight="56px">
+              <ion-row class="row-domain">
+                <ion-col class="col-count">
+                  <ion-text>{{domain.domainSeq}}.</ion-text>
+                </ion-col>
+                <ion-col class="col-text">
+                  <ion-row class="row-domain-detail">
+                    <ion-text class="domain-title">{{domain.domainName}}</ion-text>
+                    <ion-text class="domain-count-detail">{{domain.topics.length}} {{'TOPICS' | translate}} ({{domain.totalCompetencies}} {{'COMPETENCIES' | translate}})</ion-text>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+              <ng-container *ngFor="let topic of domain.topics">
+                <ion-row class="row-topic" (click)="selectedTopic(domain, topic)">
+                  <ion-col class="col-count">
+                    <ion-text>{{domain.domainSeq}} . {{topic.topicSeq}}. </ion-text>
+                  </ion-col>
+                  <ion-col class="col-text">
+                    <ion-row class="row-topic-detail">
+                      <ion-text class="topic-title">{{topic.topicName}}</ion-text>
+                      <ion-text class="topic-count-detail">{{topic.competencies.length}} {{'COMPETENCIES' | translate}}</ion-text>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
+            </ng-template>
+          </mat-expansion-panel>
+        </ng-container>
+      </ion-row>
+    </mat-accordion>
+  </ion-row>
+</ion-content>

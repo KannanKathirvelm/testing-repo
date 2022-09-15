@@ -1,0 +1,79 @@
+  <ion-header>
+    <ion-toolbar position="top">
+      <ion-row class="header-row">
+        <ion-col class="ion-no-padding header-icon">
+          <ion-icon class="nav-{{ content.contentFormat }}"></ion-icon>
+        </ion-col>
+        <ion-col class="ion-no-padding header-title">
+          <ion-text class="ellipsis">{{content.title}}</ion-text>
+        </ion-col>
+        <ion-col class="back-icon">
+          <i class="material-icons" (click)="onCloseModel()">close</i>
+        </ion-col>
+      </ion-row>
+      <nav-taxonomy-list class="taxonomy-list" [taxonomy]="content.standards" [showOnlyCount]="true"></nav-taxonomy-list>
+      <img *ngIf="content.thumbnail" class="content-thumbnail" [src]="content.thumbnail">
+      <div class="selected-date-info">
+        <div class="start-date" (click)="selectStartDate()" [ngClass]="{'active' : isStartDateSelected}">
+          <span class="label">{{'START_DATE' | translate}}</span>
+          <div class="date">
+            <span class="day">{{startDay}}</span>
+            <div class="date-month-year">
+              <span class="month-year">{{startMonth}} {{startYear}}</span><span class="day-name">{{startDayInText}}</span>
+            </div>
+          </div>
+        </div>
+        <span class="line"></span>
+        <div class="end-date" (click)="selectEndDate()" [ngClass]="{'active' : !isStartDateSelected,'no-date' : !showApplyFilter}">
+          <span class="label">{{'END_DATE' | translate}}</span>
+          <div class="date" *ngIf="selectedEndDate;else noDate">
+            <span class="day">{{endDay}}</span>
+            <div class="date-month-year">
+              <span class="month-year">{{endMonth}} {{endYear}}</span><span class="day-name">{{endDayInText}}</span>
+            </div>
+          </div>
+          <ng-template #noDate>
+            <div class="no-date">--</div>
+          </ng-template>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="calendar-content">
+    <div class="portfolio-calendar-container" >
+      <p-calendar [(ngModel)]="selectedDate" styleClass="date-picker" [inline]="true" [minDate]="minDate" [maxDate]="endDate" class="portfolio-calendar no-range" [numberOfMonths]="1" (onSelect)="onSelectDate()">
+      </p-calendar>
+    </div>
+    <ion-row class="row-include-video-conference" [ngClass]="{'disabled': !studentCount}">
+      <ion-col class="col-icon">
+        <ion-icon class="nav-meet"></ion-icon>
+      </ion-col>
+      <ion-col class="col-text">
+        <ion-text>{{'INCLUDE_VIDEO_CONFERENCING' | translate}}</ion-text>
+      </ion-col>
+      <ion-col class="col-toggle">
+        <ion-toggle [checked]="isEnableConference" (ionChange)="toggleEnableConference($event)"></ion-toggle>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-start-end-time" *ngIf="isEnableConference">
+      <ion-col class="col-start-time">
+        <ion-select [value]="startTime" (ionChange)="changeStartTime($event)" dropdownScrollIntoView>
+          <ion-select-option [value]="time" *ngFor="let time of timeList">{{time}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col class="col-end-time">
+        <ion-select [value]="endTime" (ionChange)="changeEndTime($event)" dropdownScrollIntoView>
+          <ion-select-option [value]="time" *ngFor="let time of timeList">{{time}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-text class="danger-text" *ngIf="isInvalidTime">{{'TIME_VALIDATION_MSG' | translate}}</ion-text>
+    </ion-row>
+    <ion-row *ngIf="isActivityAssigned">
+      <ion-text class="danger-text activity-disable">{{'ASSIGNED_ACTIVITY_MSG' | translate}}</ion-text>
+    </ion-row>
+  </ion-content>
+  <ion-footer>
+    <ion-button class="btn-submit" [disabled]="isInvalidTime || isActivityAssigned" (click)="onAddActivity()">
+      {{'ADD_ACTIVITY' | translate}}
+    </ion-button>
+  </ion-footer>

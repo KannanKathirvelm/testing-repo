@@ -1,0 +1,32 @@
+<ion-grid class="atc-chart-view ion-no-padding" [ngClass]="{'landscape-chart': !isPortrait}">
+  <ion-row class="class-info-container" *ngIf="isChartLoaded">
+    <ion-col size="8" class="class-info">
+      <ng-container *ngIf="classDetails">
+        <ion-text class="class-name ellipsis">{{classDetails.title}}</ion-text>
+        <ion-text *ngIf="classDetails.course" class="class-msg">{{classDetails.course.title}} {{'COURSE' | translate}}</ion-text>
+      </ng-container>
+    </ion-col>
+    <ion-col size="4" class="chart-actions">
+      <ion-row class="zoom-out">
+        <ion-text class="material-icons" *ngIf="isZoomed" (click)="onResetZoom()">cached</ion-text>
+      </ion-row>
+      <ion-row class="screen-rotate" *ngIf="isPortrait; else landscapeView" (click)="onRotateLandscape()">
+        <i class="material-icons">fullscreen</i>
+      </ion-row>
+      <ng-template #landscapeView>
+        <ion-row class="screen-rotate" (click)="onRotatePortrait()">
+          <i class="material-icons">fullscreen_exit</i>
+        </ion-row>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+  <ion-row class="non-premium-atc-chart-view" [ngClass]="{'hidden': !isChartLoaded}">
+  </ion-row>
+  <ng-container *ngIf="!isChartLoaded">
+    <ion-grid class="skeleton-grid">
+      <ion-row class="skeleton-row atc-skeleton">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-grid>

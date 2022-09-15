@@ -1,0 +1,66 @@
+  <ion-row class="domain-competency-content-container">
+  <ng-container *ngIf="isShowProficiencyView && subjectCode; else noProficiencyView">
+    <ion-row #domainContainer class="domain-competency-content">
+    <!-- Class statistics card component -->
+    <nav-class-statistics
+    [numberOfStudents]="numberOfStudents"
+    [domainCoverageCount]="domainCoverageCount"
+    [courseCoverageCount]="courseCoverageCount"
+    (toggleClassStatisticsCount)="toggleClassStatisticsCount()"
+    [showClassCount]="showClassCount">
+    </nav-class-statistics>
+    <ion-row *ngIf="showClassCount" class="backdrop" (click)="toggleClassStatisticsCount()"></ion-row>
+    <!-- Class Domain coverage panel -->
+    <nav-domain-coverage-panel *ngIf="domainCoverageCount;else showDomainSkeletonView"
+    [domainCoverageCount]="domainCoverageCount"
+    (slideNextStudent)="slideNextStudent($event)"
+    (slidePrevStudent)="slidePrevStudent($event)"
+    (selectedDomain)="onSelectDomain()">
+    </nav-domain-coverage-panel>
+    <ng-template #showDomainSkeletonView>
+      <nav-domain-coverage-panel>
+      </nav-domain-coverage-panel>
+    </ng-template>
+    </ion-row>
+    <!-- Student Domain competency performance panel -->
+    <nav-student-domain-competency-performance-panel *ngIf="domainsCompetencyPerformance && domainsCompetencyPerformance?.length"
+    [ngClass]="{'hide' : !isShowDomainCompetencyPerformance}"
+    [isShowMore]="isShowMore"
+    [domainsCompetencyPerformance]="domainsCompetencyPerformance"
+    [domainLevelSummary]="domainLevelSummary"
+    [studentsDomainPanelContentHeight]="studentsDomainPanelContentHeight"
+    [activeDomainSeq]="activeDomainSeq"
+    (selectCompetency)="onSelectCompetency($event)"
+    (selectTopic)="onSelectTopic($event)">
+    </nav-student-domain-competency-performance-panel>
+    <ion-row class="students-domain-performance-container" *ngIf="studentsDomainPerformance && studentsDomainPerformance?.length;else showStudentDomainSkeletonView">
+    <ng-container *ngFor="let studentDomainPerformance of studentsDomainPerformance;index as studentSeq">
+      <!-- Student Domain performance panel -->
+      <nav-student-domain-performance-panel [ngClass]="{'hide' : isShowDomainCompetencyPerformance}"
+      *ngIf="studentDomainPerformance && studentDomainPerformance.domainCompetencies?.length"
+      [studentSeq]="studentSeq"
+      [studentDomainPerformance]="studentDomainPerformance"
+      [isSlideNext]="isSlideNext"
+      [isSlidePrev]="isSlidePrev"
+      [activeDomainSeq]="activeDomainSeq">
+      </nav-student-domain-performance-panel>
+    </ng-container>
+    </ion-row>
+    <ion-row class="student-performance-showmore" *ngIf="!isFetchedAll && studentsDomainPerformance" (click)="onClickShowMore()">
+      <ion-text>{{'SHOW_MORE' | translate}}</ion-text>
+    </ion-row>
+    <ng-template #showStudentDomainSkeletonView>
+      <nav-student-domain-performance-panel>
+      </nav-student-domain-performance-panel>
+      <nav-student-domain-performance-panel>
+      </nav-student-domain-performance-panel>
+      <nav-student-domain-performance-panel>
+      </nav-student-domain-performance-panel>
+    </ng-template>
+    </ng-container>
+    <ng-template #noProficiencyView>
+      <ion-row class="no-data-msg">
+        {{'NO_PROFICIENCY' | translate}}
+      </ion-row>
+    </ng-template>
+  </ion-row>

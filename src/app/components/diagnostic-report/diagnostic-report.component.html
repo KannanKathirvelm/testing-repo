@@ -1,0 +1,161 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="report-header-row">
+      <ion-col class="ion-no-padding header-icon">
+        <ion-icon class="nav-assessment"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding diagnostic-header">
+        <ion-text class="ellipsis">{{activity.title}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-no-padding close-icon">
+        <ion-text class="material-icons" (click)="closeReport()">clear</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row class="info-row">
+    <i class="material-icons info-icon">info_outlined</i>
+    <ion-text class="info-text">{{ 'PLEASE_CLICK_COMPETENCY_CODE' | translate }}</ion-text>
+  </ion-row>
+  <div class="table-container" *ngIf="studenstReport?.length && collection && collection.content;else skeletonView">
+    <div class="studrnt-table-container">
+      <table>
+        <thead>
+          <tr class="competency-header">
+            <th class="students-title">{{ 'STUDENTS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="student-report-container" *ngFor="let student of studenstReport">
+            <th class="student-report-header">
+              <ion-thumbnail class="student-thumbnail">
+                <ion-img
+                  *ngIf="student.thumbnail && !isThumbnailError; else ngxAvatar"
+                  (ionError)="onImgError()"
+                  [src]="student.thumbnail"
+                  class="student-img"
+                ></ion-img>
+                <ng-template #ngxAvatar>
+                  <ion-avatar class="profile avatar-icon">
+                    <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                  </ion-avatar>
+                </ng-template>
+              </ion-thumbnail>
+              <ion-text class="student-name">{{student.lastName}}, {{student.firstName}}</ion-text>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="compentency-table-container">
+      <table>
+        <thead>
+          <tr class="competency-header">
+            <td class="competency-subject" *ngFor="let content of collection?.content;let questionIndex = index">
+              <div *ngIf="content.standard" class="competency" (click)="onOpenAggregateReport(content)">
+                <span> {{content.standard.domainCode}} </span>
+                <span> {{content.standard.code}} </span>
+              </div>
+              <div class="question">Q{{questionIndex+1}}</div>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of studenstReport | sortBy: 'firstName'">
+            <td class="student-report-container" *ngFor="let question of student?.questions">
+              <div class="answer-container">
+                <div class="answer-option">
+                  <span class="option" *ngFor="let option of question?.answer; let optionIndex = index">
+                    <span
+                      *ngIf="question.isPerformed && (question.type === 'FIB' || question.performByAddData); else showAnswerOption"
+                      class="option-{{option.answerStatus}}"
+                      [ngClass]="{'answer-underline' : (question.type === 'FIB' && !question.performByAddData)}"
+                      >{{option.answer_text}}
+                    </span>
+                    <ng-template #showAnswerOption>
+                      <span class="option-{{option.answerStatus}}">{{convertNumberToChar(optionIndex)}}</span>
+                    </ng-template>
+                    <ng-template #noData>
+                      <span class="option-{{option.answerStatus}}">{{convertNumberToChar(optionIndex)}}</span>
+                    </ng-template>
+                  </span>
+                </div>
+                <div class="answer-icon" [ngSwitch]="question.scoreStatus">
+                  <ng-container *ngSwitchCase="0">
+                    <img src="/assets/icons/wrong.svg" alt="wrong" />
+                  </ng-container>
+                  <ng-container *ngSwitchCase="1">
+                    <img src="/assets/icons/tick-icon.svg" alt="correct" class="correct-icon" />
+                  </ng-container>
+                  <ng-container *ngSwitchCase="2">
+                    <img src="/assets/icons/wrong.svg" alt="wrong" />
+                    <img src="/assets/icons/tick-green.svg" alt="correct" />
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    <i class="not_interested material-icons">not_interested</i>
+                  </ng-container>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ng-template #skeletonView>
+    <div class="table-container">
+      <div class="studrnt-table-container">
+        <table>
+          <thead>
+            <tr class="competency-header">
+              <th class="students-title-skeleton">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="student-report-container" *ngFor="let item of [].constructor(4)">
+              <th class="student-report-header">
+                <ion-thumbnail class="student-thumbnail">
+                  <ion-avatar class="profile avatar-icon">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-avatar>
+                </ion-thumbnail>
+                <ion-text class="student-name-skeleton">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-text>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compentency-table-container">
+        <table>
+          <thead>
+            <tr class="competency-header">
+              <td class="competency-subject" *ngFor="let item of [].constructor(4)">
+                <div class="competency-skeleton-text">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </div>
+                <div class="question-skeleton-text">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </div>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="student-report-container" *ngFor="let item of [].constructor(4)">
+              <th class="student-score-skeleton" *ngFor="let item of [].constructor(4)">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-template>
+</ion-content>
+<ion-footer *ngIf="isShowUpdateData">
+  <ion-button class="update-data" (click)="updateData()">Update Data</ion-button>
+</ion-footer>

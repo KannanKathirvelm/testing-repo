@@ -1,0 +1,4 @@
+<ion-label class="select-label">{{selectHeaderOptions.header}}</ion-label>
+<ion-select [interfaceOptions]="selectHeaderOptions" [placeholder]="title" class="source-destination" [compareWith]="compareWithCategoriesCode" [value]="selectedValue" (ionChange)="onChangeGradeBound($event)" dropdownScrollIntoView>
+  <ion-select-option *ngFor="let grade of grades" [value]="grade.id">{{ grade.grade }}</ion-select-option>
+</ion-select>

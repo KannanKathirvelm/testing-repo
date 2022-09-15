@@ -1,0 +1,105 @@
+.journey-content {
+  z-index: 11;
+}
+
+.container {
+  display: inline-grid;
+  width: 100%;
+
+  &.course-map {
+    --background: var(--journey-coursemap-content-bgcolor);
+    overflow: auto;
+  }
+
+  &.milestone {
+    --background: var(--journey-milestone-content-bgcolor);
+  }
+}
+
+.journey-footer {
+  transition: 1s;
+  overflow: auto;
+
+  &.student-and-grade {
+    height: 85px;
+  }
+
+  &.active {
+    top: 50%;
+    height: 50%;
+  }
+
+  &::before {
+    display: none;
+  }
+
+  .list-container {
+    height: 100%;
+  }
+
+  ion-toolbar {
+    --min-height: 40px;
+    border-top: 1px solid var(--light-gray);
+
+    ion-grid {
+      height: 45px;
+    }
+
+    .title-col {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 48px;
+
+      .title {
+        margin: auto;
+      }
+
+      .arrow-col {
+        .arrow-icon {
+          margin: auto;
+          display: flex;
+          height: 100%;
+        }
+      }
+
+      ion-text {
+        width: 100%;
+        padding-left: 16px;
+        font-size: 14px;
+        text-transform: capitalize;
+        font-family: var(--sans);
+        color: var(--students-list-title);
+      }
+    }
+  }
+}
+
+.no-journey-message {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.skeleton-panel-header {
+  height: 58px;
+  margin-bottom: 5px;
+
+  ion-col {
+    background: var(--white);
+    width: 100%;
+    -webkit-box-align: center;
+    align-items: center;
+    display: grid;
+    height: 58px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    grid-template-columns: 1fr 58px;
+
+    ion-skeleton-text {
+      width: 90%;
+    }
+  }
+}

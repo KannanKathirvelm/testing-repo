@@ -1,0 +1,67 @@
+<ion-header class="proficiency-header">
+  <ion-toolbar>
+    <ion-grid class="justify-content-center">
+      <ion-row>
+        <ion-col>
+          <ion-back-button text="" [routerLink]="['/class/', class.id, 'proficiency', 'class-proficiency']"></ion-back-button>
+        </ion-col>
+        <ion-col>
+          <ion-avatar class="thumbnail">
+            <ion-img *ngIf="studentProfile && studentProfile.avatarUrl && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="studentProfile.avatarUrl"></ion-img>
+            <ng-template #ngxAvatar>
+              <ion-avatar class="avatar-icon">
+                <ngx-avatar *ngIf="studentProfile" [name]="studentProfile.firstName"></ngx-avatar>
+              </ion-avatar>
+            </ng-template>
+            <ion-skeleton-text *ngIf="!studentProfile" animated></ion-skeleton-text>
+          </ion-avatar>
+        </ion-col>
+        <ion-col class="student-name ellipsis">
+          <ng-container *ngIf="studentProfile;else skeletonText">
+            <ion-text class="first-name title ellipsis">
+              {{studentProfile.lastName}},
+            </ion-text>
+            <ion-text class="last-name title ellipsis">
+              {{studentProfile.firstName}}
+            </ion-text>
+          </ng-container>
+          <ng-template #skeletonText>
+            <ion-skeleton-text class="title" animated></ion-skeleton-text>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="proficiency-container" [scrollY]="hideProficiencyScroll" [scrollX]="true">
+  <ng-container *ngIf="activeSubject && fwCompetencies && !isLoading">
+    <proficiency-chart *ngIf="isChartDataLoaded && studentGradeLoaded"
+    [class]="class"
+    [subjects]="subjects"
+    [isSkeletonChart]="isLoading"
+    [showHeader]="!isLoading"
+    [categories]="categories"
+    [domainTopicCompetencyMatrixSkeletonData]="domainTopicCompetencyMatrix"
+    [domainCoordinatesSkeletonData]="domainCoordinates"
+    [frameworkId]="frameworkId"
+    [activeSubject]="activeSubject"
+    [activeCategory]="activeCategory"
+    [fwCompetencies]="fwCompetencies"
+    [domainCoordinates]="domainCoordinates"
+    [showCompetencyInfo]="showCompetencyInfo"
+    [showDomainInfo]="showDomainInfo"
+    [taxonomyGrades]="taxonomyGrades"
+    [gradeBound]="studentGrade"
+    (selectCategory)="onSelectCategory($event)"
+    (selectSubject)="onSelectSubject($event)"
+    (selectDomain)="onSelectDomain($event)"
+    (selectTopic)="onSelectTopic($event)"
+    (selectLegend)="onSelectLegend()"
+    (selectCompetency)="onSelectCompetency($event)"
+    [domainTopicCompetencyMatrix]="domainTopicCompetencyMatrix"
+    [isPrivateStudent]="isPrivateStudent"
+    [isOnline]="isOnline"
+    (chartLoded)="chartLoded()">
+  </proficiency-chart>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,88 @@
+.grid-student-list {
+  padding-top: 0;
+  position: relative;
+
+  .row-search {
+    position: fixed;
+    width: 100%;
+    background: var(--white);
+    z-index: 1;
+
+    ion-searchbar {
+      --background: var(--white);
+      --box-shadow: none;
+      border-bottom: 1px solid var(--picton-blue);
+      font-family: var(--sans);
+    }
+  }
+
+  .row-student-list {
+    display: grid;
+    overflow: inherit;
+    height: calc(100% - 59px);
+    position: relative;
+    padding-top: 59px;
+
+    .row-student {
+      display: grid;
+      grid-template-columns: 48px auto 36px;
+      height: 35px;
+      margin-top: 11px;
+
+      &.active {
+        ion-col {
+          &.col-selected-icon {
+            display: flex;
+          }
+        }
+      }
+
+      ion-col {
+        &.col-selected-icon {
+          display: none;
+        }
+
+        &.col-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          ion-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+
+            img {
+              width: auto;
+              max-width: 100%;
+              height: auto;
+              max-height: 100%;
+            }
+          }
+        }
+
+        &.col-text {
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+
+          .text-name {
+            font-family: var(--sans);
+            font-size: 14px;
+            color: var(--dark-400);
+          }
+        }
+
+        &.col-selected-icon {
+          justify-content: center;
+          align-items: center;
+
+          ion-icon {
+            background: var(--picton-blue);
+          }
+        }
+      }
+    }
+  }
+}

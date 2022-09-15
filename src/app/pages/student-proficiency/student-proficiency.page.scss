@@ -1,0 +1,58 @@
+.proficiency-header {
+  ion-toolbar {
+    --min-height: var(--toolbar-height);
+
+    ion-grid {
+      ion-row {
+        display: grid;
+        grid-template-columns: 50px 60px 1fr;
+
+        ion-col {
+          display: flex;
+
+          ion-back-button {
+            --padding-start: 0;
+            --padding-end: 0;
+            margin: auto;
+            --background-hover: none;
+            --color: var(--login-header-back-bth);
+          }
+
+          .thumbnail {
+            width: 34px;
+            height: 34px;
+            margin: auto;
+
+            .avatar-icon {
+              ::ng-deep .avatar-container {
+                height: 34px !important;
+                width: 34px !important;
+    
+                .avatar-content {
+                  width: 34px;
+                  height: 34px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font: 16px / 30px Helvetica, Arial, sans-serif !important;
+                  margin: auto;
+                }
+              }
+            }
+          }
+
+          .title {
+            margin: auto 0 auto 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.proficiency-container {
+  height: 100%;
+  background-color: var(--proficiency-background-color);
+  position: relative;
+  --overflow: hidden;
+}

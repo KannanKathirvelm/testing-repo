@@ -1,0 +1,70 @@
+<ng-container *ngIf="hasPortfolioActivities; else showMessageText">
+  <mat-accordion *ngFor="let portfolio of portfolioActivities;">
+    <ng-container *ngIf="portfolio?.portfolioContents?.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <ion-row class="portfolio-header">
+            <ion-row>
+              <ion-icon class="portfolio-icon nav-{{portfolio.type}}"></ion-icon>
+            </ion-row>
+            <ion-text class="portfolio-title">{{portfolio.label | translate}} ({{portfolio.portfolioContents.length}})
+            </ion-text>
+          </ion-row>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <ion-row *ngFor="let activity of portfolio.portfolioContents; index as portfolioIndex" class="portfolio-card">
+            <ion-row class="portfolio-container">
+              <ion-col class="portfolio-img-contain">
+                <ion-row  class="portfolio-thumbnail-img" (click)="onPreview(activity)">
+                  <img *ngIf="activity.thumbnailUrl" [src]="activity.thumbnailUrl"/>
+                </ion-row>
+                <ion-row class="portfolio-taxonomy-contain" *ngIf="activity.taxonomy">
+                  <nav-taxonomy-list [taxonomy]="activity.taxonomy"></nav-taxonomy-list>
+                </ion-row>
+              </ion-col>
+              <ion-col class="portfolio-content">
+                <ion-text class="portfolio-name" (click)="onPreview(activity)">{{activity.title}}</ion-text>
+                <ion-text class="portfolio-txt owner-name" *ngIf="activity.owner" (click)="onPreview(activity)">{{'BY' | translate}}
+                  {{activity.owner.lastName}}, {{activity.owner.firstName}}
+                </ion-text>
+                <ion-text [ngClass]="{'ellipsis' : !showMoreItems[portfolioIndex], 'show-more': showMoreItems[portfolioIndex]}" class="portfolio-txt">{{activity.learningObjective}}</ion-text>
+                <ion-text class="show-text" *ngIf="activity.learningObjective?.length >30" (click)="showMoreItems[portfolioIndex] = !showMoreItems[portfolioIndex]">{{ showMoreItems[portfolioIndex] ? ('SHOW_LESS' | translate): ('SHOW_MORE' | translate) }}</ion-text>
+              </ion-col>
+            </ion-row>
+             <ion-row class="portfolio">
+              <portfolio-content-card [activity]="activity" [userId]="userId" class="activity-card"></portfolio-content-card>
+            </ion-row>
+          </ion-row>
+        </ng-template>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
+</ng-container>
+<ng-template #showMessageText>
+  <ion-row [ngSwitch]="competency.competencyStatus">
+    <ng-container *ngSwitchCase="0">
+      <ion-row class="no-portfolio">
+        {{'NOT_STARTED_COMPETENCY_MSG'| translate}}
+      </ion-row>
+    </ng-container>
+    <ng-container *ngSwitchCase="2">
+      <ion-row class="no-portfolio">
+        {{'INFERRED_COMPETENCY_MSG'| translate}}
+      </ion-row>
+    </ng-container>
+    <ng-container *ngSwitchCase="3">
+      <ion-row class="no-portfolio">
+       <span>{{'GRANTED_MASTERED_COMPETENCY_MSG'| translate}}</span> 
+        <span>{{'MASTERED_COMPETENCY_MSG'| translate}}</span>
+      </ion-row>
+    </ng-container>
+    <ng-container *ngSwitchCase="4">
+      <ion-row class="no-portfolio">
+        {{'EARNED_COMPETENCY_MSG'| translate}}
+      </ion-row>
+    </ng-container>
+  </ion-row>
+  <ion-row class="no-portfolio">
+    {{'NO_RESULTS_FOUND'| translate}}
+  </ion-row>
+</ng-template>

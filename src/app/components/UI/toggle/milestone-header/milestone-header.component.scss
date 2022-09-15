@@ -1,0 +1,76 @@
+.journey-grid {
+  background: var(--journey-tab-bgcolor);
+  height: 48px;
+
+  .journey-tab-row {
+    display: flex;
+    justify-content: space-between;
+
+    .journey-button-col {
+      padding: 0;
+
+      .journey-segment-button {
+        float: left;
+        margin: 8px 9px;
+        border-radius: 8px;
+        width: 200px;
+        height: 32px;
+        min-height: 32px;
+        background-color: var(--journey-seg-button-bgcolor);
+
+        .segment-button {
+          width: 100px;
+          margin: 0;
+          min-height: inherit;
+          --indicator-height: 0;
+
+          .segment-button-title {
+            font-family: var(--sans);
+            font-size: 13px;
+            text-transform: capitalize;
+            text-align: center;
+            color: var(--milestone-toggle);
+          }
+
+          &.segment-button-checked {
+            .segment-button-title {
+              color: var(--milestone-toggle-checked);
+            }
+          }
+        }
+
+        .segment-button-checked {
+          font-weight: bold;
+          --color-checked: var(--journey-seg-button-active-label-color);
+          --background-checked: var(--journey-seg-button-active-bgcolor);
+        }
+      }
+    }
+
+    .journey-toggle-col {
+      padding: 0;
+
+      .journey-toggle-row {
+        display: grid;
+        grid-template-columns: 1fr 40px;
+        padding: 4px;
+        height: 48px;
+        align-items: center;
+
+        .toggle-title {
+          height: 20px;
+          font-family: var(--sans);
+          font-size: 14px;
+          padding-right: 5px;
+          text-transform: capitalize;
+          text-align: center;
+          color: var(--journey-lesson-text-color);
+        }
+
+        .toggle-icon {
+          padding: 5px 0;
+        }
+      }
+    }
+  }
+}

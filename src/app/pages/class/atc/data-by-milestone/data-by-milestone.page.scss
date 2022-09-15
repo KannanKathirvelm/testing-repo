@@ -1,0 +1,239 @@
+ion-header {
+  &::after {
+    display: none;
+  }
+
+  .header-container {
+    background: var(--data-by-milestone-report-bgcolor);
+    padding: 0;
+
+    .row-header {
+      display: grid;
+      grid-template-columns: 48px auto;
+      border-bottom: 0.5px solid var(--class-navbar-border-color);
+      height: 45px;
+
+      ion-col {
+        display: flex;
+        align-items: center;
+
+        &.close-icon {
+          justify-content: center;
+        }
+
+        &.title {
+          ion-text {
+            color: var(--data-by-milestone-text);
+          }
+        }
+      }
+    }
+
+    .row-dropdown {
+      display: grid;
+      grid-template-columns: 48px auto 48px;
+      position: relative;
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 25%);
+
+      .col-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .row-flag-icon {
+          background-color: var(--data-by-milestone-report-bgcolor);
+          border: 1px solid var(--flag-icon-color);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          margin: 0 auto;
+
+          .flag-icon {
+            background: var(--flag-icon-color);
+            color: var(--data-by-milestone-report-bgcolor);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            margin: 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+          }
+        }
+      }
+
+      .col-title {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        ion-text {
+          font-size: 12px;
+          color: var(--data-by-milestone-text);
+          font-weight: bold;
+        }
+      }
+
+      .col-dropdown-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-text {
+          color: var(--data-by-milestone-text);
+        }
+      }
+    }
+
+    .row-search {
+      border-bottom: 1px solid var(--search-row-border);
+
+      .search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        ion-icon {
+          font-size: 24px;
+          opacity: 0.75;
+          color: var(--data-by-milestone-text);
+        }
+      }
+    }
+  }
+}
+
+ion-content {
+  .grid-table {
+    overflow: auto;
+    padding: 0;
+
+    .row-table-header {
+      display: grid;
+      grid-template-columns: 200px 48px repeat(3, 180px);
+      height: 58px;
+
+      ion-col {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-text {
+          color: var(--data-by-milestone-text);
+          font-weight: bold;
+          font-size: 15px;
+          text-align: center;
+        }
+      }
+    }
+
+    .row-table-body {
+      .row-table-data {
+        display: grid;
+        grid-template-columns: 200px 48px repeat(3, 180px);
+        height: 58px;
+
+        ion-col {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &.col-data-1 {
+            justify-content: flex-start;
+          }
+
+          &.col-data-2 {
+            ion-text {
+              font-size: 22px;
+              color: var(--data-by-milestone-text);
+            }
+          }
+
+          ion-item {
+            --border-color: transparent;
+
+            .avatar-icon {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 30px;
+              height: 30px;
+
+              ::ng-deep .avatar-container {
+                width: 30px;
+                height: 30px;
+
+                .avatar-content {
+                  width: 30px;
+                  height: 30px;
+                  font: 16px / 30px Helvetica, Arial, sans-serif !important;
+                  margin: auto;
+                }
+              }
+            }
+
+            ion-label {
+              font-size: 14px;
+              color: var(--data-by-milestone-text);
+              padding-left: 5px;
+            }
+          }
+
+          ion-text {
+            color: var(--data-by-milestone-text);
+            font-size: 15px;
+            text-align: center;
+          }
+
+          .score-range {
+            background: none;
+            font-weight: bold;
+
+            &.grade-range-0-59 {
+              color: var(--red);
+            }
+
+            &.grade-range-not-started {
+              color: var(--dark-400);
+            }
+
+            &.grade-range-60-69 {
+              color: var(--grade-range-60-69);
+            }
+
+            &.grade-range-70-79 {
+              color: var(--grade-range-70-79);
+            }
+
+            &.grade-range-80-89 {
+              color: var(--grade-range-80-89);
+            }
+
+            &.grade-range-90-100 {
+              color: var(--grade-range-90-100);
+            }
+          }
+        }
+      }
+
+      .row-no-records {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 20px 0;
+
+        ion-text {
+          font-style: italic;
+          color: var(--data-by-milestone-text);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+.lesson-plan-list-container {
+  .lesson-plan-list-container-row {
+    .lesson-plan-list-panel {
+      ::ng-deep .mat-expansion-panel-content {
+        ::ng-deep .mat-expansion-panel-body {
+          padding-bottom: 10px;
+          background: var(--lesson-plan-list-accordion-bgcolor);
+        }
+      }
+    }
+
+    .lesson-plan-list-panel {
+      width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+
+      ::ng-deep .mat-expansion-panel-body {
+        padding: 0;
+      }
+
+      .lesson-plan-list-panel-header {
+        padding: 16px;
+
+        &.mat-expanded {
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+          border-radius: 0;
+        }
+      }
+
+      .lesson-plan-list-row {
+        .title-col {
+          .lesson-plan-list-title {
+            ion-text {
+              width: 328px;
+              font-family: var(--sans);
+              font-size: 14px;
+              font-weight: bold;
+              color: var(--lesson-plan-list-title-text);
+            }
+
+            &.lesson {
+              float: left;
+            }
+          }
+        }
+
+        .lesson-plan-arrow-icon-col {
+          max-width: 24px;
+          display: flex;
+
+          .lesson-plan-arrow-icon {
+            margin: auto;
+            color: var(--lesson-plan-list-title-text);
+            font-size: 15px;
+            text-align: center;
+            line-height: 1.3;
+          }
+        }
+      }
+
+      .prior-knowledge-button-row {
+        padding: 5px 16px;
+        background-color: var(--prior-knowledge-bgcolor);
+
+        .prior-knowledge-button {
+          border-radius: 20px;
+          background: var(--dark-400);
+          color: var(--white);
+          font-size: 12px;
+          padding: 0 10px;
+          margin: 5px;
+          text-align: center;
+          height: 20px;
+        }
+      }
+
+      .question-row {
+        padding: 15px;
+        background-color: var(--question-block-bgcolor);
+
+        .question-text {
+          font-size: 12px;
+          color: var(--question-block-text);
+          white-space: normal;
+        }
+      }
+
+      .anticipated-row {
+        padding: 10px;
+        background-color: var(--anticipated-row-bgcolor);
+      }
+
+      .anticipated-accordion-bgcolor {
+        background-color: var(--anticipated-accordion-bgcolor);
+      }
+
+      .anticipated-blocks-row {
+        padding: 10px 10px 0;
+
+        .anticipated-block {
+          background-color: var(--anticipated-block-bgcolor);
+          margin-bottom: 10px;
+          padding: 10px;
+        }
+      }
+
+      .anticipated-text {
+        font-size: 12px;
+        color: var(--anticipated-text);
+        white-space: normal;
+
+        &.anticipated-headline-text {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

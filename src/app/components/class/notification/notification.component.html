@@ -1,0 +1,7 @@
+<div class="notification-container" (scroll)="onScroll($event)">
+  <ion-grid *ngIf="notificationList && notificationList.notifications.length" class="notification-list no-padding">
+    <ion-row *ngFor="let notification of notificationList.notifications" class="notification" (click)="onRedirect(notification)">
+      <notification-panel [notification]="notification"></notification-panel>
+    </ion-row>
+  </ion-grid>
+</div>

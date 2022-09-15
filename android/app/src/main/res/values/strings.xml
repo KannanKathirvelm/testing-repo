@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Gooru Navigator: Instructor</string>
+    <string name="title_activity_main">Gooru Navigator: Instructor</string>
+    <string name="package_name">org.gooru.navigator.instructor</string>
+</resources>

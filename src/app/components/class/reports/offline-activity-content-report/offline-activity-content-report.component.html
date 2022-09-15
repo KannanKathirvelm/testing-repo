@@ -1,0 +1,63 @@
+<div *ngIf="offlineActivity">
+  <ion-row  *ngIf="offlineActivity.reference" class="offline-container">
+    <ion-row>
+      <ion-col>
+        <ion-icon class="offline-resource-icon"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-text class="offline-desc-title">{{'DESCRIPTION' | translate}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-text class="offline-desc-text" [ngClass]="{'ellipsis' : !showMore, 'show-more': showMore}" [innerHTML]="offlineActivity.reference"></ion-text>
+    <ion-text class="show-text" *ngIf="offlineActivity.reference" (click)="showMore = !showMore">{{ showMore ? ('SHOW_LESS' | translate): ('SHOW_MORE' | translate) }}</ion-text>
+  </ion-row>
+  <div *ngFor="let task of activityTasks; let taskIndex=index">
+    <oa-task-submissions [task]="task" [isPreview]="!isPreview"></oa-task-submissions>
+  </div>
+  <div class="footer-container">
+    <div class="player-grading">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            <ion-row class="row-rubric-header">
+              <ion-col class="col-icon">
+                <ion-icon class="nav-rubric"></ion-icon>
+              </ion-col>
+              <ion-col class="col-title">
+                <ion-text class="text-header">{{'STUDENT_RUBRIC' | translate}}</ion-text>
+                <i class="material-icons rubric-attachment" *ngIf="studentRubric.url" inAppBrowser url={{studentRubric.url}}>attachment</i>
+              </ion-col>
+              <ion-col *ngIf="studentRubric.maxScore" class="col-score" ngClass="grade-range-{{studentRubric.gradedScoreInPercentage | gradeRange}}">
+                <ion-text *ngIf="studentRubric.gradedScore">{{studentRubric.gradedScore | transformCompentencyStats: studentRubric.maxScore}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <nav-rubric-report [isReadonly]="true" [isTeacherRubric]="!isStudent" [rubric]="studentRubric" [isReport]="true"></nav-rubric-report>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            <ion-row class="row-rubric-header">
+              <ion-col class="col-icon">
+                <ion-icon class="nav-rubric"></ion-icon>
+              </ion-col>
+              <ion-col class="col-title">
+                <ion-text class="text-header">{{'TEACHER_RUBRIC' | translate}}</ion-text>
+                <i class="material-icons rubric-attachment" *ngIf="teacherRubric.url" inAppBrowser url={{teacherRubric.url}}>attachment</i>
+              </ion-col>
+              <ion-col *ngIf="teacherRubric.maxScore" class="col-score" ngClass="grade-range-{{teacherRubric.gradedScoreInPercentage | gradeRange}}">
+                <ion-text *ngIf="teacherRubric.gradedScore">{{teacherRubric.gradedScore | transformCompentencyStats: teacherRubric.maxScore}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <nav-rubric-report [isReadonly]="true" [isTeacherRubric]="!isStudent" [rubric]="teacherRubric" [isReport]="true"></nav-rubric-report>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

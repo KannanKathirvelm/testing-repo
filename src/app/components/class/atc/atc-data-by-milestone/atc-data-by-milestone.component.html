@@ -1,0 +1,28 @@
+<ion-grid class="atc-data-by-milestone-grid">
+  <ion-row class="data-by-milestone-title-row">
+    <ion-col size="10" class="ion-no-padding">
+      <ion-text class="data-by-milestone-title">{{ 'DATA_BY_MILESTONE' | translate }}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding navigate-col">
+      <ion-icon name="arrow-forward" (click)="navigateToDataByMilestonePage()"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="report-content-row">
+    <ion-text># {{ 'STUDENTS_WITH_LESSONS' | translate }}</ion-text>
+  </ion-row>
+  <ng-container *ngIf="isShowMilestoneChart; else showChart">
+    <ion-row class="milestone-list-container no-data">
+      <ion-text class="no-milestone-chart">{{'NO_MILESTONE_CHART_MSG' | translate}}</ion-text>
+    </ion-row>
+  </ng-container>
+  <ng-template #showChart>
+    <div class="milestone-list-container">
+      <svg class="chart" id="bar-chart" #barChart></svg>
+      <ng-container *ngIf="!isChartLoaded">
+        <ion-row class="skeleton-center">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+      </ng-container>
+    </div>
+  </ng-template>
+</ion-grid>

@@ -1,0 +1,46 @@
+<ion-row class="row-assign-class-activity">
+  <ion-col class="col-image" (click)="onPreview()" [ngStyle]="{ 'background-image': 'url('+content.thumbnail+')'}">
+  </ion-col>
+  <ion-col class="col-collection-detail">
+    <ion-row class="row-collection" (click)="onPreview()">
+      <ion-text class="collection-text">{{content.title}}</ion-text>
+    </ion-row>
+    <ion-row class="col-icons">
+      <ion-row class="col-count">
+        <ion-row class="row-collection">
+          <ng-container *ngIf="content.isOfflineActivity; else questionCountTemplate">
+            <ion-text class="offline-task-count">
+              {{content.taskCount}}
+              <ng-container *ngIf="content.taskCount > 1; else taskText">{{'TASKS' | translate}}</ng-container>
+              <ng-template #taskText>{{'TASK' | translate}}</ng-template>
+            </ion-text>
+          </ng-container>
+          <ng-template #questionCountTemplate>
+            <ng-container *ngIf="content.isExternalAssessment || content.isExternalCollection; else showQuestionCount">
+              <ion-text class="external-row">{{ 'EXTERNAL' | translate }} {{content.contentFormat}}</ion-text>
+            </ng-container>
+            <ng-template #showQuestionCount>
+              <ion-col class="col-student-count">
+                <ion-icon class="nav-resource"></ion-icon>
+                <ion-text>{{content.resourceCount}}</ion-text>
+              </ion-col>
+              <ion-col class="col-info-count">
+                <ion-icon class="nav-question"></ion-icon>
+                <ion-text>{{content.questionCount}}</ion-text>
+              </ion-col>
+            </ng-template>
+          </ng-template>
+        </ion-row>
+      </ion-row>
+      <ion-row class="col-share-icon" *ngIf="content.isExternalCollection || content.isExternalAssessment">
+        <ion-icon class="share-icon"></ion-icon>
+      </ion-row>
+      <ion-row class="col-taxonomy" *ngIf="content.taxonomy">
+        <nav-taxonomy-list [taxonomy]="content.taxonomy" [showFrameworkAndDisaplyCode]="true"></nav-taxonomy-list>
+      </ion-row>
+      <ion-row class="col-icon" [ngClass]="{disabled: classDetails.isArchived}">
+        <ion-icon name="add-outline" (click)="openCalender()"></ion-icon>
+      </ion-row>
+    </ion-row>
+  </ion-col>
+</ion-row>

@@ -1,0 +1,36 @@
+.class-info-container {
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  
+  .class-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--white);
+  }
+  
+  .total-competencies {
+    display: flex;
+    flex-direction: column;
+    
+    .competency-count {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--white);
+      text-align: right;
+    }
+    
+    .competency-label {
+      font-size: 12px;
+      text-align: right;
+      color: var(--white);
+    }
+  }
+}
+.initial-inferred {
+  display: flex;
+  justify-content: space-between;
+}
+

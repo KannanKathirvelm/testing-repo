@@ -1,0 +1,29 @@
+<ion-grid class="grid-allow-access-container">
+  <ion-row class="row-allow-access">
+    <ion-col class="col-calender-icon">
+      <ng-container *ngIf="isZoomMeetingTool; else calenderIcon">
+        <ion-icon class="zoom-icon"></ion-icon>
+      </ng-container>
+      <ng-template #calenderIcon>
+        <ion-text class="material-icons">calendar_today</ion-text>
+      </ng-template>
+    </ion-col>
+    <ion-col class="col-content">
+      <ion-row class="row-header-text">
+        <ng-container *ngIf="isZoomMeetingTool; else zoomTemplate">
+          <ion-text>{{'ZOOM_PERMISSION_DESC' | translate}}</ion-text>
+        </ng-container>
+        <ng-template #zoomTemplate>
+          <ion-text>{{'MEET_PERMISSION_DESC' | translate}}</ion-text>
+        </ng-template>
+      </ion-row>
+      <ion-row class="row-description">
+        <ion-text>{{'REVOKE_PERMISSION_MSG' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="row-button">
+        <ion-button class="btn-deny" (click)="closeModal()">{{'DENY' | translate}}</ion-button>
+        <ion-button class="btn-allow" (click)="clickAllow()">{{'ALLOW' | translate}}</ion-button>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>

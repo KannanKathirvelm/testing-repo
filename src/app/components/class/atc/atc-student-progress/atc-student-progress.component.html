@@ -1,0 +1,71 @@
+<ion-grid class="atc-student-progress-grid">
+  <ion-row class="student-progress-title-row">
+    <ion-col size="10" class="ion-no-padding">
+      <ion-text class="student-progress-title">{{ 'STUDENT_PROGRESS' | translate }}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding navigate-col">
+     <ion-icon name="arrow-forward" (click)="navigateToStudentsProficiency()"></ion-icon>
+   </ion-col>
+  </ion-row>
+  <ion-row class="student-progress-content-row">
+    <ion-col size="6" class="ion-no-padding student-data-col">
+      <ion-row class="icon-col">
+        <ion-icon class="profile-img"></ion-icon>
+      </ion-row>
+      <ion-row class="progress-content-data">
+        <ion-text class="content-category">{{ 'STUDENTS' | translate }}</ion-text>
+        <ion-row class="category-data-row">
+          <ion-text class="category-data">{{ 'TOTAL' | translate }}</ion-text>
+          <ion-text class="data">{{classMemberCount}}</ion-text>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+    <ion-col size="6" class="ion-no-padding competency-data-col">
+      <ion-row class="icon-col">
+        <ion-icon class="competency-img"></ion-icon>
+      </ion-row>
+      <ion-row class="progress-content-data">
+        <ion-text class="content-category">{{ 'COMPETENCIES' | translate }}</ion-text>
+        <ion-row class="category-data-row">
+          <ion-text class="category-data">{{ 'MOST_GAINS' | translate }}</ion-text>
+          <ion-text class="data">{{mostGainedCompetency}}</ion-text>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="chart-container">
+    <ion-row class="competencies-list-container">
+      <div id="pie-chart" #pieChart></div>
+      <ion-row class="competencies-list">
+        <ng-container *ngFor="let competency of totalMaxGained; let competencyIndex = index">
+          <ion-row class="list">
+            <ion-text class="alphabet"> {{competencyIndex + 1}}</ion-text>
+            <ion-row class="list-details">
+              <ion-text class="labels">
+                <ion-text class="title">{{competency.label}}</ion-text>
+                <ion-text class="competency-icon"></ion-text>
+              </ion-text>
+              <ion-text class="value">
+                <ion-text class="title">{{competency.value}}</ion-text>
+                <ion-text class="user-icon"></ion-text>
+              </ion-text>
+            </ion-row>
+          </ion-row>
+        </ng-container>
+      </ion-row>
+    </ion-row>
+    <ng-container *ngIf="!isChartLoaded">
+      <ion-row class="competencies-list-container skeleton-container">
+        <ion-row class="skeleton-center">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+        <ion-row class="competencies-list">
+          <ion-row class="list" *ngFor="let item of [].constructor(3)">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ng-container>
+  </ion-row>
+</ion-grid>

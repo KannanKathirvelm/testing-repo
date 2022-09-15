@@ -1,0 +1,100 @@
+.domain-slides {
+  height: 200px;
+  width: 100%;
+  border-top: solid 4px var(--domain-coverage-bg);
+
+  .domain-container {
+    margin-bottom: 4px;
+    width: 100%;
+
+    ::ng-deep nav-domain-competency-progress-bar {
+      padding: 0 10px;
+      margin: auto;
+      width: 100%;
+    }
+
+    .domain-progress-bar {
+      .progress-bar-skeleton {
+        margin: 15px;
+        height: 36px;
+      }
+    }
+
+    .domain-header {
+      padding: 0 0 0 8px;
+      height: 48px;
+
+      .domain-title {
+        text-align: left;
+        padding: 0 5px;
+        line-height: 1;
+        margin: auto;
+        color: var(--domain-coverage-title-color);
+
+        ion-skeleton-text {
+          margin: 10px 0;
+          height: 20px;
+        }
+      }
+
+      .domain-actions {
+        background-color: rgba(251, 251, 251);
+
+        ion-row {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          height: 100%;
+
+          ion-text {
+            margin: 0 14px;
+          }
+        }
+      }
+    }
+
+    .domain-count-container {
+      padding: 0 15px;
+      text-align: left;
+
+      .domain-competency-title {
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      ion-skeleton-text {
+        width: 150px;
+        height: 12px;
+      }
+
+      .info-icon {
+        display: flex;
+        justify-content: flex-end;
+
+        ion-text {
+          width: 24px;
+          height: 24px;
+          margin: 0 8px 0 0;
+        }
+      }
+
+      .domain-count {
+        display: grid;
+        font-size: 12px;
+        font-weight: 600;
+
+        .mastered {
+          color: var(--proficiency-competency-status-3);
+        }
+
+        .in-progress {
+          color: var(--proficiency-competency-status-1);
+        }
+
+        .not-started {
+          color: var(--proficiency-competency-status-0);
+        }
+      }
+    }
+  }
+}

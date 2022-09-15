@@ -1,0 +1,61 @@
+.grid-timepicker-container {
+  max-width: 260px;
+  padding: 0;
+
+  .row-timepicker {
+    display: grid;
+    grid-template-columns: 130px 29px 130px;
+
+    ion-col {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      .row-time-type {
+        ion-text {
+          color: var(--alto);
+        }
+      }
+
+      &.col-colon {
+        font-size: 90px;
+        color: var(--timepicker-colon-color);
+        font-weight: bold;
+      }
+
+      ion-icon {
+        font-size: 30px;
+        color: var(--timepicker-icon-color);
+      }
+
+      ion-input {
+        --padding-start: 0;
+        --padding-end: 0;
+        --padding-top: 0;
+        --padding-bottom: 0;
+        text-align: center;
+        font-size: 100px;
+        font-weight: bold;
+        color: var(--timepicker-text-color);
+      }
+    }
+  }
+
+  .row-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+
+    .save-next {
+      --background: var(--white);
+      color: var(--apple-with-dark);
+      border: 1px solid var(--green);
+      width: 100%;
+      box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
+      height: 48px;
+    }
+  }
+}

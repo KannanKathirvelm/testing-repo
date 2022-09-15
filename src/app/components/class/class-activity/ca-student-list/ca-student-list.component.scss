@@ -1,0 +1,153 @@
+ion-header.ca-student-list-header {
+  ion-toolbar {
+    .row-header {
+      ion-col {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.col-selected-count {
+          ion-text {
+            text-transform: capitalize;
+          }
+        }
+
+        ion-icon {
+          font-size: 34px;
+        }
+      }
+    }
+  }
+}
+
+ion-content.ca-student-list-content {
+  .no-students {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
+    ion-text {
+      font-style: italic;
+      font-size: 16px;
+      color: var(--dark-400);
+    }
+  }
+
+  .row-select-all {
+    border-bottom: 1px solid var(--ca-student-list-select-all-border-color);
+    width: 100%;
+
+    ion-button {
+      margin: 0;
+    }
+  }
+
+  .row-student-list {
+    ion-list {
+      width: 100%;
+
+      ion-item {
+        --padding-start: 0;
+
+        ion-row {
+          &.row-student {
+            display: grid;
+            grid-template-columns: 48px auto;
+            width: 100%;
+
+            ion-col {
+              display: grid;
+              align-items: center;
+
+              &.col-icon {
+                justify-content: center;
+
+                .profile {
+                  padding: 0;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 46px;
+                  width: 46px;
+        
+                  .profile-icon {
+                    background-size: 100% 100%;
+                    background-position: center;
+                    width: 32px;
+                    height: 32px;
+                    margin: auto;
+                    display: flex;
+                    border-radius: 50%;
+                  }
+                }
+        
+                .avatar-icon {
+                  ::ng-deep .avatar-container {
+                    height: 32px !important;
+                    width: 32px !important;
+        
+                    .avatar-content {
+                      width: 32px;
+                      height: 32px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font: 16px / 30px Helvetica, Arial, sans-serif !important;
+                      margin: auto;
+                    }
+                  }
+                }
+              }
+
+              &.col-student-name {
+                ion-text {
+                  color: var(--dark-400);
+                  text-transform: capitalize;
+                }
+              }
+
+              ion-thumbnail {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+
+                &.selected-student {
+                  background: var(--ca-selected-student-bg-color);
+                  border-radius: 50%;
+                  color: var(--ca-selected-student-text-color);
+                }
+
+                ion-img {
+                  border-radius: 50%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+ion-footer.ca-student-list-footer {
+  &::before {
+    background-image: none;
+  }
+
+  .row-footer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    ion-button {
+      &.cancel-button {
+        --background: var(--ca-student-list-cancel-btn-bg-color);
+        color: var(--ca-student-list-cancel-btn-text-color);
+        margin-right: 5px;
+      }
+    }
+  }
+}

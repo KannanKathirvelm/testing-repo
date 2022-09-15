@@ -1,0 +1,84 @@
+<mat-accordion class="lesson-plan-session-container">
+  <ion-row class="ion-no-padding lesson-plan-session-container-row">
+    <mat-expansion-panel class="lesson-plan-session-panel" [hideToggle]="true">
+      <mat-expansion-panel-header class="lesson-plan-session-panel-header" collapsedHeight="48px" expandedHeight="inherit">
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="lesson-plan-session-row">
+            <ion-col class="title-col ellipsis">
+              <ion-row class="lesson-plan-session-title sessions ellipsis">
+                <ion-text>Session 1</ion-text>
+              </ion-row>
+            </ion-col>
+            <ion-col class="title-col ellipsis">
+              <ion-row class="lesson-plan-session-title sessions-time ellipsis">
+                <ion-text>45 min.</ion-text>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-grid class="session-row">
+            <ion-row>
+              <ion-text class="session-block-text session-headline-text ellipsis">Session 1 Structure</ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-text class="session-block-text ellipsis">Lorem ipsum dolor sit amet, ad vis unum scaevola mandamus, duis saperet vis et. Duo utroque denique perpetua id, ad probo delicata necessitatibus nec. Vis ea aliquip singulis gloriatur.
+              </ion-text>
+            </ion-row>
+          </ion-grid>
+          <ion-row class="resource-title-row">
+            <ion-text class="resource-title">Teacher Resources</ion-text>
+          </ion-row>
+          <ion-row class="session-blocks-row">
+            <ion-col class="video-resource-icon-col ion-no-padding">
+              <ion-icon class="nav-video-resource-icon video-resource-icon video-resource-icon-color"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-text class="session-block-text video-resource-title ellipsis">Video name here</ion-text>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="session-blocks-row">
+            <ion-col class="video-resource-icon-col ion-no-padding">
+              <ion-icon class="nav-video-resource-icon video-resource-icon video-resource-icon-color"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-text class="session-block-text video-resource-title ellipsis">Video name here</ion-text>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-template>
+    </mat-expansion-panel>
+  </ion-row>
+</mat-accordion>
+<ion-grid class="ion-no-padding collection-container">
+  <ion-row class="milestone-collection-row">
+    <ion-col class="ion-no-padding collection-title-container">
+      <ion-row class="collection-title-row">
+        <ion-col class="milestone-icon-col">
+          <ion-icon class="nav-collection-icon milestone-icon milestone-collection-icon-color"></ion-icon>
+        </ion-col>
+        <ion-col class="ion-no-padding collection-title-col ellipsis">
+          <ion-text class="collection-title">Vector Quantities</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col class="milestone-icon-col">
+      <ion-icon class="milestone-icon" name="ellipsis-vertical"></ion-icon>
+    </ion-col>
+    <ion-col class="performance-col collection-performance-score-bg">
+      <ion-row class="performance-row">
+        <ion-text class="performance-score collection-performance-score">15m</ion-text>
+      </ion-row>
+      <ion-row class="profile-count-row collection-performance-score">
+        <ion-icon class="profile-icon" name="person-circle"></ion-icon>
+        <ion-row class="profile-count">25</ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>

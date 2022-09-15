@@ -1,0 +1,129 @@
+.library-contains {
+  .search-header {
+    .search-panel {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      .input-row {
+        font-size: 12px;
+        color: var(--student-list-search-text);
+        padding-left: 10px;
+      }
+
+      .search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--student-list-search-text);
+
+        ion-icon {
+          height: 22px;
+          min-width: 48px;
+        }
+      }
+      .search-text-box {
+        padding-right: 30px;
+        .select-course {
+          margin: 0 auto;
+          width: max-content;
+          max-width: 220px;
+        }
+      }
+    }
+  }
+  .library-course-head {
+    background: var(--course-card-bg);
+    height: calc(100vh - 55px);
+    overflow-y: auto;
+    .search-student-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--student-list-search-border);
+      background: var(--class-progress-body-bg);
+      border-radius: 5px;
+      margin: 10px;
+
+      .input-row {
+        font-size: 12px;
+        color: var(--student-list-search-text);
+        border-right: 1px solid var(--student-list-search-border);
+        padding-left: 10px;
+      }
+
+      .search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--student-list-search-text);
+
+        ion-icon {
+          height: 22px;
+          min-width: 48px;
+        }
+      }
+    }
+    .library-course-card-list {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 10px 0;
+      color: var(--dark-400);
+      .no-content {
+        padding: 10px;
+        margin: 0 auto;
+        color: var(--white);
+        font-size: 20px;
+      }
+    }
+  }
+}
+.skeleton-card-list {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  overflow-x: auto;
+
+  .skeleton-card {
+    width: 224px;
+    height: 376px;
+    display: grid;
+    grid-template-rows: 138px auto;
+
+    .row-header {
+      ion-skeleton-text {
+        margin: 0;
+      }
+    }
+
+    .row-body {
+      padding: 0;
+      display: grid;
+      grid-template-rows: 24px 34px 34px 34px;
+
+      .row-desc {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+
+        &.row-desc-one {
+          width: 80%;
+        }
+
+        &.row-desc-two {
+          width: 60%;
+        }
+      }
+
+      .row-count {
+        display: grid;
+        grid-template-columns: 48px 48px auto;
+        border-bottom: solid 1px var(--ca-activity-card-footer-border-color);
+
+        ion-col {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

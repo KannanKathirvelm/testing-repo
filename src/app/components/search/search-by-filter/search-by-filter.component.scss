@@ -1,0 +1,35 @@
+.search-filter-header {
+  .header-container {
+    .icon {
+      display: flex;
+      justify-content: center;
+
+      .filter-icon {
+        color: var(--search-filter-icon);
+      }
+    }
+  }
+}
+
+.search-by-filter-footer {
+  display: flex;
+  height: 60px;
+
+  .cancel-btn,
+  .confirm-btn {
+    width: 120px;
+    height: 35px;
+    font-size: 17px;
+    color: var(--filter-confirm-btn);
+    text-transform: capitalize;
+    margin: auto 15px auto 0;
+    --border-radius: 15px;
+    --background: var(--filter-count-bg);
+    font-weight: 600;
+  }
+
+  .cancel-btn {
+    --background: var(--filter-clear-btn);
+    margin-left: auto;
+  }
+}

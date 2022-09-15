@@ -1,0 +1,13 @@
+<ion-grid class="grid-ca-max-score-container">
+  <ion-row class="row-input">
+    <ion-row class="row-input-box">
+      <ion-input placeholder="0" integerInput [max]="maxScore" [(ngModel)]="userEnterScore" (keypress)="onMaxScoreEnter($event)"></ion-input>
+    </ion-row>
+    <ion-row class="row-score-text">
+      <ion-text>{{scoreLabel}}</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-row class="row-button">
+    <ion-button class="btn-confirm" [disabled]="userEnterScore < minScore" (click)="submitScore()">{{buttonText}}</ion-button>
+  </ion-row>
+</ion-grid>

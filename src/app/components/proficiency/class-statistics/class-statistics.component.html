@@ -1,0 +1,51 @@
+<ion-grid class="class-statistics-container ion-no-padding">
+  <ion-row class="class-statistics-header">
+    <ion-col size="6" class="class-statistics-title" (click)="onToggleClassCount()">
+      <ion-text *ngIf="courseCoverageCount; else classTitleSkeleton">{{'CLASS_STATISTICS' | translate}}</ion-text>
+      <ng-template #classTitleSkeleton>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ng-template>
+      <ion-row>
+        <ng-container *ngIf="showClassCount;else dropArrow">
+          <ion-text class="material-icons">arrow_drop_up</ion-text>
+        </ng-container>
+        <ng-template #dropArrow>
+          <ion-text class="material-icons">arrow_drop_down</ion-text>
+        </ng-template>
+      </ion-row>
+    </ion-col>
+    <ion-col size="6" class="class-statistics-count">
+      <ion-row class="progressBar-count" *ngIf="courseCoverageCount;else progressBarCountSkeleton">
+        <ion-text class="mastered">{{courseCoverageCount.mastered}}</ion-text>/
+        <ion-text class="in-progress">{{courseCoverageCount.inProgress}}</ion-text>/
+        <ion-text class="not-started">{{courseCoverageCount.notStarted}}</ion-text>
+      </ion-row>
+      <!-- Here the progress bar.count skeleton will be loaded -->
+      <ng-template #progressBarCountSkeleton>
+        <ion-row class="progressBar-count">
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-row>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+  <ion-row class="class-statistics-progress-bar" *ngIf="courseCoverageCount;else progressBarSkeleton">
+    <nav-student-competency-progress-bar [progressBarName]="'class-statistics'" [domain]="courseCoverageCount"></nav-student-competency-progress-bar>
+  </ion-row>
+  <!-- Here the progress bar.skeleton will be loaded -->
+  <ng-template #progressBarSkeleton>
+    <ion-row class="class-statistics-progress-bar">
+      <ion-skeleton-text class="progress-bar-skeleton" animated></ion-skeleton-text>
+    </ion-row>
+  </ng-template>
+</ion-grid>
+<ion-row [@collapse]="!showClassCount" *ngIf="domainCoverageCount" class="detail-class-statistics-count">
+  <ion-text class="students-detail">{{domainCoverageCount.length}} {{'DOMAINS' | translate}} | {{numberOfStudents}} {{'STUDENTS' | translate}}</ion-text>
+  <ion-text class="domain-competency-title">{{'COMPETENCIES' | translate}}</ion-text>
+  <ion-row class="domain-count">
+    <ion-text class="mastered">{{courseCoverageCount.mastered}} {{'MASTERED' | translate}}</ion-text>
+    <ion-text class="in-progress">{{courseCoverageCount.inProgress}} {{'IN_PROGRESS' | translate}}</ion-text>
+    <ion-text class="not-started">{{courseCoverageCount.notStarted}} {{'NOT_STARTED' | translate}}</ion-text>
+  </ion-row>
+</ion-row>

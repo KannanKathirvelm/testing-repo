@@ -1,0 +1,43 @@
+<ion-grid class="grid-meeting-container">
+  <ion-row class="row-meeting-name-container">
+    <ion-label>{{'NAME_YOUR_MEETING' | translate}}</ion-label>
+    <ion-input [(ngModel)]="meetingName"></ion-input>
+    <ion-text *ngIf="isMeetingSubmitted && !meetingName" class="danger-text">{{'MEETING_NAME_VALIDATION' | translate}}</ion-text>
+  </ion-row>
+  <ion-row class="row-student-invite-container" (click)="openStudentList()">
+    <ion-col class="col-icon">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </ion-col>
+    <ion-col class="col-text">
+      <ion-text>{{'INVITE_PEOPLE' | translate}}</ion-text>
+    </ion-col>
+    <ion-col class="col-plus-icon">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="row-calender-container">
+    <p-calendar [(ngModel)]="meetingSelectedDate" [minDate]="meetingMinDate" styleClass="meeting-date-picker" [inline]="true"></p-calendar>
+  </ion-row>
+  <ion-row class="row-footer">
+    <ion-grid class="grid-footer">
+      <ion-row class="row-start-end-time-container">
+        <ion-col class="col-start-time">
+          <ion-label>{{'START_TIME' | translate}}</ion-label>
+          <ion-select [value]="startTime" (ionChange)="changeStartTime($event)" dropdownScrollIntoView>
+            <ion-select-option [value]="time" *ngFor="let time of timeList">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col class="col-end-time">
+          <ion-label>{{'END_TIME'| translate}}</ion-label>
+          <ion-select [value]="endTime" (ionChange)="changeEndTime($event)" dropdownScrollIntoView>
+            <ion-select-option [value]="time" *ngFor="let time of timeList">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-text class="danger-text" *ngIf="isInvalidTime">{{'TIME_VALIDATION_MSG' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="row-create-activity-button">
+        <ion-button (click)="createMeetingActivity()">{{'CREATE_ACTIVITY' | translate}}</ion-button>
+      </ion-row>
+    </ion-grid>
+  </ion-row>
+</ion-grid>

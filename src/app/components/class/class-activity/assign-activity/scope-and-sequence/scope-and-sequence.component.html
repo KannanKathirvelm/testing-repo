@@ -1,0 +1,86 @@
+<mat-accordion class="accordion-default-scope-and-sequence">
+  <ng-container *ngIf="activeScopeAndSequence.modulesList; else skeletonViewTemplate">
+    <ng-container *ngFor="let module of activeScopeAndSequence.modulesList; let moduleIndex = index">
+      <mat-expansion-panel [expanded]="moduleIndex === 0" hideToggle class="accordion-panel-default-scope-and-sequence" (opened)="openModule(module)">
+        <mat-expansion-panel-header class="accordion-panel-default-scope-and-sequence-header" collapsedHeight="49px" expandedHeight="49px">
+          <ion-text class="title module-title">{{module.title}}</ion-text>
+          <ion-text class="module-duration" *ngIf="module.durationDays">{{module.durationDays}} days</ion-text>
+          <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+          <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <mat-accordion class="accordion-default-scope-domain">
+            <ng-container *ngIf="module.topicsList; else skeletonViewTemplate">
+              <ng-container *ngFor="let topic of module.topicsList; let topicIndex = index">
+                <mat-expansion-panel [expanded]="topicIndex === 0" hideToggle class="accordion-panel-default-scope-topic" (opened)="openTopics(module, topic)">
+                  <mat-expansion-panel-header class="accordion-panel-default-domain-header" collapsedHeight="49px" expandedHeight="49px">
+                    <ion-text class="title-topic ellipsis">{{topic.title}}</ion-text>
+                    <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                    <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                  </mat-expansion-panel-header>
+                  <ng-template matExpansionPanelContent>
+                    <mat-accordion class="accordion-default-scope-topic">
+                      <ng-container *ngIf="topic.competenciesList; else skeletonViewTemplate">
+                        <ng-container *ngFor="let competency of topic.competenciesList; let competencyIndex = index">
+                          <mat-expansion-panel [expanded]="competencyIndex === 0" hideToggle class="accordion-panel-default-scope-competency" (opened)="openCompetency(moduleIndex, topicIndex, competencyIndex)">
+                            <mat-expansion-panel-header class="accordion-panel-default-topic-header" collapsedHeight="49px" expandedHeight="49px">
+                              <ion-row class="row-title-heading">
+                                <ion-text class="title-code">{{competency.displayCode || competency.code}}</ion-text>
+                                <ion-text class="title-text ellipsis">{{competency.title}}</ion-text>
+                              </ion-row>
+                              <ion-row class="row-icon">
+                                <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                                <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                              </ion-row>
+                            </mat-expansion-panel-header>
+                            <ng-template matExpansionPanelContent>
+                              <ng-container *ngIf="competency.studentsContent">
+                                <mat-accordion class="accordion-student-container">
+                                  <mat-expansion-panel hideToggle class="accordion-panel-student-resource" [expanded]="true">
+                                    <mat-expansion-panel-header class="accordion-panel-default-topic-header" collapsedHeight="49px" expandedHeight="49px">
+                                      <ion-text class="title">{{'STUDENT_RESOURCES' | translate}}</ion-text>
+                                      <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                                      <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                                    </mat-expansion-panel-header>
+                                    <ng-template matExpansionPanelContent>
+                                      <nav-default-view [classDetails]="classDetails" [libraryContent]="competency.studentsContent" [isLoading]="competency.studentsContentLoading" [activities]="activities" (addActivityEvent)="addActivity($event)" (loadMoreData)="loadMore($event)" (loadLessData)="loadLess($event)"></nav-default-view>
+                                    </ng-template>
+                                  </mat-expansion-panel>
+                                </mat-accordion>
+                              </ng-container>
+                              <ng-container *ngIf="competency.teachersContent">
+                                <mat-accordion class="accordion-teacher-container">
+                                  <mat-expansion-panel hideToggle class="accordion-panel-teacher-resources" [expanded]="true">
+                                    <mat-expansion-panel-header class="accordion-panel-default-topic-header" collapsedHeight="49px" expandedHeight="49px">
+                                      <ion-text class="title">{{'TEACHER_RESOURCES'| translate}}</ion-text>
+                                      <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+                                      <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+                                    </mat-expansion-panel-header>
+                                    <ng-template matExpansionPanelContent>
+                                      <nav-default-view [classDetails]="classDetails" [libraryContent]="competency.teachersContent" [isLoading]="competency.teachersContentLoading" [activities]="activities" (addActivityEvent)="addActivity($event)" (loadMoreData)="loadMore($event)" (loadLessData)="loadLess($event)"></nav-default-view>
+                                    </ng-template>
+                                  </mat-expansion-panel>
+                                </mat-accordion>
+                              </ng-container>
+                            </ng-template>
+                          </mat-expansion-panel>
+                        </ng-container>
+                      </ng-container>
+                    </mat-accordion>
+                  </ng-template>
+                </mat-expansion-panel>
+              </ng-container>
+            </ng-container>
+          </mat-accordion>
+        </ng-template>
+      </mat-expansion-panel>
+    </ng-container>
+  </ng-container>
+</mat-accordion>
+<ng-template #skeletonViewTemplate>
+  <ion-row *ngFor="let item of [].constructor(3)" class="row-skeleton">
+    <ion-col *ngFor="let item of [].constructor(2)">
+      <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+    </ion-col>
+  </ion-row>
+</ng-template>

@@ -1,0 +1,102 @@
+.general-preference-container {
+  padding: 10px 16px;
+  width: 100%;
+
+  .general-preference-header {
+    display: flex;
+    height: 48px;
+    padding: 12px;
+    align-items: center;
+    width: 100%;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    justify-content: space-between;
+    background: var(--preferences-category-bg-color);
+
+    .title {
+      .label {
+        font-family: var(--sans);
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--preferences-color);
+      }
+    }
+
+    .delete-icon {
+      color: var(--preferences-color);
+    }
+  }
+
+  .general-preference-card-panel {
+    width: 100%;
+
+    .header-bar {
+      height: 48px;
+      border-bottom: 1px solid var(--preferences-border-color);
+      background-color: var(--preferences-color);
+      width: 100%;
+
+      &.last-row {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+
+      ion-col {
+        height: 48px;
+        display: flex;
+        align-items: center;
+
+        &.general-preference-icon {
+          padding: 10px;
+        }
+
+        &.general-preference-title {
+          padding: 5px 10px;
+        }
+      }
+
+      .general-preference-icon {
+        .icon {
+          width: 24px;
+          height: 24px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background: var(--proficiency);
+        }
+      }
+
+      .general-preference-title {
+        .title {
+          font-size: 12px;
+          font-family: var(--sans);
+          color: var(--preferences-bg-color);
+        }
+      }
+
+      .general-preference-option {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        padding-right: 12px;
+        font-family: var(--sans);
+        justify-content: flex-end;
+        color: var(--preferences-bg-color);
+
+        &.general-preference {
+          border-left: 1px solid var(--preferences-border-color);
+        }
+
+        .toggle-icon {
+          display: flex;
+          padding-left: 9px;
+
+          ion-icon {
+            width: 22px;
+            height: 20px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

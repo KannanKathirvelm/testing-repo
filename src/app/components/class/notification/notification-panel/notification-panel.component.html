@@ -1,0 +1,14 @@
+<ion-row class="notification-panel">
+  <ion-col class="icon-wrapper">
+    <ion-icon class="nav-{{ notification.currentItemType }}"></ion-icon>
+  </ion-col>
+  <ion-col class="title-container">
+    <ion-text class="notification-msg ellipsis">
+      {{notification.notifictionTitleKey | translate: translateParams}}
+    </ion-text>
+    <ion-text class="notification-title">{{ notification.currentItemTitle }}</ion-text>
+  </ion-col>
+  <ion-col class="arrow-wrapper">
+    <ion-icon name="arrow-dropright"></ion-icon>
+  </ion-col>
+</ion-row>

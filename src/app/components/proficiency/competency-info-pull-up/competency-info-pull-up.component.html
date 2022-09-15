@@ -1,0 +1,140 @@
+<ng-container *ngIf="competency">
+  <ion-toolbar class="competency-info-pull-up" position="top">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="competency-info-panel-header">
+        <ion-col class="competency-info-status" size="1">
+          <ion-row class="competency-status status-{{competency.competencyStatus}}">
+          </ion-row>
+        </ion-col>
+        <ion-col class="competency-title" size="5">
+          <ion-text class="competency-domain ellipsis">
+            {{ competency.domainName }}
+          </ion-text>
+          <ion-text class="competency-name">
+            {{ fwCompetencies | competencyGutToFwTransform
+            : competency.competencyCode
+            : competency.competencyCode
+            : 'frameworkCompetencyDisplayCode'
+            : false
+            : true
+            }}
+          </ion-text>
+        </ion-col>
+        <!-- NILEMOB-122 remove mastered label -->
+        <ion-col class="status" size="5">
+          <ion-text *ngIf="competencyStatus" class="competency-status-msg">
+            {{ competencyStatus}}
+          </ion-text>
+          <ion-icon *ngIf="isMasteredDemonstrated" class="mastered-img"></ion-icon>
+        </ion-col>
+        <ion-col class="close" size="1">
+          <i (click)="onClose()" class="close material-icons">close</i>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-content class="competency-info-pull-up-container">
+    <ion-row class="competency-info-content">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="competency-report-container">
+          <ion-text class="competency-name">
+            {{
+            fwCompetencies | competencyGutToFwTransform
+            : competency.competencyCode
+            : competency.competencyName
+            : 'frameworkCompetencyName'
+            : false
+            : true
+            }}
+          </ion-text>
+        </ion-row>
+        <!-- NILEMOB-122 remove suggest container -->
+        <!-- <ion-row class="signature-content">
+          <ng-container *ngIf="suggestions?.length;else systemSuggestion">
+            <suggestion-panel *ngFor="let suggestion of suggestions" [content]="suggestion" [showTeacherSuggestion]="true"></suggestion-panel>
+          </ng-container>
+          <ng-template #systemSuggestion>
+            <ng-container *ngIf="signatureContent">
+              <ion-row class="competency-content" *ngIf="signatureContent.isAssessment">
+                <ion-icon class="competency-img"></ion-icon>
+                <ion-text class="competency-note">
+                  {{ 'COMPETENCY_REPORT_NOTE' | translate }}
+                </ion-text>
+              </ion-row>
+              <suggestion-panel [content]="signatureContent" [showTeacherSuggestion]="false" (selectSuggestion)="onClickSuggestion($event)"></suggestion-panel>
+            </ng-container>
+          </ng-template>
+        </ion-row> -->
+      </ion-grid>
+      <ng-container *ngIf="isOnline">
+        <ion-row class="competency-info-content">
+          <ion-grid class="tabs">
+            <ion-row>
+              <ng-container *ngIf="isHidePortFolio;else allTabs">
+                <ion-col *ngFor="let tab of tabs; index as tabIndex" size="6" class="tab-content {{ tab.title }}"
+                  [ngClass]="{ active: tab.isActive}" (click)="showTab(tab, tabIndex)">
+                  <ion-text>{{ tab.title | translate }}</ion-text>
+                </ion-col>
+              </ng-container>
+              <ng-template #allTabs>
+                <ion-col *ngFor="let tab of tabs; index as tabIndex" size="4" class="tab-content {{ tab.title }}"
+                  [ngClass]="{ active: tab.isActive }" (click)="showTab(tab, tabIndex)">
+                  <ion-text>{{ tab.title | translate }}</ion-text>
+                </ion-col>
+              </ng-template>
+            </ion-row>
+          </ion-grid>
+          <!-- NILEMOB-122 remove portfolio tab -->
+          <ion-row  *ngIf="!isHidePortFolio" [ngClass]="{ active: showPortFolio }" class="content">
+            <ng-container *ngIf="portfolioDataList.length;else portfolioUserItems">
+              <mat-accordion *ngFor="let portfolio of portfolioDataList">
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <ion-row class="portfolio-header">
+                        <ion-row>
+                          <ion-avatar class="profile">
+                            <img  [src]="portfolio.thumbnail" class="profile-icon">
+                          </ion-avatar>
+                        </ion-row>                            
+                        <ion-text class="portfolio-title">{{portfolio.firstName}} {{portfolio.lastName}}
+                        </ion-text>
+                      </ion-row>
+                    </mat-expansion-panel-header>
+                    <ng-template matExpansionPanelContent>
+                      <portfolio [userId]="portfolio.id" [competency]="competency" (closePortfolioTab)="showMetaDataTab()"></portfolio>
+                    </ng-template>
+                  </mat-expansion-panel>
+              </mat-accordion>
+            </ng-container>
+            <ng-template #portfolioUserItems>
+              <portfolio [userId]="studentId" [competency]="competency" (closePortfolioTab)="showMetaDataTab()"></portfolio>
+            </ng-template>
+          </ion-row>
+          <ion-row [ngClass]="{ active: showMetaData }" class="content">
+            <metadata [microCompetencies]="microCompetencies" [prerequisites]="prerequisites"></metadata>
+          </ion-row>
+          <ion-row [ngClass]="{ active: showLearningMap }" class="content">
+            <learning-map-panel *ngIf="learningMapData" [learningMapData]="learningMapData"
+              (clickLearningMap)="onClickLearningMap($event)">
+            </learning-map-panel>
+          </ion-row>
+        </ion-row>
+      </ng-container>
+    </ion-row>
+  </ion-content>
+  <pullup-with-dynamic-height *ngIf="studentList?.length" [isShowPullUp]="showSuggestionPopup">
+    <ng-container *ngIf="selectedSuggestion">
+      <suggestion-pop-up class="pull-up-dynamic-height" [studentList]="studentList" [content]="selectedSuggestion"
+        [showSuggestionPopup]="showSuggestionPopup" (confirmSuggestion)="onConfirmSuggestion()"
+        (cancelSuggestion)="onCancelSuggestion()">
+      </suggestion-pop-up>
+    </ng-container>
+  </pullup-with-dynamic-height>
+  <ion-row [ngClass]="{'active': showLearningMapActivity}" class="learning-map-activity-container">
+    <learning-map-activity-pull-up [activitiesCount]="activitiesCount" [activityType]="activityType"
+      [isLoaded]="learningMapDataLoaded" [totalHitCount]="limit" [learningMapContent]="learningMapContent"
+      (showMore)="onClickShowMore()" (closePullUp)="closeLearningMapActivity()"
+      (selectSuggestion)="onClickSuggestion($event)">
+    </learning-map-activity-pull-up>
+  </ion-row>
+</ng-container>

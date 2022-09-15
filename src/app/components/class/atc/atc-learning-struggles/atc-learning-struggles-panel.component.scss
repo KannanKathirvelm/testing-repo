@@ -1,0 +1,93 @@
+.atc-learning-struggles-panel-container {
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--atc-learning-struggles-panel-container);
+
+  .atc-learning-topics-showall {
+    font-family: var(--sans);
+    font-size: 12px;
+    padding: 10px 0;
+    font-weight: bold;
+    justify-content: flex-end;
+    text-transform: uppercase;
+    color: var(--atc-learning-topics-showall-text);
+  }
+
+  .atc-title-row {
+    padding: 10px 0;
+
+    &.row-main-title-border {
+      border-bottom: 2px solid var(--atc-title-row-border-color);
+    }
+
+    &.row-title-border {
+      border-bottom: 1px solid var(--atc-title-row-border-color);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .student-count {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: -6px;
+    background-color: --student-count-color;
+    border-radius: 50%;
+    border: 1px solid var(--grade-header-color);
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .atc-learning-struggle-panel-title {
+    height: 20px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--atc-learning-struggle-panel-title);
+  }
+
+  .atc-learning-topic {
+    font-family: var(--sans);
+    color: var(--atc-learning-topic);
+
+    &.main-title {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    &.title-id {
+      font-weight: bold;
+      font-size: 10px;
+    }
+
+    &.title {
+      font-size: 10px;
+      font-style: italic;
+    }
+  }
+
+  .atc-suggestion-icon-col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .rotate-90 {
+      transform: rotate(90deg);
+    }
+
+    ion-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--atc-suggestion-icon-color);
+      margin-left: auto;
+    }
+  }
+}

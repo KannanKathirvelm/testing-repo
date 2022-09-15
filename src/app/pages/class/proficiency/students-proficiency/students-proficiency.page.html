@@ -1,0 +1,40 @@
+<ng-container *ngIf="isFromATC">
+  <ion-header>
+    <ion-row class="row-header">
+      <ion-col class="ion-no-padding col-icon">
+        <ion-icon name="arrow-back" (click)="navigateToAtcPage()"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding col-title">
+        <ion-text class="students-proficiency">{{'CLASS_PROGRESS_BY_COMPETENCY' | translate}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-header>
+</ng-container>
+<ion-content class="students-proficiency-container">
+  <ng-container *ngIf="activeSubject && fwCompetencies && !isLoading">
+    <proficiency-chart *ngIf="isChartDataLoaded" [class]="classDetails" [subjects]="subjects" [isSkeletonChart]="isLoading" [showHeader]="false" [categories]="categories" [domainTopicCompetencyMatrixSkeletonData]="domainTopicCompetencyMatrix"
+      [domainCoordinatesSkeletonData]="domainCoordinates" [frameworkId]="frameworkId" [activeSubject]="activeSubject" [activeCategory]="activeCategory" [fwCompetencies]="fwCompetencies" [domainCoordinates]="domainCoordinates"
+      [showCompetencyInfo]="showCompetencyInfo" [showDomainInfo]="showDomainInfo" [taxonomyGrades]="taxonomyGrades" [disableSkyline]="true" (selectSubject)="onSelectSubject($event)" (selectDomain)="onSelectDomain($event)"
+      (selectTopic)="onSelectTopic($event)" (selectCompetency)="onSelectCompetency($event)" [domainTopicCompetencyMatrix]="domainTopicCompetencyMatrix" (chartLoded)="chartLoded()">
+    </proficiency-chart>
+    <ion-row class="chart-graph-detail">
+      <ion-col class="box">
+        <ion-text></ion-text>
+      </ion-col>
+      <ion-col class="title">
+        <ion-text>{{'CLASS_PROGRESS_BY_COMPETENCY_CHART_DESC' | translate }}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-content>
+<ion-footer>
+  <ion-row class="row-competencies" (click)="openCompetencyPanel()">
+    <ion-col class="col-text">
+      <ion-text *ngIf="activeSubject">{{activeSubject.title}}</ion-text>
+      <ion-text *ngIf="frameworkId">{{frameworkId}}</ion-text>
+    </ion-col>
+    <ion-col class="col-icon">
+      <ion-text class="material-icons">arrow_upward</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-footer>

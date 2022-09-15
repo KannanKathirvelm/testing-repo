@@ -1,0 +1,75 @@
+<ion-content class="class-proficiency-content-container">
+  <ion-row class="search-student-row">
+    <ion-col size="10" class="ion-no-padding input-row">
+      <ion-input type="text" placeholder="{{ 'SEARCH_USERNAME_MSG' | translate }}"
+        (ionInput)="filterStudentList($event)"></ion-input>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding search-icon">
+      <ion-icon name="search"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ng-container *ngIf="studentsDomainPerformance && studentsDomainPerformance?.length">
+    <ion-row class="download-proficiency-container">
+      <ng-container *ngIf="isOnline && showOfflineDownloadButton" [ngSwitch]="downloadState">
+        <ion-row *ngSwitchCase="1">
+          <ion-button class="proficiency-download-button">
+            <ion-text> {{'DOWNLOADING' | translate}} </ion-text>
+            <ion-text class="material-icons download-icon"> downloading </ion-text>
+          </ion-button>
+        </ion-row>
+        <ion-row *ngSwitchDefault>
+          <ion-button class="proficiency-download-button" (click)="downloadUserCompetencyMatrix()">
+            <ion-text>{{'DOWNLOAD_OFFLINE' | translate}}</ion-text>
+            <ion-text class="material-icons download-icon"> download_for_offline </ion-text>
+          </ion-button>
+        </ion-row>
+        <ion-row *ngSwitchCase="2">
+          <ion-button class="proficiency-download-button">
+            <ion-text>{{'DOWNLOAD_COMPLETED' | translate}}</ion-text>
+            <ion-text class="material-icons download-icon"> download_done </ion-text>
+          </ion-button>
+        </ion-row>
+      </ng-container>
+      <ng-container *ngIf="downloadState === 1">
+        <ion-row class="progress-container">
+          <ion-text>
+            {{'DOWNLOADING' | translate}}
+            {{progressStatus}}%
+          </ion-text>
+          <ion-row>
+            <ion-progress-bar color="secondary" class="progress-bar" value="{{progressStatus / 100}}">
+            </ion-progress-bar>
+          </ion-row>
+        </ion-row>
+      </ng-container>
+    </ion-row>
+  </ng-container>
+  <ion-row class="proficiency-cards-container">
+    <ng-container *ngIf="isShowProficiencyView && subjectCode; else noProficiencyView">
+      <ng-container
+        *ngIf="studentsDomainPerformance && studentsDomainPerformance?.length; else studentProficiencySkeleton">
+        <ion-row [ngClass]="{'disabled': !isOnline && !downloadState}" class="student-class-card" [routerLink]="['/student-proficiency/', studentDomainPerformance.id]"
+          *ngFor="let studentDomainPerformance of studentsDomainPerformance | listFilter: searchText: 'fullName'  | sortBy: 'firstName';index as studentSeq">
+          <!-- Student class proficiency card component -->
+          <nav-student-class-proficiency-card [studentDomainPerformance]="studentDomainPerformance"
+            [studentSeq]="studentSeq" source="{{'CLASS_PROFICIENCY_TITLE' | translate}}"
+            [maxNumberOfCompetencies]="maxNumberOfCompetencies">
+          </nav-student-class-proficiency-card>
+        </ion-row>
+      </ng-container>
+    </ng-container>
+  </ion-row>
+  <ng-template #noProficiencyView>
+    <ion-row class="no-data-msg">
+      {{'NO_PROFICIENCY' | translate}}
+    </ion-row>
+  </ng-template>
+  <ng-template #studentProficiencySkeleton>
+    <ng-container *ngFor="let item of [].constructor(4)">
+      <ion-row class="proficiency-card">
+        <nav-student-class-proficiency-card>
+        </nav-student-class-proficiency-card>
+      </ion-row>
+    </ng-container>
+  </ng-template>
+</ion-content>

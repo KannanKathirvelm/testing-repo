@@ -1,0 +1,68 @@
+<ion-grid class="atc-class-progress-grid">
+  <ion-row class="class-progress-title-row">
+    <ion-col size="10" class="ion-no-padding">
+      <ion-text class="class-progress-title">{{ 'CLASS_PROGRESS' | translate }}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding navigate-col" (click)="onClickNavigate()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="performance-score-content">
+    <ion-col size="10" class="ion-no-padding performance-score-col">
+      <ion-row class="average-text">
+        <ion-text>{{'AVERAGE' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="performance-score-text">
+        <ion-text>{{'PERFORMANCE_SCORE' | translate}}</ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col size="2" *ngIf="performanceScore; else noPerformance" class="ion-no-padding performance-score grade-range-{{performanceScore | gradeRange}}">
+      <ion-text>{{performanceScore}}%</ion-text>
+    </ion-col>
+    <ng-template #noPerformance>
+      <ion-col class="ion-no-padding no-performance-col">
+        <ion-text>&ndash;&ndash;</ion-text>
+      </ion-col>
+    </ng-template>
+  </ion-row>
+  <ion-row class="performance-score-content" *ngIf="timespentSummary && timespentSummary.totalTimespent != null">
+    <ion-col size="10" class="ion-no-padding performance-score-col">
+      <ion-row class="average-text">
+        <ion-text>{{'AVERAGE' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="performance-score-text">
+        <ion-text>{{'TIMESPENT' | translate}}</ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding performance-score">
+      <ion-text>{{timespentSummary.totalTimespent | transformTimeSpent}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row class="performance-score-content">
+    <ion-col size="10" class="ion-no-padding performance-score-col">
+      <ion-row class="average-text">
+        <ion-text>{{'AVERAGE' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="performance-score-text">
+        <ion-text>{{'COMPETENCIES_GAINED_STUDENT' | translate}}</ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding performance-score">
+      <ion-text>{{gainedData ? gainedData : '0'}}</ion-text>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="performance-score-content">
+    <ion-col size="10" class="ion-no-padding performance-score-col">
+      <ion-row class="average-text">
+        <ion-text>{{'AVERAGE' | translate}}</ion-text>
+      </ion-row>
+      <ion-row class="performance-score-text">
+        <ion-text>{{'COMPETENCIES_INPROGRESS_STUDENT' | translate}}</ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding performance-score">
+      <ion-text>{{inProgressData ? inProgressData : '0'}}</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-grid>

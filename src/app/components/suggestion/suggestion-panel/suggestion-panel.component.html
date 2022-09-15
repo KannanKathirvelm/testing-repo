@@ -1,0 +1,71 @@
+<ion-row class="suggestion-panel" *ngIf="content">
+  <ion-item-sliding>
+    <ion-item lines="none" class="ion-no-padding">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="suggestion-header" [ngClass]="{'add-actions': showAddActions}">
+          <ng-container *ngIf="showAddActions; else teacherSuggestion">
+            <ion-col size="12" class="suggestion">
+              <ion-row class="title">
+                <ion-text class="ellipsis" (click)="onPreview()">
+                  {{content.title}}
+                </ion-text>
+                <nav-taxonomy-list *ngIf="content.taxonomy" [taxonomy]="content.taxonomy" [showFrameworkAndDisaplyCode]="true"></nav-taxonomy-list>
+              </ion-row>
+              <ng-container *ngIf="showTeacherSuggestion;else systemSuggestion">
+                <ion-text class="teacher-suggestion-icon material-icons" (click)="onClickSuggestion()">explore</ion-text>
+              </ng-container>
+              <ng-template #systemSuggestion>
+                <ion-text class="suggestion-icon material-icons" (click)="onClickSuggestion()">explore</ion-text>
+              </ng-template>
+              <ng-container *ngIf="showAddActions">
+                <ion-text class="add material-icons" (click)="onClickReschedule()">restore</ion-text>
+                <ng-container *ngIf="isActivityAdded;else addIcon">
+                  <ion-text class="done-icon material-icons">
+                    done
+                  </ion-text>
+                </ng-container>
+                <ng-template #addIcon>
+                  <ion-text class="add material-icons" (click)="onClickAdd()">add</ion-text>
+                </ng-template>
+              </ng-container>
+            </ion-col>
+          </ng-container>
+          <ng-template #teacherSuggestion>
+            <ion-col size="2">
+              <ion-icon [ngClass]="{'nav-assessment' : content.isAssessment,'nav-collection': content.isCollection,'nav-offline-activity' :content.isOfflineActivity}" class="icon-suggestion">
+              </ion-icon>
+            </ion-col>
+            <ion-col size="10" class="suggestion">
+              <ion-text class="title ellipsis" (click)="onPreview()">
+                {{content.title}}
+              </ion-text>
+              <ion-text class="action material-icons">play_arrow</ion-text>
+              <ng-container *ngIf="showTeacherSuggestion;else systemSuggestion">
+                <ion-text class="teacher-suggestion-icon material-icons">explore</ion-text>
+              </ng-container>
+              <ng-template #systemSuggestion>
+                <ion-text class="suggestion-icon material-icons" (click)="onClickSuggestion()">explore</ion-text>
+              </ng-template>
+            </ion-col>
+          </ng-template>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item-options side="end">
+      <ion-item-option class="option">
+        <ion-row class="content-count">
+          <ng-container *ngIf="content.questionCount || content.resourceCount">
+            <ng-container *ngIf="content.resourceCount > 0">
+              <ion-text class="material-icons">local_library</ion-text>
+              <ion-text>{{content.resourceCount}}</ion-text>
+            </ng-container>
+            <ng-container *ngIf="content.questionCount > 0">
+              <ion-text class="material-icons">help_outline</ion-text>
+              <ion-text>{{content.questionCount}}</ion-text>
+            </ng-container>
+          </ng-container>
+        </ion-row>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-row>

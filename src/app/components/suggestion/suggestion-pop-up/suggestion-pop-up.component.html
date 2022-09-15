@@ -1,0 +1,59 @@
+<ion-row class="suggestion-popup-container">
+  <ion-row class="collection-image-container">
+    <ion-text class="collection-image" [ngStyle]="{ 'background-image': 'url('+content.thumbnail+')'}">
+    </ion-text>
+    <ion-text class="collection-title ellipsis">{{content.title}}</ion-text>
+  </ion-row>
+  <ion-row class="suggestion-content-count">
+    <ng-container *ngIf="content.questionCount || content.resourceCount">
+      <ng-container *ngIf="content.resourceCount > 0">
+        <ion-text class="material-icons">local_library</ion-text>
+        <ion-text>
+          {{content.resourceCount}}
+        </ion-text>
+      </ng-container>
+      <ng-container *ngIf="content.questionCount > 0">
+        <ion-text class="material-icons">help_outline</ion-text>
+        <ion-text class="count">
+          {{content.questionCount}}
+        </ion-text>
+      </ng-container>
+    </ng-container>
+  </ion-row>
+  <ion-row class="suggestion-content">
+    <ion-text class="suggestion-msg">{{'SUGGESTION_MADE' | translate}}</ion-text>
+    <ion-row class="users-profile-details">
+      <ng-container *ngFor="let student of studentList;index as studentSeq">
+        <ion-row class="user-detail" *ngIf="studentSeq < studentCount">
+          <ion-avatar>
+            <ion-img *ngIf="(student.avatarUrl || student.thumbnail) && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.avatarUrl || student.thumbnail">
+            </ion-img>
+            <ng-template #ngxAvatar>
+              <ion-avatar class="profile avatar-icon">
+                <ngx-avatar [name]="student.firstName"></ngx-avatar>
+              </ion-avatar>
+            </ng-template>
+          </ion-avatar>
+          <ion-text class="ellipsis">{{student.firstName}}</ion-text>
+        </ion-row>
+      </ng-container>
+    </ion-row>
+    <ng-container *ngIf="moreItems.length">
+      <ion-row class="item more-items" (click)="showStudentListPopover($event)">
+        <ion-text class="label">+ {{moreItems.length}}
+          <ion-text class="sub-label">{{"MORE" | translate}}</ion-text>
+        </ion-text>
+      </ion-row>
+    </ng-container>
+  </ion-row>
+  <ion-row class="actions-container">
+    <ion-text class="cancel" (click)="onCancelCancel()">
+      {{'CANCEL' | translate}}
+    </ion-text>
+    <ion-text class="confirm" (click)="onClickConfirm()">
+      {{'CONFIRM' | translate}}
+    </ion-text>
+  </ion-row>
+</ion-row>
+<ion-row class="backdrop" (click)="onCancelCancel()" *ngIf="showSuggestionPopup">
+</ion-row>

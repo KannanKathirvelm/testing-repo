@@ -1,0 +1,43 @@
+<ion-row class="student-list-conatiner">
+  <ion-row class="list-header">
+    <ion-text class="header-title">
+      {{'MULTIPLE_STUD' | translate}}
+    </ion-text>
+    <ion-text class="header-info">
+      {{'MULTIPLE_STUD_MSG' | translate}}
+    </ion-text>
+    <ion-row class="close" (click)="onCloseStudentListReport()">
+      <ion-text class="material-icons">close</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-grid class="student-list-body">
+    <ion-row class="student-info" *ngFor="let student of studentList" (click)="onSelectStudent(student)">
+      <ion-col class="student-thumbnail">
+        <ion-img *ngIf="student.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.thumbnail"></ion-img>
+        <ng-template #ngxAvatar>
+          <ion-avatar class="profile avatar-icon">
+            <ngx-avatar [name]="student.firstName"></ngx-avatar>
+          </ion-avatar>
+        </ng-template>
+      </ion-col>
+      <ion-col class="student-name ellipsis">
+        <ion-text>
+          {{student.lastName}}, {{student.firstName}}
+        </ion-text>
+      </ion-col>
+      <ion-col class="mastered-info">
+        <ion-text class="mastered-count">
+          {{student.completedCompetencies}} / {{student.totalCompetencies}}
+        </ion-text>
+        <ion-text class="mastered-label">
+          {{'COMPETENCIES_MASTERED' | translate}}
+        </ion-text>
+      </ion-col>
+      <ion-col class="student-performance grade-range-{{student.percentScore | gradeRange}}">
+        {{student.percentScore | transformScore}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-row>
+<ion-row class="backdrop" (click)="onCloseStudentListReport()" *ngIf="isShowStudentListAtcReport">
+</ion-row>

@@ -1,0 +1,90 @@
+<ion-row class="atc-student-report-container" *ngIf="studentPerformance">
+  <ion-row class="header-container">
+    <ion-row class="profile-container grade-range-{{studentPerformance.percentScore | gradeRange}}">
+      <ion-thumbnail>
+        <ion-img *ngIf="studentPerformance.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="studentPerformance.thumbnail"></ion-img>
+        <ng-template #ngxAvatar>
+          <ion-avatar class="profile avatar-icon">
+            <ngx-avatar [name]="studentPerformance.firstName"></ngx-avatar>
+          </ion-avatar>
+        </ng-template>
+      </ion-thumbnail>
+    </ion-row>
+    <ion-row class="student-info">
+      <ion-text class="student-name">{{studentPerformance.fullName}}</ion-text>
+      <ion-row class="grade-info">
+        <ion-text class="title-container">{{'DESTINATION' | translate}}:</ion-text>
+        <ion-text class="grade-level">{{studentPerformance.grade}}</ion-text>
+      </ion-row>
+    </ion-row>
+    <ion-row class="close" (click)="onCloseStudentPerformanceReport()">
+      <ion-text class="material-icons">close</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-row class="body-container">
+    <ion-row class="performance-container info-container">
+      <ion-text class="title-container">{{'PERFORMANCE' | translate}}</ion-text>
+      <ion-row class="performance-bar-container" *ngIf="studentPerformance.competenciesNotStarted">
+        <ion-progress-bar [value]="performanceBar" class="performance-bar grade-range-{{studentPerformance.percentScore | gradeRange}}"></ion-progress-bar>
+      </ion-row>
+      <ion-text class="performance-percentage atc-grade-range-{{studentPerformance.percentScore | gradeRange}}">{{studentPerformance.percentScore | transformScore}}</ion-text>
+    </ion-row>
+    <ion-row class="competencies-container info-container" [ngClass]="{'competency-not-started': !studentPerformance.competenciesNotStarted}" [routerLink]="['/student-proficiency/', studentPerformance.id]">
+      <ion-text class="title-container">{{'COMPETENCIES' | translate}}</ion-text>
+      <ion-row class="competency-count-container" *ngIf="studentPerformance.competenciesNotStarted">
+        <ion-col [ngStyle]="{'max-width':studentPerformance.completedCompetencies | transformCompetencyStats:studentPerformance.totalCompetencies}" class="mastered-count count-box ion-no-padding"></ion-col>
+        <ion-col [ngStyle]="{'max-width':studentPerformance.inprogressCompetencies | transformCompetencyStats:studentPerformance.totalCompetencies}" class="inprogress-count count-box ion-no-padding"></ion-col>
+        <ion-col [ngStyle]="{'max-width':studentPerformance.totalCompetencies | transformCompetencyStats:studentPerformance.totalCompetencies}" class="not-started-count count-box ion-no-padding"></ion-col>
+      </ion-row>
+      <ion-row [ngClass]="{'competencies-not-started': !studentPerformance.competenciesNotStarted}">
+        <ion-row class="competency-count">
+          <ion-text class="mastered">{{studentPerformance.completedCompetencies}}</ion-text>
+          /
+          <ion-text class="inprogress">{{studentPerformance.inprogressCompetencies}}</ion-text>
+          /
+          <ion-text class="not-started">{{studentPerformance.notStartedCompetencies}}</ion-text> 
+        </ion-row>
+        <ion-row *ngIf="studentPerformance.inferredCompetencies">
+          <ion-text class="inferred">({{studentPerformance.inferredCompetencies}} of {{studentPerformance.completedCompetencies}} are inferred)</ion-text>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+    <ion-row class="progress-container">
+      {{studentPerformance.percentCompletion | transformScore}} {{'DESTINATION_MSG' | translate}}
+    </ion-row>
+  </ion-row>
+</ion-row>
+<ion-row class="atc-student-report-container" *ngIf="nonPremiumClassStudentData">
+  <ion-row class="header-container">
+    <ion-row class="profile-container grade-range-{{nonPremiumClassStudentData.score | gradeRange}}">
+      <ion-thumbnail>
+        <ion-img *ngIf="nonPremiumClassStudentData.thumbnail && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="nonPremiumClassStudentData.thumbnail"></ion-img>
+        <ng-template #ngxAvatar>
+          <ion-avatar class="profile avatar-icon">
+            <ngx-avatar [name]="nonPremiumClassStudentData.firstName"></ngx-avatar>
+          </ion-avatar>
+        </ng-template>
+      </ion-thumbnail>
+    </ion-row>
+    <ion-row class="student-info">
+      <ion-text class="student-name">{{nonPremiumClassStudentData.fullName}}</ion-text>
+    </ion-row>
+    <ion-row class="close" (click)="onCloseStudentPerformanceReport()">
+      <ion-text class="material-icons">close</ion-text>
+    </ion-row>
+  </ion-row>
+  <ion-row class="body-container">
+    <ion-row class="performance-container info-container">
+      <ion-text class="title-container">{{'PERFORMANCE' | translate}}</ion-text>
+      <ion-row class="performance-bar-container">
+        <ion-progress-bar [value]="performanceBar" class="performance-bar grade-range-{{nonPremiumClassStudentData.score | gradeRange}}"></ion-progress-bar>
+      </ion-row>
+      <ion-text class="performance-percentage atc-grade-range-{{nonPremiumClassStudentData.score | gradeRange}}">{{nonPremiumClassStudentData.score | transformScore}}</ion-text>
+    </ion-row>
+    <ion-row class="progress-container">
+      {{nonPremiumClassStudentData.progress | transformScore}} {{'DESTINATION_MSG' | translate}}
+    </ion-row>
+  </ion-row>
+</ion-row>
+<ion-row class="backdrop" (click)="onCloseStudentPerformanceReport()" *ngIf="isShowStudentAtcReport">
+</ion-row>

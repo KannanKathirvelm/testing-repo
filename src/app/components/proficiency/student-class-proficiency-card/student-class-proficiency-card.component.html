@@ -1,0 +1,53 @@
+<ion-row class="proficiency-card-container" *ngIf="studentDomainPerformance;else proficiencySkeleton">
+  <ion-row class="card-header">
+    <ion-col size="3">
+      <ion-avatar class="thumbnail">
+        <img *ngIf="studentDomainPerformance.thumbnail && !isThumbnailError; else ngxAvatar" (error)="onImgError()" [src]="studentDomainPerformance.thumbnail">
+        <ng-template #ngxAvatar>
+          <ion-avatar class="avatar-icon">
+            <ngx-avatar [name]="studentDomainPerformance.firstName"></ngx-avatar>
+          </ion-avatar>
+        </ng-template>
+      </ion-avatar>
+    </ion-col>
+    <ion-col size="9" class="student-name">
+      <ng-container *ngIf="studentDomainPerformance.firstName || studentDomainPerformance.lastName;else showEmail">
+        <ion-text dataVisibility [asteriskInLeft]="true" [showLearnerData]="studentDomainPerformance.isShowLearnerData"  class="last-name">
+          {{studentDomainPerformance.lastName}},
+        </ion-text>
+        <ion-text class="first-name">
+          {{studentDomainPerformance.firstName}}
+        </ion-text>
+      </ng-container>
+      <ng-template #showEmail>
+        <ion-text class="first-name email ellipsis">
+          {{studentDomainPerformance.email}}
+        </ion-text>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+  <ion-row class="card-body">
+    <nav-student-class-proficiency-chart [studentDomains]="studentDomainPerformance.domainCompetencies" [studentSeq]="studentSeq" [source]="source" [maxNumberOfCompetencies]="maxNumberOfCompetencies">
+    </nav-student-class-proficiency-chart>
+  </ion-row>
+</ion-row>
+<ng-template #proficiencySkeleton>
+  <ion-row class="proficiency-card-container">
+    <ion-row class="card-header">
+      <ion-col size="3">
+        <ion-avatar class="thumbnail">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="9" class="student-name ellipsis">
+        <ion-skeleton-text class="student-name-label" animated></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="student-card-body">
+      <ion-row class="student-card">
+        <ion-skeleton-text animated class="student-chart-skeleton card-skeleton-{{skeletonSeq}}" *ngFor="let item of [].constructor(skeletonViewCount);index as skeletonSeq">
+        </ion-skeleton-text>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ng-template>

@@ -1,0 +1,46 @@
+<ion-grid class="atc-diagnostic-progress-grid">
+  <ion-row class="diagnostic-progress-title-row">
+    <ion-col size="10" class="ion-no-padding">
+      <ion-text class="diagnostic-progress-title">{{ 'DIAGNOSTIC_REPORT' | translate }}</ion-text>
+    </ion-col>
+    <ion-col size="2" class="ion-no-padding navigate-col" (click)="navigateToDataByDiagnosticPage()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="report-content-row">
+    <ion-col class="ion-no-padding assessment-img">
+      <ion-icon class="nav-assessment"></ion-icon>
+    </ion-col>
+    <ion-col class="ion-no-padding diagnostic-text">
+      <ion-text># {{ 'STUDENTS_COMPLETED_DIAGNOSTIC' | translate }}</ion-text>
+    </ion-col>
+    <ion-col class="ion-no-padding student-count">
+      <ion-text>{{diagnosticReportCount}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="diagnosticSummary; else noDiagnosticSummary" class="diagnostic-summary-row">
+    <ion-row class="diagnostic-highest" *ngIf="diagnosticSummary.lowestDomain">
+      <ion-col size="2" class="ion-no-padding diagnostic-icon-col">
+        <ion-icon class="diagnostic"></ion-icon>
+      </ion-col>
+      <ion-col size="10" class="ion-no-padding diagnostic-summary">
+        <ion-row class="highest">{{ 'LOWEST' | translate }}</ion-row>
+        <ion-row class="grade-value">{{diagnosticSummary.lowestDomain.grade}} {{diagnosticSummary.lowestDomain.code}}</ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="diagnostic-highest" *ngIf="diagnosticSummary.highestDomain">
+      <ion-col size="2" class="ion-no-padding diagnostic-icon-col">
+        <ion-icon class="diagnostic"></ion-icon>
+      </ion-col>
+      <ion-col size="10" class="ion-no-padding diagnostic-summary">
+        <ion-row class="highest">{{ 'HIGHEST' | translate }}</ion-row>
+        <ion-row class="grade-value">{{diagnosticSummary.highestDomain.grade}} {{diagnosticSummary.highestDomain.code}}</ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+  <ng-template #noDiagnosticSummary>
+    <ion-row class="no-student-completed">
+      <ion-text>{{ 'NO_STUDENTS_COMPLETED_DIAGNOSTIC' | translate }}</ion-text>
+    </ion-row>
+  </ng-template>
+</ion-grid>

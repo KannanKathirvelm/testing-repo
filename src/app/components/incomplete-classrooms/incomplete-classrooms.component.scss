@@ -1,0 +1,194 @@
+.incomplete-classroom {
+  margin: 0 20px 20px;
+  border-radius: 4px;
+  background-color: var(--incomplete-class-bg);
+
+  .classroom-header {
+    height: 56px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+    .card-header {
+      display: grid;
+      padding-left: 16px;
+
+      .class-grade {
+        font-family: var(--incomplete-class-font);
+        font-size: 11px;
+        line-height: 1.45;
+        color: var(--cerulean);
+        padding-bottom: 5px;
+      }
+
+      .class-name {
+        font-family: var(--incomplete-class-font);
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.14;
+        color: var(--incomplete-class-title-color);
+      }
+    }
+  }
+
+  .classroom-title {
+    height: 32px;
+    padding-left: 16px;
+    align-items: center;
+
+    .classroom-title-txt {
+      opacity: 0.5;
+      font-family: var(--incomplete-class-font);
+      font-size: 11px;
+      font-weight: bold;
+      line-height: 1.45;
+    }
+  }
+
+  .classroom-content {
+    grid-auto-flow: column;
+    display: grid;
+    grid-template-columns: 112px auto;
+    padding: 0;
+
+    .classroom-img-content {
+      display: grid;
+
+      .class-code {
+        padding-left: 13px;
+        display: grid;
+        opacity: 0.5;
+        font-family: var(--incomplete-class-font);
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 1.45;
+        color: var(--limed-spruce);
+        text-transform: uppercase;
+      }
+    }
+
+    .incomplete-icon-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .classroom-unselect-icon {
+        mask-image: var(--radio-btn);
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: cover;
+        background: var(--delete-incomplete-class);
+        border: none;
+        height: 30px;
+        width: 30px;
+      }
+
+      .classroom-select-icon {
+        mask-image: var(--tick);
+        background: var(--correct-answer);
+        border: none;
+        height: 30px;
+        width: 30px;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: cover;
+      }
+    }
+  }
+
+  .incomplete-classroom-course {
+    display: grid;
+    grid-template-columns: auto 65px;
+    width: 100%;
+    height: 56px;
+    padding-left: 10px;
+    border-top: solid 1px var(--incomplete-class-border);
+    border-bottom: solid 1px var(--incomplete-class-border);
+
+    .classroom-course {
+      display: grid;
+
+      .course-code {
+        font-family: var(--incomplete-class-font);
+        font-size: 11px;
+        line-height: 1.45;
+        color: var(--cerulean);
+      }
+
+      .course-subject {
+        font-family: var(--incomplete-class-font);
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.14;
+        color: var(--delete-incomplete-class);
+      }
+    }
+  }
+
+  .delete-classroom {
+    height: 56px;
+    padding: 0 16px;
+    box-shadow: 0 0 6px 0 rgb(211 22 22 / 20%);
+    background-color: var(--incomplete-class-color);
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--incomplete-class-font);
+    font-size: 12px;
+    line-height: 1.33;
+    color: var(--delete-incomplete-class);
+    .classroom-unselect-icon {
+      mask-image: var(--radio-btn);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: cover;
+      background: var(--delete-incomplete-class);
+      border: none;
+      height: 30px;
+      width: 30px;
+    }
+
+    .classroom-select-icon {
+      mask-image: var(--tick);
+      background: var(--correct-answer);
+      border: none;
+      height: 30px;
+      width: 30px;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: cover;
+    }
+
+    .delete-icon {
+      color: var(--incomplete-class-delete-color);
+      font-size: 20px;
+    }
+  }
+
+  .confirm-delete-classroom {
+    float: right;
+    display: flex;
+    visibility: visible;
+    align-items: center;
+    height: 56px;
+
+    .confirm-txt {
+      border-radius: 20px;
+      background-color: var(--incomplete-confirm-btn-bg);
+      align-items: center;
+      display: flex;
+      justify-content: space-around;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--incomplete-class-color);
+      margin-right: 16px;
+      width: 86px;
+      height: 26px;
+      padding: 6px;
+
+      .classroom-close-icon {
+        font-size: 20px;
+      }
+    }
+  }
+}

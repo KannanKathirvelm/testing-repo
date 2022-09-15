@@ -1,0 +1,94 @@
+<mat-accordion class="class-setting">
+  <mat-expansion-panel hideToggle class="student-list-container" [expanded]="true">
+    <mat-expansion-panel-header class="student-header-row" collapsedHeight="42px" expandedHeight="inherit">
+      <ion-col size="10" class="ion-no-padding student-header">
+        <ion-text>{{ 'STUDENTS' | translate }}</ion-text>
+      </ion-col>
+      <ion-col size="2" class="arrow-col ion-no-padding">
+        <i class="material-icons arrow-up">arrow_drop_up</i>
+        <i class="material-icons arrow-down">arrow_drop_down</i>
+      </ion-col>
+    </mat-expansion-panel-header>
+    <ion-row class="student-list-row" (click)="onAddStudent()">
+      <ion-col class="ion-no-padding student-list-img">
+        <ion-icon [name]="isShowAddStudent ?  'close-outline' : 'add-outline'"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding student-list-name">
+        <ion-text>{{ 'ADD_STUDENT' | translate }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="student-list-row" (click)="onAddMultipleStudent()">
+      <ion-col class="ion-no-padding student-list-img">
+        <ion-icon [name]="isShowMultiMailBox ?  'close-outline' : 'add-outline'"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding student-list-name">
+        <ion-text>{{ 'ADD_MULTIPLE_STUDENTS' | translate }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="search-student-row" *ngIf="classMembers?.length">
+      <ion-col size="10" class="ion-no-padding input-row">
+        <ion-input type="text" placeholder="{{ 'SEARCH_USERNAME_MSG' | translate }}"
+          (ionInput)="filterStudentList($event)"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding search-icon">
+        <ion-icon name="search"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="student-list">
+      <ion-row class="student-details-row" [ngClass]="{'student-disable': !classMember.isActive}"
+        *ngFor="let classMember of classMembers | listFilter: searchText: 'fullName' | sortBy: 'firstName'">
+        <ion-col class="ion-no-padding student-profile" *ngIf="classMember.avatarUrl && !isThumbnailError; else avatarIcon">
+          <ion-thumbnail>
+            <ion-img (ionError)="onImgError()" [src]="classMember.avatarUrl" class="profile-icon"></ion-img>
+          </ion-thumbnail>
+        </ion-col>
+        <ng-template #avatarIcon>
+          <ion-col class="ion-no-padding avatar-icon">
+            <ngx-avatar [name]="classMember.firstName"></ngx-avatar>
+          </ion-col>
+        </ng-template>
+        <ion-col class="ion-no-padding student-detail-col">
+          <ion-row class="student-name ellipsis">
+            <ion-text class="ellipsis name" dataVisibility [asteriskInLeft]="false"
+              [showLearnerData]="classMember.isShowLearnerData">{{classMember.lastName}}, {{classMember.firstName}}</ion-text>
+            <ion-text class="ellipsis student-id" *ngIf="classMember.studentId">({{classMember.studentId}})</ion-text>
+          </ion-row>
+          <ion-row class="student-info-row">
+            <ng-container *ngIf="classMember.showEmail | checkToShowEmail: tenantSettingShowInfo; else showUsername">
+              <ion-text>{{classMember.email}}</ion-text>
+            </ng-container>
+            <ng-template #showUsername>
+              <ion-text>{{classMember.username}}</ion-text>
+            </ng-template>
+          </ion-row>
+          <ion-row *ngIf="isPremiumClass">
+            <ion-col size="6" class="ion-no-padding destination-selector"
+              *ngIf="classDetails && classDetails.forceCalculateIlp">
+              <student-grade-select *ngIf="sourceGrades" [grades]="sourceGrades"
+                [selectHeaderOptions]="sourceSelectHeader" [title]="searchTitle" [studentId]="classMember.id"
+                (gradeLevelChange)="onLowerBoundChange($event)" [defaultGrade]="classMember.bounds[hasShowGradeLevel ? 'gradeLevel' : 'gradeLowerBound']">
+              </student-grade-select>
+            </ion-col>
+            <ion-col size="6" class=" ion-no-padding destination-selector">
+              <student-grade-select *ngIf="destinationGrades" [grades]="destinationGrades"
+                [selectHeaderOptions]="destinationSelectHeader" [title]="destinationTitle" [studentId]="classMember.id"
+                (gradeLevelChange)="onUpperBoundChange($event)" [defaultGrade]="classMember.bounds.gradeUpperBound">
+              </student-grade-select>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col class="ion-no-padding active-student">
+          <ion-toggle checked={{classMember.isActive}} (ionChange)="toggleActivateStudent($event, classMember.id)">
+          </ion-toggle>
+        </ion-col>
+        <ion-col class="ion-no-padding delete-student" (click)="onDeleteStudent(classMember.id, classMember)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-col>
+        <pullup-with-dynamic-height [isShowPullUp]="isShowDeleteStudent">
+          <delete-student-alert [studentFullName]="studentFullName" (selectConfirm)="onConfirmDeleteStudentClassRoom()" (closePopup)="closeDeleteClassPopup()" class="pull-up-dynamic-height">
+          </delete-student-alert>
+        </pullup-with-dynamic-height>
+      </ion-row>
+    </ion-row>
+  </mat-expansion-panel>
+</mat-accordion>

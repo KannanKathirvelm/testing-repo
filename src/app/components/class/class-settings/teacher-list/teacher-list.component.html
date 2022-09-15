@@ -1,0 +1,75 @@
+<mat-accordion class="class-setting">
+  <mat-expansion-panel hideToggle class="teacher-list-container" [expanded]="true">
+    <mat-expansion-panel-header class="teacher-list-header" collapsedHeight="42px" expandedHeight="inherit">
+      <ion-col size="10" class="teacher-header-row ion-no-padding">
+        <ion-text>{{ 'TEACHER' | translate }}</ion-text>
+      </ion-col>
+      <ion-col size="2" class="arrow-col ion-no-padding">
+        <i class="material-icons arrow-up">arrow_drop_up</i>
+        <i class="material-icons arrow-down">arrow_drop_down</i>
+      </ion-col>
+    </mat-expansion-panel-header>
+    <ion-row class="teacher-details-row">
+      <ion-col class="ion-no-padding teacher-profile" *ngIf="!showNgxAvatar; else avatarIcon">
+        <img [src]="classOwner.avatarUrl" class="profile-icon" (error)="imageErrorHandler()">
+      </ion-col>
+      <ng-template #avatarIcon>
+        <ion-col class="ion-no-padding avatar-icon">
+          <ngx-avatar [name]="classOwner.firstName"></ngx-avatar>
+        </ion-col>
+      </ng-template>
+      <ion-col class="ion-no-padding teacher-name">
+        <ion-text>{{classOwner.lastName}}, {{classOwner.firstName}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion class="class-setting">
+  <mat-expansion-panel hideToggle class="teacher-list-container" [expanded]="true">
+    <mat-expansion-panel-header class="teacher-list-header" collapsedHeight="42px" expandedHeight="inherit">
+      <ion-col size="10" class="teacher-header-row ion-no-padding">
+        <ion-text>{{ 'CO_TEACHERS' | translate }}</ion-text>
+      </ion-col>
+      <ion-col size="2" class="arrow-col ion-no-padding">
+        <i class="material-icons arrow-up">arrow_drop_up</i>
+        <i class="material-icons arrow-down">arrow_drop_down</i>
+      </ion-col>
+    </mat-expansion-panel-header>
+    <ion-row class="teacher-list">
+      <ion-row class="teacher-list-row" (click)="onAddTeacher()" *ngIf="userId === classOwner.id">
+        <ion-col class="ion-no-padding teacher-list-img">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-col>
+        <ion-col class="ion-no-padding teacher-list-name">
+          <ion-text>{{ 'ADD_TEACHER' | translate }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-radio-group class="teacher-details-group">
+        <ion-list class="teacher-details-row" *ngFor="let classCollaborator of classCollaborators">
+          <ion-col class="ion-no-padding teacher-profile" *ngIf="!showNgxAvatar; else avatarIcon">
+            <img [src]="classCollaborator.avatarUrl" class="profile-icon" (error)="imageErrorHandler()">
+          </ion-col>
+          <ng-template #avatarIcon>
+            <ion-col class="avatar-icon">
+              <ngx-avatar [name]="classCollaborator.firstName"></ngx-avatar>
+            </ion-col>
+          </ng-template>
+          <ion-col class="ion-no-padding teacher-name">
+            <ion-text>{{classCollaborator.lastName}}, {{classCollaborator.firstName}}</ion-text>
+          </ion-col>
+          <ng-container *ngIf="userId === classOwner.id">
+            <ion-col class="ion-no-padding delete-teacher">
+              <ion-radio color="primary" (ionFocus)="onSelectCheckbox(classCollaborator)"></ion-radio>
+            </ion-col>
+            <ion-col class="ion-no-padding delete-teacher" (click)="onDeleteTeacher(classCollaborator)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-col>
+          </ng-container>
+        </ion-list>
+      </ion-radio-group>
+    </ion-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<ng-container *ngIf="classCollaborators && classCollaborators.length && userId === classOwner.id">
+  <ion-button color="primary" class="apply-setting-button" (click)="onApplySettings()" [disabled]="!isCheckboxSelected">{{ 'APPLY_SETTINGS' | translate }}</ion-button>
+</ng-container>

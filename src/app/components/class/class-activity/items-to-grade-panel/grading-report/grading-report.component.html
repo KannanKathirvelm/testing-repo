@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="row-rubric-header">
+      <ion-col class="col-icon">
+        <ng-container *ngIf="isAssessmentGrading; else gradeInfoTemplate">
+          <ion-icon class="nav-rubric"></ion-icon>
+        </ng-container>
+        <ng-template #gradeInfoTemplate>
+          <ion-icon class="nav-task"></ion-icon>
+        </ng-template>
+      </ion-col>
+      <ion-col class="col-title">
+        <ion-text *ngIf="oaGrading" class="rubric-title">{{collection.title}}</ion-text>
+      </ion-col>
+      <ion-col class="col-close">
+        <ion-text (click)="closeRubric()" class="material-icons close">close</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="student-list-row" [ngClass]="{'temp-disable': showStudentList}">
+      <ion-col size="2" class="left-arrow">
+        <ion-icon name="arrow-back-outline" (click)="slidePrev(studentSlider,slideWithNav)" [class.hide]="studentSlider.isBeginningSlide"></ion-icon>
+      </ion-col>
+      <ion-col size="8" class="student-list-slide-col">
+        <ion-slides pager="false" class="student-list" [options]="studentSlideOpts" #slideWithNav (ionSlideDidChange)="SlideDidChange(studentSlider,slideWithNav)">
+          <ng-container *ngIf="students.length; else studentSkeleton">
+            <ion-slide *ngFor="let student of students | sortBy: 'name'; let studentIndex = index">
+              <ion-grid class="ion-no-padding">
+                <ion-row class="student-name-slide-row">
+                  <ion-col class="profile-row">
+                    <ion-avatar class="profile avatar-icon" *ngIf="student.thumbnail; else avatarIcon">
+                      <img [src]="student.thumbnail" class="profile-icon">
+                    </ion-avatar>
+                    <ng-template #avatarIcon>
+                      <ion-avatar class="profile avatar-icon">
+                        <ngx-avatar [name]="student.name"></ngx-avatar>
+                      </ion-avatar>
+                    </ng-template>
+                  </ion-col>
+                  <ion-col class="ellipsis student-name-row">
+                    <ion-text class="text-student-count">{{studentIndex + 1}} of {{students.length}}</ion-text>
+                    <ion-text class="text-student-name ellipsis">{{student.name}}</ion-text>
+                  </ion-col>
+                  <ion-col class="col-dropdown" *ngIf="!showStudentList && students.length > 1">
+                    <ion-icon name="caret-down-outline" (click)="toggleStudentList()"></ion-icon>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+          </ng-container>
+        </ion-slides>
+      </ion-col>
+      <ion-col size="2" class="right-arrow">
+        <ng-container *ngIf="showStudentList; else forwardIcon">
+          <ion-text (click)="toggleStudentList()" class="material-icons close">close</ion-text>
+        </ng-container>
+        <ng-template #forwardIcon>
+          <ion-icon name="arrow-forward-outline" (click)="slideNext(studentSlider,slideWithNav)" [class.hide]="studentSlider.isEndSlide"></ion-icon>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row class="tabs" *ngIf="!showStudentList">
+      <ng-container *ngFor="let tab of tabs;index as tabIndex">
+        <ion-col class="tab-content {{tab.title}}" [ngClass]="{'active' : tab.isActive}" (click)="showTab(tab,tabIndex)">
+          <ion-text>{{tab.title | translate}}</ion-text>
+        </ion-col>
+      </ng-container>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row class="backdrop" *ngIf="showStudentList" (click)="closeRubric()"></ion-row>
+  <nav-oa-student-list *ngIf="students.length" [@collapse]="!showStudentList" [students]="students" [activeStudentIndex]="activeStudentIndex" (selectedStudent)="slideByIndex($event, slideWithNav)"></nav-oa-student-list>
+  <ng-container *ngIf="activeStudent">
+    <ng-container *ngIf="isAssessmentGrading; else oaTemplate">
+      <nav-frq-grading-report [student]="activeStudent" [showTeacherTab]="showTeacherTab" [showStudentTab]="showStudentTab" (fetchFrqQuestion)="fetchFrqQuestion()" (updateCategoryLevels)="updateCategoryLevels($event)"
+        (fetchStudentAnswers)="fetchFrqAnswerForStudent()" (submitAssessmentGradeEvent)="submitAssessmentGrade()" [maxScore]="oaGrading.content.maxScore"></nav-frq-grading-report>
+    </ng-container>
+    <ng-template #oaTemplate>
+      <nav-oa-grading-report [showTeacherTab]="showTeacherTab" [showStudentTab]="showStudentTab" [showOaAnswerTab]="showOaAnswerTab" [student]="activeStudent" (fetchStudentSubmissionData)="fetchOaSubmission()"
+        (updateCategoryLevels)="updateCategoryLevels($event)" (submitGradeEvent)="submitGrade()" [maxScore]="oaGrading.content.maxScore"></nav-oa-grading-report>
+    </ng-template>
+  </ng-container>
+</ion-content>
+<ng-template #studentSkeleton>
+  <ion-grid class="skeleton-student ion-no-padding">
+    <ion-row class="student-name-slide-row">
+      <ion-col class="profile-row">
+        <ion-avatar class="profile avatar-icon">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-avatar>
+      </ion-col>
+      <ion-col class="ellipsis student-name-row">
+        <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>
+<nav-custom-alert *ngIf="allItemsAreGraded" [successMessage1]="'You are all caught up!'" (dismissAlert)="dismissAlert($event)"></nav-custom-alert>

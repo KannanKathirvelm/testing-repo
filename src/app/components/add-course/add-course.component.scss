@@ -1,0 +1,145 @@
+.course-contain {
+  .course-panel {
+    display: grid;
+    width: 100%;
+    .course-header {
+      font-family: "Playfair Display";
+      font-size: 20px;
+      font-style: italic;
+      text-align: center;
+      padding: 10px 10px 0;
+      color: var(--white);
+      opacity: 0.3;
+    }
+    .search-student-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--student-list-search-border);
+      background: var(--class-progress-body-bg);
+      border-radius: 5px;
+      margin: 10px;
+
+      .input-row {
+        font-size: 12px;
+        color: var(--student-list-search-text);
+        border-right: 1px solid var(--student-list-search-border);
+        padding-left: 10px;
+      }
+
+      .search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--student-list-search-text);
+
+        ion-icon {
+          height: 22px;
+          min-width: 48px;
+        }
+      }
+    }
+  }
+  .featured-course-card-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    overflow-y: hidden;
+  }
+  .no-course-panel {
+    height: 200px;
+    margin: auto;
+    padding-top: 20px;
+    .no-course-text {
+      color: white;
+      text-align: center;
+    }
+  }
+  .content-catalog {
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+    width: 100%;
+    .content-text {
+      margin: 0 auto 10px;
+      color: var(--white);
+      opacity: 0.7;
+    }
+  }
+  .content-source-head {
+    overflow-x: auto;
+    .content-source-card {
+      padding: 0;
+      .content-source-panel {
+        display: flex;
+        flex-wrap: nowrap;
+        .content-soruce-section {
+          display: grid;
+          justify-content: center;
+          background-color: var(--white);
+          margin: 0 10px 20px;
+          min-height: 250px;
+          width: 250px;
+          text-align: center;
+          border-radius: 4px;
+          padding: 20px;
+
+          img {
+            width: 100px;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}
+.skeleton-card-list {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  overflow-x: auto;
+
+  .skeleton-card {
+    width: 224px;
+    height: 376px;
+    display: grid;
+    grid-template-rows: 138px auto;
+
+    .row-header {
+      ion-skeleton-text {
+        margin: 0;
+      }
+    }
+
+    .row-body {
+      padding: 0;
+      display: grid;
+      grid-template-rows: 24px 34px 34px 34px;
+
+      .row-desc {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+
+        &.row-desc-one {
+          width: 80%;
+        }
+
+        &.row-desc-two {
+          width: 60%;
+        }
+      }
+
+      .row-count {
+        display: grid;
+        grid-template-columns: 48px 48px auto;
+        border-bottom: solid 1px var(--ca-activity-card-footer-border-color);
+
+        ion-col {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

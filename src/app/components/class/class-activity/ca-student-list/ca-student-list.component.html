@@ -1,0 +1,65 @@
+<ion-header class="ca-student-list-header">
+  <ion-toolbar>
+    <ion-row class="row-header">
+      <ion-col size="3" class="col-selected-count">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-text>{{selectedStudentListCount}}</ion-text>
+      </ion-col>
+      <ion-col size="7" class="col-search-student">
+        <ion-input placeholder="{{'SEARCH' | translate}}" type="search" enterkeyhint="search" class="student-searchbar" (ionInput)="filterStudentList($event)" searchIcon="false" clearIcon="false"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="col-close">
+        <ion-icon name="close-outline" (click)="closeModal()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ca-student-list-content">
+  <ng-container *ngIf="studentList && studentList.length; else noStudentsMsg">
+    <ion-row class="row-select-all">
+      <ion-button *ngIf="selectedStudentListCount === 'All'; else selectAll" (click)="deselect()">{{'DESELECT' | translate}}</ion-button>
+      <ng-template #selectAll>
+        <ion-button (click)="selectall()">{{'SELECT_ALL' | translate}}</ion-button>
+      </ng-template>
+    </ion-row>
+    <ion-row class="row-student-list">
+      <ion-list>
+        <ion-item *ngFor="let student of studentList | listFilter: searchText: 'name' | sortBy: 'firstName'">
+          <ion-row class="row-student">
+            <ion-col class="col-icon">
+              <ion-thumbnail [ngClass]="{'selected-student': student.isSelected}" (click)="toggleStudentSelection(student)">
+                <ng-container *ngIf="student.isSelected; else imageAvatar">
+                  <ion-text class="material-icons">done_all</ion-text>
+                </ng-container>
+                <ng-template #imageAvatar>
+                  <ion-img *ngIf="student.avatarUrl && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.avatarUrl"></ion-img>
+                  <ng-template #ngxAvatar>
+                    <ion-avatar class="profile avatar-icon">
+                      <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                    </ion-avatar>
+                  </ng-template>
+                </ng-template>
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col class="col-student-name">
+              <ion-text dataVisibility [asteriskInLeft]="false" [showLearnerData]="student.isShowLearnerData">{{student.name}}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+  </ng-container>
+  <ng-template #noStudentsMsg>
+    <ng-container *ngIf="isStudentListLoaded">
+      <ion-row class="no-students">
+        <ion-text>{{'ADD_STUDENT_LIST' | translate}}</ion-text>
+      </ion-row>
+    </ng-container>
+  </ng-template>
+</ion-content>
+<ion-footer class="ca-student-list-footer">
+  <ion-row class="row-footer" *ngIf="studentList && studentList.length">
+    <ion-button class="cancel-button" (click)="closeModal()">{{'CANCEL' | translate}}</ion-button>
+    <ion-button class="submit-button common-btn" (click)="saveUsers()">{{'SAVE' | translate}}</ion-button>
+  </ion-row>
+</ion-footer>

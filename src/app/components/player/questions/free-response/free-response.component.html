@@ -1,0 +1,92 @@
+<ion-row class="free-response-question content-{{ componentSequence }}" [ngClass]="{
+    disabled: isDisabled,
+    'question-answered': isQuestionAnswered,
+    'bidirectional-restrict': !isBidirectionalPlay,
+    'already-played': alreadyPlayed
+  }" (click)="onClickQuestionWithFeedBack()">
+  <ion-row class="hz-line"></ion-row>
+  <ng-container *ngIf="isDownloadPdf">
+    <hr />
+  </ng-container>
+  <!-- start header section -->
+  <ion-row class="resource-content-container"
+    [ngClass]="{ 'active-content': isActive, 'blur-question': !reportViewMode }">
+    <ion-row *ngIf="!isDownloadPdf" class="header-section">
+      <ion-row class="type">{{ componentSequence }}.
+        {{ "FREE_RESPONSE_QUESTION" | translate }}</ion-row>
+      <ion-row class="toggle-icon" (click)="toggleAnswers()">
+        <ng-template #downArrow>
+          <ion-text class="material-icons arrow-dropdown">
+            arrow_drop_down
+          </ion-text>
+        </ng-template>
+        <ion-text *ngIf="!showAnswer; else downArrow" class="material-icons arrow-dropup">
+          arrow_drop_up
+        </ion-text>
+      </ion-row>
+    </ion-row>
+    <!-- end header section -->
+    <!-- start question section -->
+    <ion-row class="title-container" (click)="toggleAnswers()">
+      <ng-container *ngIf="isDownloadPdf">
+        {{ componentSequence }}.
+      </ng-container>
+      <mathjax class="title" *ngIf="content.title" [content]="content.title"></mathjax>
+      <ion-row class="info-icon" (click)="toggleInfo()" *ngIf="!reportViewMode">
+        <i class="material-icons info" *ngIf="(content.taxonomy | keyvalue)?.length">info_outlined</i>
+      </ion-row>
+    </ion-row>
+    <!-- end question section -->
+    <ion-row>
+      <nav-taxonomy-list *ngIf="content.taxonomy" [taxonomy]="content.taxonomy"></nav-taxonomy-list>
+    </ion-row>
+    <!-- start performance report section -->
+    <ng-container *ngIf="!isPreview">
+      <ion-row class="timespent-container" *ngIf="reportViewMode && performance">
+        <i class="material-icons clock-icon">access_time</i>
+        <ion-text class="timespent-text">{{
+          performance.timespent | transformTimeSpent
+          }}</ion-text>
+      </ion-row>
+    </ng-container>
+  </ion-row>
+  <!-- end performance report section -->
+  <!-- start answer section -->
+  <ion-row class="answer-container" [@collapse]="showAnswer">
+    <ion-row class="answer-content" [ngClass]="{
+        'active-content': isActive,
+        'blur-question': !reportViewMode
+      }">
+      <ng-template [ngTemplateOutlet]="questionContainer" *ngIf="!reportViewMode"></ng-template>
+      <ion-row *ngIf="content.thumbnail" class="thumbnail">
+        <img [src]="content.thumbnail" imageLoader inAppBrowser [collectionId]="collectionId" [resourceId]="content.id"
+          [url]="content.thumbnail" />
+      </ion-row>
+      <form [formGroup]="answerForm" (ngSubmit)="onConfirm()">
+        <ion-row [ngStyle]="isDownloadPdf && pdfPreviewStyles.answerSectionStyles" class="free-response-answer"
+          [ngClass]="{ 'read-only': reportViewMode }" (click)="onClickAnswer()" *ngIf="!isPreview">
+          <ion-row class="answer-info">
+            <label>{{ "ANSWER" | translate }}</label>
+            <i class="material-icons edit" *ngIf="!reportViewMode">edit</i>
+          </ion-row>
+          <input name="answer-text" [(ngModel)]="answerText" formControlName="answer"
+            placeholder="{{ 'ENTER_ANSWER' | translate }}" />
+        </ion-row>
+        <ion-row class="confirm" [@fadeAnimation]="hideConfirmButton" *ngIf="!hideConfirmButton">
+          <ion-button type="submit" [disabled]="!answerForm.valid || disableConfirmBtn" *ngIf="!reportViewMode">
+            {{ "CONFIRM" | translate }}</ion-button>
+        </ion-row>
+      </form>
+    </ion-row>
+    <!-- start evidence section -->
+    <ion-row *ngIf="isShowEvidence && !isPreview" class="evidence-container">
+      <nav-evidence-file-upload [evidenceFiles]="evidenceFiles"></nav-evidence-file-upload>
+    </ion-row>
+    <!-- end  evidence section -->
+  </ion-row>
+  <!-- end answer section -->
+  <ng-template #questionContainer>
+    <mathjax class="description" *ngIf="content.description" [content]="content.description"></mathjax>
+  </ng-template>
+  <ion-row class="player-overlay" *ngIf="!isActive && !reportViewMode" (click)="onClickQuestion()"></ion-row>
+</ion-row>

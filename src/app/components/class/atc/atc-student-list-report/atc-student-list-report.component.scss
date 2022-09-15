@@ -1,0 +1,140 @@
+.student-list-conatiner {
+  background-color: var(--atc-student-list-conatiner);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+  width: 100%;
+  z-index: 13;
+  max-height: 100%;
+  display: grid;
+
+  .list-header {
+    display: grid;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+    padding: 12px 15px;
+    position: relative;
+    color: var(--dark-400);
+
+    .header-title {
+      font-weight: bolder;
+      font-size: 13px;
+    }
+
+    .header-info {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .close {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+    }
+  }
+
+  .student-list-body {
+    display: grid;
+    overflow-y: auto;
+    width: 100%;
+
+    .student-info {
+      height: 48px;
+      display: grid;
+      grid-template-columns: 40px 1fr auto 45px;
+      column-gap: 5px;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid var(--atc-student-info);
+      padding-left: 5px;
+
+      &:last-child {
+        border: none;
+      }
+
+      .student-thumbnail {
+        ion-img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+
+        .profile {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 46px;
+          width: 46px;
+
+          .profile-icon {
+            background-size: 100% 100%;
+            background-position: center;
+            width: 32px;
+            height: 32px;
+            margin: auto;
+            display: flex;
+            border-radius: 50%;
+          }
+        }
+
+        .avatar-icon {
+          ::ng-deep .avatar-container {
+            height: 32px !important;
+            width: 32px !important;
+
+            .avatar-content {
+              width: 32px;
+              height: 32px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font: 16px / 30px Helvetica, Arial, sans-serif !important;
+              margin: auto;
+            }
+          }
+        }
+      }
+
+      .student-name {
+        text-transform: capitalize;
+        font-size: 13px;
+        line-height: 13px;
+        color: var(--dark-400);
+      }
+
+      .mastered-info {
+        display: grid;
+        justify-content: right;
+        align-items: center;
+        line-height: 17px;
+        color: var(--dark-400);
+
+        .mastered-count {
+          font-weight: bold;
+          text-align: right;
+          font-size: 12px;
+        }
+
+        .mastered-label {
+          font-size: 12px;
+        }
+      }
+
+      .student-performance {
+        height: 100%;
+        color: var(--atc-student-list-conatiner);
+        line-height: 35px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        border-bottom: 1px solid var(--atc-student-performance);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.backdrop {
+  z-index: 4;
+}

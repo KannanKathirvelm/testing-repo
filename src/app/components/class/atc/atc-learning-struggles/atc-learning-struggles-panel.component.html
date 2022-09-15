@@ -1,0 +1,54 @@
+<ion-grid *ngIf="filteredDomainList" class="atc-learning-struggles-panel-container">
+  <ion-row class="atc-title-row row-main-title-border" *ngIf="currentGradeName">
+    <ion-text class="atc-learning-struggle-panel-title ellipsis">{{'LEARNING_CHALLENGES' | translate}} ({{currentGradeName}})</ion-text>
+  </ion-row>
+  <ion-row class="atc-title-row row-title-border" *ngFor="let competency of filteredDomainList" (click)="onClickLearningChallenges(competency)">
+    <ion-col size="10" class="ion-no-padding">
+      <ion-row class="ellipsis">
+        <ion-text class="atc-learning-topic main-title ellipsis">
+          {{
+            fwCompetencies |
+            competencyGutToFwTransform :
+            competency.code :
+            competency.name :
+            'frameworkCompetencyName' :
+            false :
+            true
+          }}
+        </ion-text>
+      </ion-row>
+      <ion-row class="ellipsis">
+        <ion-text class="atc-learning-topic title-id">
+          {{competency.displayCode}} |
+        </ion-text>
+        <ion-text class="atc-learning-topic title ellipsis">
+          {{
+          fwDomains |
+          domainGutToFwTransform :
+          competency.domainCode :
+          competency.domainName :
+          'fwDomainName' :
+          true
+        }}
+        </ion-text>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1" class="ion-no-padding atc-suggestion-icon-col">
+      <ion-icon name="compass" class="rotate-90"></ion-icon>
+    </ion-col>
+    <ion-col size="1" class="ion-no-padding atc-student-count-col">
+      <ion-text class="student-count">
+        {{competency.studentsCount}}
+      </ion-text>
+      <ion-text class="material-icons info">person</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row class="atc-learning-topics-showall" *ngIf="isToggleOption" (click)="clickShowAll()">
+    <ion-text *ngIf="isShowAll;else showLess">{{'SHOW_ALL' | translate}}</ion-text>
+  </ion-row>
+  <ng-template #showLess>
+    <ion-text>
+      {{'SHOW_LESS'| translate}}
+    </ion-text>
+  </ng-template>
+</ion-grid>

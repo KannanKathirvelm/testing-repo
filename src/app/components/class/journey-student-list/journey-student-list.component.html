@@ -1,0 +1,72 @@
+<ion-header class="student-list-header" (click)="onToggleView()">
+  <ion-toolbar class="student-list-toolbar">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="title-col">
+        {{ 'STUDENTS' | translate }}
+      </ion-row>
+      <ion-row class="icon-col">
+        <ion-icon class="arrow-icon" name="caret-up-outline"></ion-icon>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-grid class="ion-no-padding student-list-container">
+  <ng-container *ngIf="!isOnline && !downloadState">
+    <ion-row class="download-text-row">
+      <ion-col class="download-text-col">
+        <i _ngcontent-dyo-c233="" class="material-icons info-student">info_outlined</i>
+        <ion-text class="download-user">
+          {{'YOU_HAVENT_DOWNLOADED_THE_STUDENT_DATA' | translate}} </ion-text>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+  <ion-row class="download-student-container">
+    <ng-container *ngIf="isOnline && showOfflineDownloadButton" [ngSwitch]="downloadState">
+      <ion-row *ngSwitchCase="1">
+        <ion-button class="student-journey-download-button">
+          <ion-text> {{'DOWNLOADING' | translate}} </ion-text>
+          <ion-text class="material-icons download-icon"> downloading </ion-text>
+        </ion-button>
+      </ion-row>
+      <ion-row *ngSwitchDefault>
+        <ion-button class="student-journey-download-button" (click)="downloadStudentContent()">
+          <ion-text>{{'DOWNLOAD_OFFLINE' | translate}}</ion-text>
+          <ion-text class="material-icons download-icon"> download_for_offline </ion-text>
+        </ion-button>
+      </ion-row>
+      <ion-row *ngSwitchCase="2">
+        <ion-button class="student-journey-download-button">
+          <ion-text>{{'DOWNLOAD_COMPLETED' | translate}}</ion-text>
+          <ion-text class="material-icons download-icon"> download_done </ion-text>
+        </ion-button>
+      </ion-row>
+    </ng-container>
+    <ng-container *ngIf="downloadState === 1">
+      <ion-row class="progress-container">
+        <ion-text>
+          {{'DOWNLOADING' | translate}}
+          {{progressStatus}}%
+        </ion-text>
+        <ion-row>
+          <ion-progress-bar color="secondary" class="progress-bar" value="{{progressStatus / 100}}">
+          </ion-progress-bar>
+        </ion-row>
+      </ion-row>
+    </ng-container>
+  </ion-row>
+  <ion-row class="student-list" *ngFor="let classMember of classMembers" (click)="openStudentMilestone(classMember)" [ngClass]="{'active-student': selectedStudentId === classMember.id, 'disabled': !isOnline && !downloadState}">
+    <ion-col size="2">
+      <ion-avatar class="profile" *ngIf="classMember && classMember.avatarUrl != null && !isThumbnailError; else avatarIcon">
+        <img (error)="onImgError()" [src]="classMember.avatarUrl" class="profile-icon">
+      </ion-avatar>
+      <ng-template #avatarIcon>
+        <ion-avatar class="profile avatar-icon">
+          <ngx-avatar [name]="classMember.firstName"></ngx-avatar>
+        </ion-avatar>
+      </ng-template>
+    </ion-col>
+    <ion-col size="10" class="student-name-container" [ngClass]="{'visible': showClassMembers}">
+      <ion-text class="student-name" dataVisibility [asteriskInLeft]="false" [showLearnerData]="classMember.isShowLearnerData">{{classMember.lastName}}, {{classMember.firstName}}</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,102 @@
+ion-toolbar {
+  --min-height: 48px;
+}
+
+.header-bar {
+  height: 48px;
+
+  .close-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    .profile-icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .profile-icon {
+    background-size: 100% 100%;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    display: flex;
+    border-radius: 50%;
+  }
+
+  .avatar-icon {
+    ::ng-deep .avatar-container {
+      display: flex;
+
+      ::ng-deep .avatar-content {
+        width: 30px;
+        height: 30px;
+        font: 16px / 30px Helvetica, Arial, sans-serif !important;
+        margin: auto;
+      }
+    }
+  }
+
+  .student-name-container {
+    display: flex;
+    align-items: center;
+
+    .student-name {
+      text-transform: capitalize;
+      font-size: 12px;
+      font-style: var(--sans);
+    }
+
+    .change-text {
+      text-transform: capitalize;
+      font-size: 13px;
+      font-style: var(--sans);
+      margin-left: 10px;
+      color: var(--dark-blue-color);
+    }
+  }
+}
+
+nav-milestone-header {
+  width: 100%;
+}
+
+.body-container {
+  height: 100%;
+  overflow: scroll;
+
+  nav-student-milestone {
+    width: 100%;
+  }
+}
+
+.skeleton-panel-header {
+  height: 40px;
+  margin-bottom: 5px;
+
+  ion-col {
+    background: var(--skeleton-panel-bg);
+    width: 100%;
+    -webkit-box-align: center;
+    align-items: center;
+    display: grid;
+    height: 58px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    grid-template-columns: 1fr 58px;
+
+    ion-skeleton-text {
+      width: 90%;
+    }
+  }
+}

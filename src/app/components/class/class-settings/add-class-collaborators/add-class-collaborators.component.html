@@ -1,0 +1,42 @@
+<ion-grid class="add-collaborator-container ion-no-padding">
+  <ion-row class="row-header">
+    <ion-col size="10" class="col-text">
+      Add Collaborator
+    </ion-col>
+    <ion-col size="2" class="col-icon">
+      <ion-icon name="close-outline" (click)="closeModal()"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row class="row-content">
+    <form [formGroup]="addTeacherForm" class="add-teacher-form" autofill="off">
+      <ion-row class="justify-content-center add-teacher-section">
+        <nav-input-email [label]="'ENTER_YOUR_COLLABORATOR_EMAIL' | translate" [parentForm]="addTeacherForm" (iconClickEvent)="onIconClick()" [showIcon]="true" [iconName]="'add_circle_outline'"></nav-input-email>
+        <ion-text *ngIf="submitted && validateForm.email.errors?.required" class="danger-text text-center">{{'ENTER_EMAIL_ERROR' | translate}}</ion-text>
+        <ion-text *ngIf="submitted && validateForm.email.errors?.email" class="danger-text text-center">{{'ENTER_VALID_EMAIL' | translate}}</ion-text>
+        <ion-text *ngIf="noTeacherFound" class="danger-text text-center">{{ 'NO_TEACHER_FOUND' | translate }}</ion-text>
+      </ion-row>
+      <ion-row class="row-collaborator-list" *ngFor="let collaborator of collaborators">
+        <ion-col size="2" class="col-image">
+          <ion-thumbnail>
+            <ion-img *ngIf="collaborator.avatarUrl && !isThumbnailError; else ngxAvatar" [src]="collaborator.avatarUrl" (ionError)="onImgError()">
+            </ion-img>
+            <ng-template #ngxAvatar>
+              <ion-avatar class="profile avatar-icon">
+                <ngx-avatar [name]="collaborator.firstName"></ngx-avatar>
+              </ion-avatar>
+            </ng-template>
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col size="8" class="col-email">
+          <ion-text class="ellipsis">{{collaborator.email}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="col-close">
+          <ion-icon name="close-outline" (click)="removeCollaborator(collaborator.id)"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-button">
+        <ion-button class="submit-btn" (click)="addTeacher()" [disabled]="!collaborators.length">{{'SUBMIT' | translate}}</ion-button>
+      </ion-row>
+    </form>
+  </ion-row>
+</ion-grid>

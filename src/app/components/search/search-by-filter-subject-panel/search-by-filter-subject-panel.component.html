@@ -1,0 +1,66 @@
+<ion-grid class="search-filter-content">
+  <ion-row class="item-header" (click)="onClickHeader()">
+    <ion-col size="2" *ngIf="!activeCategory;else done" class="count-container">
+      <ion-row class="count-circle">
+        <ion-text class="count">0</ion-text>
+      </ion-row>
+    </ion-col>
+    <ng-template #done>
+      <ion-col size="2" class="done-count-container">
+        <ion-text class="done-icon material-icons-outlined">
+          done_all
+        </ion-text>
+      </ion-col>
+    </ng-template>
+    <ion-col size="8" class="label-container title">
+      <ion-text class="label">
+        {{'SUBJECT_AND_FRAMEWORK' | translate}}
+      </ion-text>
+      <ion-text *ngIf="!activeCategory" class="no-selected-items">
+        &#45; {{'NONE' | translate}} &#45;
+      </ion-text>
+    </ion-col>
+    <ion-col size="2" class="label-container">
+      <ion-text class="dropdown-icon">
+        <ng-template #downArrow>
+          <ion-text class="material-icons-outlined">
+            arrow_drop_down
+          </ion-text>
+        </ng-template>
+        <ion-text *ngIf="isExpand;else downArrow" class="material-icons-outlined">
+          arrow_drop_up
+        </ion-text>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row [@collapse]="!isExpand" class="items-container">
+    <ion-row class="search-by-filters-actions">
+      <ion-col class="actions" size="12">
+        <ion-col class="categories" *ngIf="categories" [ngClass]="{ 'active': activeCategory }" size="4">
+          <ion-item lines="none">
+            <ion-label>{{ 'CATEGORIES' | translate }}</ion-label>
+            <ion-select [compareWith]="compareWithCode" (ionChange)="onSelectCategory($event)" [value]="activeCategory" dropdownScrollIntoView>
+              <ion-select-option *ngFor="let category of categories" [value]="category">{{ category.title }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col class="categories left-dropdown" *ngIf="subjects" [ngClass]="{ 'active': activeSubject }" size="4">
+          <ion-item lines="none">
+            <ion-label>{{ 'FACETS' | translate }}</ion-label>
+            <ion-select [compareWith]="compareWithCode" (ionChange)="onSelectSubject($event)" [value]="activeSubject" dropdownScrollIntoView>
+              <ion-select-option *ngFor="let subject of subjects" [value]="subject">{{ subject.title }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col class="categories left-dropdown" size="4" [ngClass]="{ 'active': activeFramework }" *ngIf="activeSubject">
+          <ion-item lines="none">
+            <ion-label>{{ 'FRAMEWORK' | translate}}</ion-label>
+            <ion-select [compareWith]="compareWithFwId" (ionChange)="onSelectFramework($event)" [value]="activeFramework" dropdownScrollIntoView>
+              <ion-select-option *ngFor="let framework of activeSubject.frameworks" [value]="framework.standardFrameworkId">{{ framework.title }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-grid>

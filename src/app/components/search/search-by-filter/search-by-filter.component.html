@@ -1,0 +1,100 @@
+<ion-header class="search-filter-header ion-no-border">
+  <ion-toolbar>
+    <ion-row class="header-container">
+      <ion-col size="2" class="icon">
+        <ion-text class="filter-icon material-icons">
+          filter_list
+        </ion-text>
+      </ion-col>
+      <ion-col size="8" class="title">
+        <ion-text class="title">
+          {{'CHOOSE_FILTERS' | translate}}
+        </ion-text>
+      </ion-col>
+      <ion-col size="2" class="icon" (click)="onClosePullUp()">
+        <ion-text class="close-icon material-icons" (click)="onClosePullUp()">
+          close
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="search-filter-content">
+  <search-by-filter-subject-panel
+    [subjects]="subjects"
+    [activeSubject]="activeSubject"
+    [taxonomyGrades]="taxonomyGrades"
+    [activeCategory]="activeCategory"
+    [activeFramework]="activeFramework"
+    [categories]="categories"
+    (selectCategory)="onSelectCategory($event)"
+    (selectSubject)="onSelectSubject($event)"
+    (selectFramework)="onSelectFramework($event)">
+  </search-by-filter-subject-panel>
+  <ng-container *ngIf="taxonomyGrades">
+    <search-by-filter-taxonomy-panel
+      [selectedItem]="activeGrade"
+      title="{{'GRADES' | translate}}"
+      [items]="taxonomyGrades"
+      (selectItem)="onSelectGrade($event)">
+    </search-by-filter-taxonomy-panel>
+  </ng-container>
+  <ng-container *ngIf="domains">
+    <search-by-filter-taxonomy-panel
+      [selectedItem]="activeDomain"
+      title="{{'DOMAINS' | translate}}"
+      [items]="domains"
+      (selectItem)="onSelectDomain($event)">
+    </search-by-filter-taxonomy-panel>
+  </ng-container>
+  <ng-container *ngIf="competencies">
+    <search-by-filter-panel
+      [selectedItems]="selectedCompetencies"
+      [isShowCode]="true"
+      title="{{'STANDARD' | translate}}"
+      [items]="competencies"
+      (selectItems)="onSelectCompetency($event)">
+    </search-by-filter-panel>
+  </ng-container>
+  <ng-container *ngIf="audiences">
+    <search-by-filter-panel
+      [selectedItems]="selectedAudiences"
+      title="{{'AUDIENCE' | translate}}"
+      [items]="audiences"
+      (selectItems)="onSelectAudiences($event)">
+    </search-by-filter-panel>
+  </ng-container>
+  <ng-container *ngIf="languages">
+    <search-by-filter-panel
+      [selectedItems]="selectedLanguages"
+      title="{{'LANGUAGES' | translate}}"
+      [items]="languages"
+      (selectItems)="onSelectLanguages($event)">
+    </search-by-filter-panel>
+  </ng-container>
+  <ng-container *ngIf="educationalUses">
+    <search-by-filter-panel
+      [selectedItems]="selectedEducationalUses"
+      title="{{'EDUCATIONAL_USE' | translate}}"
+      [items]="educationalUses"
+      (selectItems)="onSelectEducationalUse($event)">
+    </search-by-filter-panel>
+  </ng-container>
+  <ng-container *ngIf="showDiagnosticToggle">
+    <search-by-filter-panel 
+      [selectedItems]="selectedDiagnostic" 
+      title="{{'ONLY_DIAGNOSTIC' | translate}}" 
+      [isToggle]="true"
+      [items]="diagnostic"
+      (selectItems)="onDiagnosticToggle($event)">
+    </search-by-filter-panel>
+  </ng-container>
+</ion-content>
+<ion-footer class="search-by-filter-footer ion-no-border">
+  <ion-button class="cancel-btn" (click)="onClickCancel()">
+    {{'CLEAR' | translate}}
+  </ion-button>
+  <ion-button class="confirm-btn" (click)="onClickConfirm()">
+    {{'CONFIRM' | translate}}
+  </ion-button>
+</ion-footer>

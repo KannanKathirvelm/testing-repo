@@ -1,0 +1,164 @@
+ion-header {
+  ion-toolbar {
+    --min-height: var(--toolbar-height);
+
+    .row-header {
+      display: grid;
+      grid-template-columns: auto 48px;
+      padding: 0;
+
+      .col-title {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 17px;
+        padding-left: 12px;
+
+        ion-text {
+          color: var(--dark-400);
+        }
+      }
+
+      .col-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+      }
+    }
+  }
+}
+
+ion-content {
+  ion-grid {
+    padding: 10px 16px;
+
+    .row-competency-detail {
+      display: flex;
+      flex-direction: column;
+
+      &.skeleton-view {
+        .text-title {
+          width: 50px;
+        }
+
+        .text-desc {
+          ion-skeleton-text {
+            height: 100px;
+          }
+        }
+      }
+
+      .text-title {
+        font-weight: bold;
+        color: var(--dark-400);
+        font-size: 15px;
+      }
+
+      .text-desc {
+        color: var(--dark-400);
+        font-size: 14px;
+        margin: 10px 0;
+      }
+    }
+
+    .no-students-list {
+      font-style: italic;
+      color: var(--green);
+      margin-top: 13px;
+      display: flex;
+    }
+
+    .row-student-search {
+      &.skeleton-view {
+        margin-bottom: 10px;
+
+        ion-skeleton-text {
+          height: 48px;
+        }
+      }
+
+      ion-searchbar {
+        padding: 0;
+        border-bottom: 1px solid var(--alto);
+        margin-bottom: 10px;
+        --box-shadow: none;
+      }
+    }
+
+    .row-student-list-container {
+      display: grid;
+      grid-template-columns: 48px auto 48px 48px;
+      height: 50px;
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+
+      .col-profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .profile {
+          display: flex;
+        }
+
+        .profile-icon {
+          background-size: 100% 100%;
+          background-position: center;
+          width: 30px;
+          height: 30px;
+          margin: auto;
+          display: flex;
+          border-radius: 50%;
+        }
+
+        .avatar-icon {
+          height: 48px;
+          width: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          ::ng-deep .avatar-container {
+            height: 30px !important;
+
+            ::ng-deep .avatar-content {
+              width: 30px;
+              height: 30px;
+              font: 16px / 30px Helvetica, Arial, sans-serif !important;
+              margin: auto;
+            }
+          }
+        }
+
+        .student-name {
+          text-transform: capitalize;
+          font-size: 12px;
+          font-style: var(--sans);
+          color: var(--students-list-title);
+        }
+      }
+
+      .col-title {
+        display: flex;
+        align-items: center;
+
+        ion-text {
+          color: var(--dark-400);
+        }
+        
+        .suggestion-icon {
+          width: 30px;
+          height: 30px;
+          color: var(--atc-suggestion-icon-color);
+        }
+      }
+
+      .col-performance {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

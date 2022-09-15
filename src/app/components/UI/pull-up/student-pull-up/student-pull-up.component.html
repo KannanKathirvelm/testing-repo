@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar position="top">
+    <ion-row class="header-bar" *ngIf="userDetail">
+      <ion-col size="10" class="no-padding">
+        <ion-row class="profile">
+          <ion-col size="2" class="profile-icon-container no-padding">
+            <ion-avatar class="profile" *ngIf="userDetail && (userDetail.thumbnail || userDetail.avatarUrl) && !isThumbnailError; else avatarIcon">
+              <img [src]="userDetail.thumbnail || userDetail.avatarUrl" class="profile-icon" (error)="onImgError()" >
+            </ion-avatar>
+            <ng-template #avatarIcon>
+              <ion-avatar class="profile avatar-icon">
+                <ngx-avatar [name]="userDetail.firstName" size="{{avatarSize}}"></ngx-avatar>
+              </ion-avatar>
+            </ng-template>
+          </ion-col>
+          <ion-col size="10" class="student-name-container no-padding">
+            <ion-text class="student-name ellipsis">{{userDetail.firstName}} {{userDetail.lastName}}</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="2" class="no-padding close-icon-container">
+        <ion-text class="material-icons" (click)="closePullUp()">clear</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="isPremiumClass">
+    <nav-milestone-header
+    (segmentEventChanged)="segmentChanged($event)"
+    (toggleLessonEvent)="toggleLesson($event)"
+    [activeView]="'milestone'"
+    [isPremiumClass]="isPremiumClass">
+    </nav-milestone-header>
+  </ion-toolbar>
+</ion-header>
+<ion-content overflow-scroll="true" class="body-container" [scrollEvents]="true" (ionScroll)="onScroll()">
+  <ng-container *ngIf="isMilestoneView; else courseMapTemplate">
+    <nav-student-milestone
+    *ngIf="milestoneLoaded; else skeletonView"
+    [milestones]="milestones"
+    [isOnline]="isOnline"
+    [currentLocation]="currentLocation"
+    [skippedContents]="skippedContents"
+    [classId]="classId"
+    [courseId]="courseId"
+    [frameworkCode]="fwCode"
+    [userId]="userId"
+    [subjectCode]="subject"
+    (scrollToCollection)="scrollToCollection($event)"
+    (openCollectionReport)="onClickStudentReport($event)"
+    ></nav-student-milestone>
+  </ng-container>
+  <ng-template #courseMapTemplate>
+    <course-map
+    *ngIf="unitLoaded; else skeletonView"
+    [units]="units"
+    [isOnline]="isOnline"
+    [tenantSettings]="tenantSettings"
+    (openUnitPanel)="onOpenUnitPanel($event)"
+    (openLessonPanel)="onOpenLessonPanel($event)"
+    [isUnitLoaded]="unitLoaded"
+    [isLessonLoaded]="lessonLoaded"
+    [isCollectionLoaded]="collectionLoaded"
+    (openCollectionReport)="onClickStudentReport($event)"
+    [isStudentCourseMap]="true">
+    </course-map>
+  </ng-template>
+  <ng-template #skeletonView>
+    <ion-row class="skeleton-panel-header" *ngFor="let item of [].constructor(3)">
+      <ion-col class="horiz-vert-center">
+        <ion-skeleton-text animated class="skeleton-header-text" *ngFor="let item of [].constructor(2)"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header class="items-to-grade-list-header" (click)="onToggleView()">
+  <ion-toolbar class="items-to-grade-list-toolbar">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="collection-title-col">
+        {{ 'ITEMS_TO_GRADE' | translate }}
+      </ion-row>
+      <ion-row class="icon-col">
+        <ion-icon class="arrow-icon" name="caret-up-outline"></ion-icon>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-grid class="items-to-grade-container ion-no-padding">
+  <ion-row class="items-to-grade-row" *ngFor="let gradeContent of gradingList;index as gradeIndex" (click)="onGradeItem(gradeContent)">
+    <ion-col class="icon-col">
+      <ng-container *ngIf="gradeContent.isAssessmentGrading; else gradeInfoTemplate">
+        <ion-icon class="nav-rubric"></ion-icon>
+      </ng-container>
+      <ng-template #gradeInfoTemplate>
+        <ion-icon class="nav-task"></ion-icon>
+      </ng-template>
+    </ion-col>
+    <ion-col class="items-to-grade-title-col">
+      <ion-text class="items-to-grade-title ellipsis" *ngIf="gradeContent.content;else collectionTitle">{{gradeContent.content.title}}</ion-text>
+      <ng-template #collectionTitle>
+        <ion-text class="items-to-grade-title ellipsis">{{gradeContent.collection.title}}</ion-text>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+</ion-grid>

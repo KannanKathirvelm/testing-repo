@@ -1,0 +1,13 @@
+<ion-row class="input-wrapper">
+  <ion-grid [formGroup]="parentForm">
+    <ion-row class="justify-content-center email-label">
+      <ion-label class="input-label">{{ label }} {{isRequired ? '*' : ''}}</ion-label>
+    </ion-row>
+    <ion-row class="justify-content-center">
+      <ion-input #input id="email" inputmode="email" class="input-field" name="email" (keyup)="onEnterEmail()" formControlName="email" [(ngModel)]="emailId">
+      </ion-input>
+      <!-- add_circle_outline -->
+      <ion-text class="material-icons" *ngIf="showIcon" (click)="iconClick()">{{iconName}}</ion-text>
+    </ion-row>
+  </ion-grid>
+</ion-row>

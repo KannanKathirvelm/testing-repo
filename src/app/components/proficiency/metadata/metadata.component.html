@@ -1,0 +1,52 @@
+<ion-row class="metadata" *ngIf="competencies">
+  <ion-row class="heading">{{'MICRO_COMPETENCIES' | translate}}</ion-row>
+  <ng-container *ngIf="competencies?.length;else noCompetencyData">
+    <ion-row class="micro-comeptency-list" *ngFor="let competency of competencies;index as competencyIndex">
+      <ion-row class="micro-competency" (click)="onClickMicroCompetency(competencyIndex)">
+        <ion-text class="micro-competency-code">
+          {{competency.code}}
+        </ion-text>
+        <ion-row class="arrow">
+          <ion-text class="material-icons" *ngIf="competency.isActive;else downArrow">arrow_drop_up</ion-text>
+          <ng-template #downArrow>
+            <ion-text class="material-icons">arrow_drop_down</ion-text>
+          </ng-template>
+        </ion-row>
+      </ion-row>
+      <ion-row class="description" [@collapse]="!competency.isActive">
+        <ion-text>{{competency.title}}</ion-text>
+      </ion-row>
+    </ion-row>
+  </ng-container>
+  <ng-template #noCompetencyData>
+    <ion-row class="no-data">
+      <ion-text>{{'NO_COMPETENCY' | translate}}</ion-text>
+    </ion-row>
+  </ng-template>
+  <ion-row class="prequisite-competencies-heading">{{'PREQUISITE_COMPETENCIES' | translate}}</ion-row>
+  <ion-row class="prequisite-competencies" [ngClass]="{'no-competency' : !prerequisites?.length}">
+    <ng-container *ngIf="prerequisites?.length;else noPrerequisitesData">
+      <ion-row class="panel-container" [ngClass]="{'show-more': showMoreItems[prerequisiteIndex]}" *ngFor="let prerequisite of prerequisites; index as prerequisiteIndex">
+        <ion-row class="panel-header ellipsis">
+          <ion-text class="title ellipsis">{{prerequisite.code}}</ion-text>
+          <ion-row class="competency-status status-{{prerequisite.status}}"></ion-row>
+        </ion-row>
+        <ion-row class="panel-body">
+          <ion-text class="competency-description" [ngClass]="{'ellipsis' : !showMoreItems[prerequisiteIndex], 'show-more': showMoreItems[prerequisiteIndex]}" >{{prerequisite.title}}</ion-text>
+          <ion-text class="show-text" *ngIf="prerequisite.title?.length >30" (click)="showMoreItems[prerequisiteIndex] = !showMoreItems[prerequisiteIndex]">{{ showMoreItems[prerequisiteIndex] ? ('SHOW_LESS' | translate): ('SHOW_MORE' | translate) }}</ion-text>
+        </ion-row>
+      </ion-row>
+    </ng-container>
+    <ng-template #noPrerequisitesData>
+      <ion-row class="no-data">
+        <ion-text>{{'NO_PREQUISITE' | translate}}</ion-text>
+      </ion-row>
+    </ng-template>
+  </ion-row>
+  <ion-row class="alt-concepts-heading">{{'ALT_CONCEPTS' | translate}}</ion-row>
+  <ion-row class="alt-concepts">
+    <ion-row class="no-data">
+      <ion-text>{{'NO_ALT_CONCEPTS' | translate}}</ion-text>
+    </ion-row>
+  </ion-row>
+</ion-row>

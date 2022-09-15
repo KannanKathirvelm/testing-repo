@@ -1,0 +1,114 @@
+.delete-or-archive-conatiner {
+  background-color: var(--atc-student-list-conatiner);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+  width: 100%;
+  z-index: 13;
+  max-height: 100%;
+
+  .list-header {
+    display: grid;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+    position: relative;
+    width: 100%;
+    background-color: var(--archive-class-color);
+    color: white;
+    height: 48px;
+
+    .header-title {
+      font-weight: bolder;
+      margin-left: 20px;
+    }
+
+    .header-info {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .close {
+      position: absolute;
+      right: 8px;
+      top: 0;
+      bottom: 0;
+
+      ion-text {
+        margin: auto;
+      }
+    }
+  }
+
+  .content-container {
+    display: grid;
+    overflow-y: auto;
+    max-height: calc(100% - 48px);
+    width: 100%;
+    padding: 20px;
+    grid-gap: 15px;
+
+    .action-confirm {
+      width: 100%;
+
+      ion-item {
+        width: 100%;
+        display: grid;
+
+        ion-label {
+          white-space: unset;
+        }
+
+        ion-checkbox {
+          margin-right: 15px;
+        }
+      }
+    }
+
+    .delete-message {
+      ion-text {
+        font-weight: 400;
+        opacity: 0.7;
+        text-transform: capitalize;
+      }
+
+      .class-name {
+        font-weight: 600;
+        opacity: 1;
+      }
+    }
+
+    .actions {
+      width: 100%;
+      justify-content: flex-end;
+
+      .cancel-btn {
+        --color: black;
+        --background: var(--cancel-btn-bg-color);
+        --border-color: var(--cancel-btn-color);
+        --border-width: 1px;
+        --border-style: solid;
+        margin-left: 10px;
+      }
+
+      .confirm-btn {
+        --background: var(--archive-class-color);
+      }
+    }
+  }
+
+  &.delete-class {
+    .list-header {
+      background-color: var(--delete-class-color);
+    }
+
+    .content-container {
+      .actions {
+        .confirm-btn {
+          --background: var(--delete-class-color);
+        }
+      }
+    }
+  }
+}
+
+.backdrop {
+  z-index: 4;
+}

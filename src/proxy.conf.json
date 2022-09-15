@@ -1,0 +1,18 @@
+{
+  "/api/*": {
+    "target": "https://staging.gooru.org/api",
+    "changeOrigin": true,
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  },
+  "/gooru-search/*": {
+    "target": "https://staging.gooru.org/gooru-search",
+    "changeOrigin": true,
+    "secure": false,
+    "pathRewrite": {
+      "^/gooru-search/": ""
+    }
+  }
+}

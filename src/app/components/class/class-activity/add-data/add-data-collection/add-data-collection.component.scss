@@ -1,0 +1,168 @@
+.add-data-collection-container {
+  margin: 0;
+
+  &::after {
+    display: none;
+  }
+
+  ion-toolbar {
+    --min-height: 56px;
+  }
+
+  .row-search {
+    margin-top: 8px;
+
+    ion-searchbar {
+      padding: 0;
+      --box-shadow: none;
+    }
+  }
+
+  .report-header-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    height: 48px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+
+    .header-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-text {
+      display: flex;
+      font-size: 12px;
+      letter-spacing: normal;
+      color: var(--add-data-header-text-color);
+      clear: both;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      text-overflow: ellipsis;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      ion-text {
+        width: 100%;
+      }
+    }
+  }
+}
+
+ion-content {
+  .row-questions {
+    .mat-accordion {
+      width: 100%;
+
+      .mat-expansion-panel {
+        border-radius: 0;
+        box-shadow: none;
+        margin-top: 0;
+
+        .mat-expansion-panel-header {
+          margin-bottom: 3px;
+          box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+          padding: 0;
+
+          &:hover {
+            background: var(--add-data-accordion-header-hover-color);
+          }
+
+          ::ng-deep .mat-content {
+            height: 100%;
+
+            .row-header {
+              width: 100%;
+              height: 100%;
+              display: grid;
+              grid-template-columns: auto 48px;
+
+              .col-text {
+                padding: 0;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+
+                ion-text {
+                  color: var(--add-data-accordion-header-text-color);
+                  font-family: var(--sans);
+                  font-weight: bold;
+                  font-size: 12px;
+                  padding-left: 16px;
+                }
+              }
+
+              .col-performance {
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--add-data-performance-color);
+                height: 100%;
+                z-index: 11;
+                text-align: center;
+
+                &.has-timespent {
+                  &:before {
+                    display: none;
+                  }
+                }
+
+                &:before {
+                  content: '';
+                  width: 20px;
+                  height: 8px;
+                  background: var(--white);
+                  border-radius: 5px;
+                  position: absolute;
+                  text-align: center;
+                }
+              }
+            }
+          }
+        }
+
+        ::ng-deep .mat-expansion-panel-body {
+          padding-top: 34px;
+        }
+      }
+    }
+  }
+
+  .row-submit-btn {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    bottom: 0;
+    background: var(--add-data-submit-bg-color);
+    z-index: 111;
+
+    .submit-btn {
+      width: 100%;
+      height: 48px;
+      --border-radius: 5px;
+    }
+  }
+
+  .skeleton-grid {
+    padding: 50px 0 0;
+
+    .skeleton-row {
+      display: grid;
+      grid-template-columns: auto 48px;
+      min-height: 48px;
+      align-items: center;
+      background: var(--add-data-submit-bg-color);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .external-collection-container {
+    padding-top: 33px;
+    display: flex;
+    justify-content: center;
+  }
+}

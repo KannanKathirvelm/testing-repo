@@ -1,0 +1,26 @@
+<ion-grid class="sync-progress-grid">
+  <ion-row>
+    <ng-container *ngFor="let syncStatusItem of syncStatusItems">
+      <ng-container *ngIf="syncStatusItem.statusCode === syncStatusCode">
+        <ion-icon class="{{syncStatusItem.className}}"></ion-icon>
+      </ng-container>
+    </ng-container>
+  </ion-row>
+  <ion-grid class="sync-progress-bar-grid">
+    <ion-row class="sync-progress-bar-row">
+      <ion-text class="sync-progress-bar-text">{{statusMessage[syncStatusCode] | translate}}</ion-text>
+      <ion-text class="sync-progress-bar-grade-text" ngClass="offline-sync-range-{{syncPercentage | gradeRange}}">
+        {{syncPercentage| transformPerformanceScore}}</ion-text>
+    </ion-row>
+    <ion-row class="progress-bar performance-color" [ngStyle]="{'width':progressBarWidth}">
+      <ion-row class="progress-container" [ngStyle]="{'width': progressBarWidth}"
+        ngClass="offline-sync-range-{{syncPercentage | gradeRange}}"></ion-row>
+      <ng-container *ngFor="let item of [].constructor(progressBarCount);index as progressSeq">
+        <ng-container *ngIf="progressPointGap && progressSeq < maxNumberOfProgress">
+          <ion-text class="progress-point"
+            [ngStyle]="{'margin-right':((progressSeq === progressBarCount) ? 0 : progressPointGap+'px')}"></ion-text>
+        </ng-container>
+      </ng-container>
+    </ion-row>
+  </ion-grid>
+</ion-grid>

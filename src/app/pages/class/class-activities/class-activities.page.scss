@@ -1,0 +1,22 @@
+.class-activity-content-container {
+  ion-tabs {
+    ion-tab-bar {
+      height: 40px;
+    }
+
+    ion-tab-button {
+      &.tab-selected {
+        color: var(--class-activity-tabs-selected-color);
+        font-weight: bold;
+        border-bottom: solid 4px;
+      }
+
+      ion-label {
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

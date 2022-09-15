@@ -1,0 +1,53 @@
+<mat-accordion class="accordion-items-to-grade-container" *ngIf="assessmentGradingContent || oaGradingContent" [ngClass]="(isAssessmentGrading) ? 'question-grading': 'offline-activity-grading'">
+  <mat-expansion-panel class="accordion-expansion-panel" [expanded]="true">
+    <mat-expansion-panel-header collapsedHeight="49px" expandedHeight="49px">
+      <ion-row class="row-header" [ngClass]="(isAssessmentGrading) ? 'assessment-header' : 'offline-header'">
+        <ion-col class="col-icon"></ion-col>
+        <ion-col class="col-title">
+          <ng-container *ngIf="isAssessmentGrading; else gradingTitle">
+            <ion-text class="ellipsis">{{assessmentContent.title}}</ion-text>
+          </ng-container>
+          <ng-template #gradingTitle>
+            <ion-text class="ellipsis">{{oaGradingContent.title}}</ion-text>
+          </ng-template>
+        </ion-col>
+        <ion-col class="ion-no-padding question-count" *ngIf="assessmentGradingContent">
+          <ion-icon name="help-circle"></ion-icon>
+          <ion-text>{{questionCount}}</ion-text>
+        </ion-col>
+        <ion-col class="col-info">
+          <ng-container *ngIf="isAssessmentGrading; else gradeInfoTemplate">
+            <ion-icon class="nav-rubric"></ion-icon>
+          </ng-container>
+          <ng-template #gradeInfoTemplate>
+            <ion-icon class="nav-task"></ion-icon>
+            <ion-text>{{oaContent.taskCount}}</ion-text>
+          </ng-template>
+        </ion-col>
+        <ion-col class="col-thumbnail" [ngStyle]="{'background-image': isAssessmentGrading ? 'url('+ assessmentContent.thumbnail+')' : 'url('+ oaGradingContent.thumbnailUrl+')'}">
+        </ion-col>
+      </ion-row>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <ion-grid class="row-grading-classes">
+        <ng-container *ngFor="let question of grade.questions">
+          <ng-container *ngFor="let gradingClass of question.gradingClasses | sortBy: 'activityDate'">
+            <ion-row class="row-grading-class" (click)="onGradeItem(gradingClass)" [ngClass]="(isAssessmentGrading) ? 'assessment-grading' : 'oa-grading'">
+              <ion-col class="col-title">
+                <ion-text>{{question.resourceTitle}}</ion-text>
+              </ion-col>
+              <ion-col class="col-student">
+                <ion-text class="activity-date" *ngIf="gradingClass.activityDate">{{gradingClass.activityDate}}</ion-text>
+                <ion-icon class="nav-student-profile"></ion-icon>
+                <ion-text>{{gradingClass.studentCount}}</ion-text>
+              </ion-col>
+              <ion-col class="col-rubric">
+                <ion-icon class="nav-rubric"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </ng-container>
+      </ion-grid>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

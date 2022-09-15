@@ -1,0 +1,27 @@
+.atc-calendar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-width: 300px;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,0);
+  background-color: var(--ca-calendar-bg);
+  margin: auto;
+  z-index: 4;
+  border-top: 1px solid var(--ca-calendar-border);
+  top: 48px;
+
+  p-calendar {
+    .ui-datepicker {
+      border: none;
+    }
+  }
+}
+
+.backdrop {
+  position: absolute;
+  top: 48px;
+  z-index: 3;
+  cursor: pointer;
+  margin: auto;
+  bottom: auto;
+}

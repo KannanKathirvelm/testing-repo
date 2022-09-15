@@ -1,0 +1,161 @@
+.learning-challenges-container {
+  background-color: var(--atc-student-report-container);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+  width: 100%;
+  overflow-y: auto;
+  z-index: 13;
+  max-height: calc(100% - 48px);
+
+  .grade-header-title {
+    height: 48px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    box-shadow: 0 0 5px var(--grade-header-color);
+    margin-bottom: 2px;
+
+    .title {
+      font-size: 15px;
+      margin: auto 25px;
+      font-weight: 700;
+      opacity: 0.6;
+      color: var(--atc-learning-topic);
+    }
+
+    .close-btn {
+      margin: auto;
+      font-size: 20px;
+    }
+  }
+
+  .accordion-container {
+    width: 100%;
+
+    .mat-expansion-panel-spacing {
+      margin: 0;
+    }
+
+    mat-expansion-panel ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
+      }
+
+      mat-expansion-panel-header {
+        .mat-expansion-indicator {
+          &::after {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid;
+            border-bottom: transparent;
+            padding: 0;
+            transform: unset;
+            border-style: solid;
+            border-width: 6px;
+          }
+        }
+      }
+    }
+
+    mat-expansion-panel-header {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      margin-bottom: 2px;
+    }
+
+    .atc-learning-title {
+      display: grid;
+
+      .domain-grade {
+        margin-left: 5px;
+      }
+    }
+
+    .atc-title-row {
+      padding: 10px 24px;
+
+      &.row-main-title-border {
+        border-bottom: 2px solid var(--atc-title-row-border-color);
+      }
+
+      &.row-title-border {
+        border-bottom: 1px solid var(--atc-title-row-border-color);
+
+        &:last-child {
+          border-bottom: none;
+          margin-bottom: 3px;
+        }
+      }
+    }
+
+    .atc-learning-struggle-panel-title {
+      height: 20px;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--atc-learning-struggle-panel-title);
+    }
+
+    .atc-learning-topic {
+      font-family: var(--sans);
+      color: var(--atc-learning-topic);
+
+      &.main-title {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      &.title-id {
+        font-weight: bold;
+        font-size: 13px;
+      }
+
+      &.title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+    }
+
+    .atc-student-count-col {
+      margin: auto;
+      justify-content: center;
+      display: flex;
+
+      .student-count {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        top: -6px;
+        background-color: var(--teacher-suggestion-text);
+        border-radius: 50%;
+        border: 1px solid var(--grade-header-color);
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+      }
+    }
+
+    .atc-suggestion-icon-col {
+      display: flex;
+      justify-content: center;
+      margin: auto;
+
+      .rotate-90 {
+        transform: rotate(90deg);
+      }
+
+      ion-icon {
+        width: 20px;
+        height: 20px;
+        color: var(--atc-suggestion-icon-color);
+      }
+    }
+  }
+}
+
+.backdrop {
+  z-index: 4;
+  opacity: 0.8;
+}

@@ -1,0 +1,93 @@
+.delete-conatiner {
+    background-color: var(--atc-student-list-conatiner);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+    width: 100%;
+    z-index: 13;
+    max-height: 100%;
+  
+    .list-header {
+      display: grid;
+      grid-template-columns: auto 49px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+      position: relative;
+      width: 100%;
+      background-color: var(--delete-class-color);
+      color: white;
+      height: 48px;
+  
+      .header-title {
+        font-weight: bolder;
+        margin-left: 20px;
+        font-size: 15px;
+      }
+  
+      .header-info {
+        font-size: 12px;
+        line-height: 15px;
+      }
+  
+      .close {  
+        ion-text {
+          margin: auto;
+        }
+      }
+    }
+  
+    .content-container {
+      display: grid;
+      overflow-y: auto;
+      max-height: calc(100% - 48px);
+      width: 100%;
+      padding: 20px;
+  
+      .delete-message {
+        font-weight: 400;
+        opacity: 0.7;
+  
+        .student-name {
+          text-transform: capitalize;
+          font-weight: bolder;
+        }
+      }
+  
+      .action-confirm {
+        width: 100%;
+        padding: 10px 0px;
+  
+        ion-item {
+          width: 100%;
+          --padding-start: 0px;
+          --inner-padding-end: 0px;
+  
+          ion-label {
+            white-space: unset;
+            margin: 0px;
+          }
+  
+          ion-checkbox {
+            margin-right: 15px;
+          }
+        }
+      }
+  
+      .actions {
+        width: 100%;
+        justify-content: flex-end;
+  
+        .cancel-btn {
+          --color: black;
+          --background: var(--cancel-btn-bg-color);
+          --border-color: var(--cancel-btn-color);
+          --border-width: 1px;
+          --border-style: solid;
+          margin-left: 10px;
+        }
+  
+        .confirm-btn {
+          --background: var(--delete-class-color);
+          margin-left: 10px;
+        }
+      }
+    }
+  }

@@ -1,0 +1,50 @@
+<ion-content class="items-to-grade-container">
+  <ng-container *ngIf="isOnline; else offlineMessage">
+    <ng-container *ngIf="isGradeItemLoaded; else skeletonViewTemplate">
+      <ng-container *ngIf="gradingItems.length; else noItemsToGradeTemplate">
+        <ng-container *ngIf="gradingItems.length > 1">
+          <ion-row class="row-sort-slider">
+            <ion-col size="1" class="left-arrow">
+              <ion-icon name="arrow-back-outline" (click)="slidePrev(sortSlider,slideWithNav)" [class.disabled]="sortSlider.isBeginningSlide"></ion-icon>
+            </ion-col>
+            <ion-col size="10" class="slider-content">
+              <ion-slides pager="false" class="meeting-list" [options]="sortSlideOpts" #slideWithNav>
+                <ion-slide *ngFor="let sortingItem of sortList; let sortIndex = index">
+                  <ion-row class="row-sort">
+                    <ion-col class="col-icon">
+                      <ion-text class="material-icons">{{sortingItem.icon}}</ion-text>
+                    </ion-col>
+                    <ion-col class="col-text">
+                      <ion-text>{{'SORTED_BY' | translate}} {{sortingItem.label}}</ion-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-slide>
+              </ion-slides>
+            </ion-col>
+            <ion-col size="1" class="right-arrow">
+              <ion-icon name="arrow-forward-outline" (click)="slideNext(sortSlider,slideWithNav)" [class.disabled]="sortSlider.isEndSlide"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+        <ng-container *ngFor="let grade of gradingItems;index as gradeIndex">
+          <nav-items-to-grade-panel *ngIf="grade" class="items-to-grade-panel" [grade]="grade" [classId]="class.id" (reloadItemsToGrade)="reloadItemsToGrade()"></nav-items-to-grade-panel>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #skeletonViewTemplate>
+      <ion-row class="skeleton-panel-header" *ngFor="let item of [].constructor(3)">
+        <ion-col class="horiz-vert-center">
+          <ion-skeleton-text animated class="skeleton-header-text" *ngFor="let item of [].constructor(2)"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+    <ng-template #noItemsToGradeTemplate>
+      <ion-row class="row-no-items">
+        <ion-text>{{"NO_ITEMS_TO_GRADE" | translate}}</ion-text>
+      </ion-row>
+    </ng-template>
+  </ng-container>
+  <ng-template #offlineMessage>
+    <nav-offline-message-preview></nav-offline-message-preview>
+  </ng-template>
+</ion-content>

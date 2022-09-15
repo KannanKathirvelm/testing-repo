@@ -1,0 +1,75 @@
+<ion-row class="course-contain">
+    <ion-row class="course-panel">
+        <header class="course-header">
+            <ion-text class="course-text">{{'ADD_COURSE' | translate}}</ion-text>
+        </header>
+        <ion-row class="search-student-row">
+            <ion-col size="10" class="ion-no-padding input-row">
+                <ion-input type="text" placeholder="{{'SEARCH_COURSE' | translate}}" [(ngModel)]="searchTerms"
+                    (keyup.enter)="onSearchCourse()"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="ion-no-padding search-icon">
+                <ion-icon name="search" (click)="onSearchCourse()"></ion-icon>
+            </ion-col>
+        </ion-row>
+    </ion-row>
+    <ng-container *ngIf="searchContent.length || !isLoading; else skeletonView">
+        <div class="featured-course-card-list" (scroll)="onScroll($event)" *ngIf="searchContent.length;else nocourse">
+            <app-add-course-card *ngFor="let content of searchContent" [content]="content" [classDetail]="classDetail">
+            </app-add-course-card>
+        </div>
+        <ng-template #nocourse>
+            <ion-row class="no-course-panel">
+                <ion-text class="no-course-text">{{'NO_COURSES' | translate}}</ion-text>
+            </ion-row>
+        </ng-template>
+    </ng-container>
+    <ion-row class="content-catalog">
+        <ion-text class="content-text">{{'BROWSE_CONTENT_CATALOGS' | translate}}</ion-text>
+    </ion-row>
+    <ion-row class="content-source-head">
+        <ion-grid class="content-source-card">
+            <ion-row class="content-source-panel">
+                <ion-col class="content-soruce-section" *ngFor="let source of contentSources"
+                    (click)="openSearchPullUp(source)">
+                    <ion-text>{{source.name}}</ion-text>
+                    <ng-container *ngIf="!source.isThumbnailError; else avatarIcon">
+                        <img (error)="onImgError(source)" [src]="source.thumbnail">
+                    </ng-container>
+                    <ng-template #avatarIcon>
+                        <img src="assets/images/icons/profile.png">
+                    </ng-template>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-row>
+</ion-row>
+<ng-template #skeletonView>
+    <ion-row class="skeleton-card-list">
+      <ng-container *ngFor="let item of [].constructor(3)">
+        <ion-card class="skeleton-card">
+          <ion-row class="row-header">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+          <ion-card-content class="row-body">
+            <ion-row class="row-count">
+              <ng-container *ngFor="let item of [].constructor(3)">
+                <ion-col>
+                  <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row class="row-desc">
+              <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+            </ion-row>
+            <ion-row class="row-desc row-desc-one">
+              <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+            </ion-row>
+            <ion-row class="row-desc row-desc-two">
+              <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ion-row>
+  </ng-template>

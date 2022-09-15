@@ -1,0 +1,209 @@
+.atc-student-progress-grid {
+  padding: 0;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--atc-learning-struggles-panel-container);
+
+  .student-progress-title-row {
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 25%);
+    padding: 5px 15px;
+    color: var(--atc-progress-title-text);
+
+    .student-progress-title {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+
+    .navigate-col {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 24px;
+    }
+  }
+
+  .student-progress-content-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 7px;
+
+    .student-data-col {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .competency-data-col {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .icon-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .profile-img {
+        width: 24px;
+        height: 24px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: var(--profile-icon);
+      }
+
+      .competency-img {
+        width: 24px;
+        height: 24px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: var(--competency-icon);
+      }
+    }
+
+    .progress-content-data {
+      display: grid;
+      padding-left: 5px;
+      font-size: 12px;
+
+      .content-category {
+        color: var(--atc-highlight-text);
+      }
+
+      .category-data-row {
+        color: var(--atc-progress-data-text);
+        text-transform: capitalize;
+
+        .data {
+          font-weight: bold;
+          padding-left: 3px;
+        }
+      }
+    }
+  }
+
+  .chart-container {
+    width: 100%;
+    position: relative;
+
+    .competencies-list-container {
+      min-height: 197px;
+      display: grid;
+      grid-template-columns: auto 140px;
+      width: 100%;
+
+      &.skeleton-container {
+        position: absolute;
+        background: var(--white);
+      }
+
+      .skeleton-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-skeleton-text {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+        }
+      }
+
+      #graft_data {
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .percentage_color {
+          opacity: 0.8;
+        }
+      }
+
+      svg {
+        height: 100%;
+      }
+
+      path.slice {
+        stroke-width: 2px;
+      }
+
+      polyline {
+        opacity: 0.3;
+        stroke: black;
+        stroke-width: 2px;
+        fill: none;
+      }
+
+      .competencies-list {
+        padding: 15px 7px 0;
+        display: flex;
+        flex-direction: column;
+
+        .list {
+          padding-bottom: 5px;
+          align-items: center;
+          color: var(--atc-progress-data-text);
+          .alphabet {
+            padding: 8px;
+          }
+
+          .list-details {
+            display: grid;
+            font-size: 12px;
+
+            .labels {
+              display: grid;
+              height: 20px;
+              border-bottom: 1px solid var(--gray-a9);
+              grid-template-columns: auto 30px;
+
+              .title {
+                width: 52px;
+              }
+
+              .competency-icon {
+                background-image: var(--competency-icon);
+                width: 15px;
+                height: 15px;
+                background-size: 15px 15px;
+                justify-self: center;
+                align-self: center;
+                background-repeat: no-repeat;
+                display: block;
+                margin-left: 5px;
+              }
+            }
+
+            .value {
+              display: grid;
+              height: 16px;
+              grid-template-columns: auto 30px;
+
+              .title {
+                width: 52px;
+              }
+
+              .user-icon {
+                background-image: var(--profile-icon);
+                width: 15px;
+                height: 15px;
+                background-size: 15px 15px;
+                justify-self: center;
+                align-self: center;
+                background-repeat: no-repeat;
+                display: block;
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

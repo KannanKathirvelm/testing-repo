@@ -1,0 +1,8 @@
+{
+  "name": "Gooru Navigator: Instructor",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

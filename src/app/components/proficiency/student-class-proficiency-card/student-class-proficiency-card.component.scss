@@ -1,0 +1,109 @@
+.proficiency-card-container {
+  background-color: var(--proficiency-card-bg);
+  border-radius: 5px;
+  height: max-content;
+  width: 156px;
+  margin: 8px;
+
+  .card-header {
+    width: 100%;
+
+    ion-col {
+      margin: auto;
+
+      .thumbnail {
+        width: 35px;
+        height: 35px;
+
+        .avatar-icon {
+          ::ng-deep .avatar-container {
+            height: 32px !important;
+            width: 32px !important;
+
+            .avatar-content {
+              width: 35px;
+              height: 35px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font: 16px / 30px Helvetica, Arial, sans-serif !important;
+              margin: auto;
+            }
+          }
+        }
+      }
+    }
+
+    .student-name {
+      margin: auto;
+      font-size: 14px;
+      line-height: 15px;
+
+      .first-name,
+      .last-name {
+        text-transform: capitalize;
+        opacity: 0.9;
+        color: var(--proficiency-card-username);
+      }
+    }
+  }
+
+  .student-card-body {
+    width: 100%;
+    height: 125px;
+    transform: rotate(90deg);
+
+    .student-card {
+      transform: rotate(180deg);
+
+      .student-chart-skeleton {
+        width: 65%;
+        margin: 0 0 5px 2rem;
+        height: 8px;
+
+        &.card-skeleton-0 {
+          width: 24%;
+        }
+
+        &.card-skeleton-5 {
+          width: 28%;
+        }
+
+        &.card-skeleton-2 {
+          width: 40%;
+        }
+
+        &.card-skeleton-3 {
+          width: 65%;
+        }
+
+        &.card-skeleton-9 {
+          width: 36%;
+        }
+
+        &.card-skeleton-4,
+        .card-skeleton-8 {
+          width: 48%;
+        }
+
+        &.card-skeleton-7 {
+          width: 35%;
+        }
+
+        &.card-skeleton-1,
+        &.card-skeleton-6 {
+          width: 42%;
+        }
+      }
+    }
+  }
+
+  .card-body {
+    padding: 0 0 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-width: 156px;
+    overflow-x: auto;
+  }
+}

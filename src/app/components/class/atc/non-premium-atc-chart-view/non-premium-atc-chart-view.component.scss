@@ -1,0 +1,111 @@
+.atc-chart-view {
+  background-color: var(--atc-chart-bg);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.13);
+  position: relative;
+  min-height: 500px;
+  width: 100%;
+
+  .chart-actions {
+    width: 100%;
+    height: 40px;
+    display: flex;
+
+    .screen-rotate {
+      height: 40px;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 15px;
+      color: var(--rotate-screen-color);
+
+      i {
+        margin: auto;
+        font-size: 30px;
+      }
+    }
+
+    .zoom-out {
+      width: 25px;
+      color: var(--rotate-screen-color);
+      height: 40px;
+      margin: 0 15px 0 auto;
+
+      ion-text {
+        margin: auto;
+        font-size: 30px;
+      }
+    }
+  }
+
+  .class-info-container {
+    width: 100%;
+    margin: 15px 15px 0;
+
+    .class-name {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 27px;
+    }
+
+    .class-msg,
+    .class-name {
+      color: var(--atc-tick-text);
+    }
+
+    .class-msg {
+      font-size: 12px;
+    }
+
+    .total-competencies {
+      color: var(--atc-tick-text);
+      justify-content: flex-end;
+      display: grid;
+
+      .competency-count {
+        font-size: 20px;
+        font-weight: 700;
+        justify-self: flex-end;
+      }
+
+      .competency-label {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .atc-chart-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  &.landscape-chart {
+    .class-info-container {
+      margin: 0;
+      padding: 0 15px;
+    }
+  }
+}
+
+.skeleton-grid {
+  width: 100%;
+  height: 100%;
+  background-color: var(--ms-coursemap-report-color);
+  position: absolute;
+  padding: 0;
+
+  .skeleton-row {
+    align-items: center;
+
+    &.atc-skeleton {
+      width: 100%;
+      display: flex;
+      height: 100%;
+
+      ion-skeleton-text {
+        height: 100%;
+        margin: 0;
+      }
+    }
+  }
+}

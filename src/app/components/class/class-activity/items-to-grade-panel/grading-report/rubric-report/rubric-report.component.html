@@ -1,0 +1,102 @@
+<ion-grid class="grid-rubric" *ngIf="rubric; else skeletonView">
+  <ion-row class="row-rubric-header" *ngIf="!isReport && (rubric.isTeacherRubric || rubric.grader)">
+    <ion-col class="col-icon">
+      <ion-icon class="nav-rubric"></ion-icon>
+    </ion-col>
+    <ion-col class="col-title">
+      <ion-text class="text-header">{{'RUBRIC' | translate}}
+        <i class="material-icons rubric-attachment" *ngIf="rubric.url" inAppBrowser url={{rubric.url}}>attachment</i>
+      </ion-text>
+      <ion-text class="text-sub-header" *ngIf="!isReadonly">{{'TEACHER_RUBRIC_HEADER_TITLE' | translate}}</ion-text>
+    </ion-col>
+    <ng-container *ngIf="rubric.maxScore; else calculatedMaxScore">
+      <ion-col *ngIf="maxScore" class="col-score" ngClass="grade-range-{{rubric.gradedScoreInPercentage | gradeRange}}">
+        <ion-text>{{rubric.gradedScore | transformCompentencyStats: rubric.maxScore}}</ion-text>
+      </ion-col>
+    </ng-container>
+    <ng-template #calculatedMaxScore>
+      <ion-col class="col-score" *ngIf="totalRubricPoints > 0" ngClass="grade-range-{{rubric.gradedScoreInPercentage | gradeRange}}">
+        <ion-text>{{rubric.gradedScore | transformCompentencyStats: totalRubricPoints}}</ion-text>
+      </ion-col>
+    </ng-template>
+  </ion-row>
+  <ion-row class="row-categories">
+    <ng-container *ngIf="rubric.categories && rubric.categories.length; else noCategories">
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel *ngFor="let category of rubric.categories; let categoryIndex = index">
+          <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            <ion-col class="col-info">
+              <ion-icon class="nav-info"></ion-icon>
+            </ion-col>
+            <ion-col class="col-title">
+              <ion-text class="text-category">{{category.title}}</ion-text>
+            </ion-col>
+            <ion-col class="col-dropdown">
+              <ion-text class="material-icons arrow-dropdown"> arrow_drop_down </ion-text>
+              <ion-text class="material-icons arrow-dropup"> arrow_drop_up </ion-text>
+            </ion-col>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <ng-container *ngIf="category.allowsScoring; else withoutScore">
+              <nav-category-with-score [isReadonly]="isReadonly" [category]="category" [categoryIndex]="categoryIndex" (updateCategoryLevels)="updateCategory($event)"></nav-category-with-score>
+            </ng-container>
+            <ng-template #withoutScore>
+              <nav-category-without-score [isReadonly]="isReadonly" [category]="category" [categoryIndex]="categoryIndex" (updateCategoryLevels)="updateCategory($event)"></nav-category-without-score>
+            </ng-template>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-container>
+    <ng-template #noCategories>
+      <ng-container *ngIf="!rubric.isTeacherRubric; else scoreTemplate">
+        <ion-text class="no-self-grade">{{'STUDENT_SELF_GRADING_NOT_REQUIRED' | translate}}</ion-text>
+      </ng-container>
+    </ng-template>
+    <ng-template #scoreTemplate>
+      <ng-container *ngIf="isTeacherRubric && !rubric.scoring && maxScore">
+        <nav-number-increment [minScore]="0" [maxScore]="maxScore" [increment]="rubric.increment" [score]="rubric.gradedScore" (scoreIncrement)="scoreIncrement($event)"></nav-number-increment>
+      </ng-container>
+    </ng-template>
+  </ion-row>
+  <ion-row class="row-comment" [ngClass]="{'read-only': isReadonly}">
+    <ion-label>{{'GENERAL_COMMENTS' | translate}}</ion-label>
+    <ion-input name="comments" [(ngModel)]="rubric.comment" placeholder="{{ !isTeacherRubric ? ('COMMON_GOES_HERE' | translate) : ('ENTER_COMMENTS' | translate) }}"></ion-input>
+  </ion-row>
+  <ion-row class="actions" *ngIf="!isReadonly">
+    <ion-button class="confirm" (click)="submitOAGrade()">{{ 'CONFIRM' | translate }}</ion-button>
+  </ion-row>
+</ion-grid>
+<!-- <ng-template #noCategories>
+  <ng-container *ngIf="!rubric.isTeacherRubric">
+    <ion-text class="no-self-grade">{{'STUDENT_SELF_GRADING_NOT_REQUIRED' | translate}}</ion-text>
+  </ng-container>
+</ng-template> -->
+<ng-template #skeletonView>
+  <ion-row class="skeleton-row row-rubric-header">
+    <ion-col class="col-icon">
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+    </ion-col>
+    <ion-col class="col-title">
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+    </ion-col>
+    <ion-col class="col-score">
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+    </ion-col>
+  </ion-row>
+  <ion-row class="skeleton-row row-rubric-header row-accordion" *ngFor="let item of [].constructor(2)">
+    <ion-col class="col-icon">
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+    </ion-col>
+    <ion-col class="col-title">
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+    </ion-col>
+    <ion-col class="col-score">
+      <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+    </ion-col>
+  </ion-row>
+  <ion-row class="skeleton-comment">
+    <ion-skeleton-text animated class="skeleton-label-text"></ion-skeleton-text>
+    <ion-skeleton-text animated class="skeleton-input-text"></ion-skeleton-text>
+  </ion-row>
+</ng-template>

@@ -1,0 +1,159 @@
+<ng-container *ngIf="class; skeletonViewForList">
+  <ion-content>
+    <ion-row *ngIf="showSyncProgress" class="sync-progress-bar-container" [ngClass]="{'hide': offlineSyncCompleted}">
+      <ion-col class="no-padding">
+        <app-sync-progress-bar [syncPercentage]="syncPercentage" [syncStatusCode]="syncStatusCode">
+        </app-sync-progress-bar>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-calender">
+      <nav-calender-navbar [disabledDates]="disabledDates" [highlightDates]="highlightDates"
+        (selectedCalenderDate)="onSelectedCalenderDate($event)" (selectView)="onSelectView($event)">
+      </nav-calender-navbar>
+    </ion-row>
+    <ion-refresher slot="fixed" id="ion-refresher" (ionRefresh)="onRefresh($event)" pullFactor="0.5" pullMin="100"
+      pullMax="200">
+      <ion-refresher-content pullingIcon="chevron-down-circle" pullingText="Pull to refresh" refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+    <ng-container *ngIf="isClassActivityLoaded && classContents.length">
+      <ion-row class="row-grid-list-view" *ngIf="selectedView === 'daily'">
+        <ion-col class="col-grid" [ngClass]="{'active': !isListView }" (click)="toggleView()">
+          <ion-text class="material-icons">apps</ion-text>
+        </ion-col>
+        <ion-col class="col-list" [ngClass]="{'active': isListView }" (click)="toggleView()">
+          <ion-text class="material-icons">list</ion-text>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+    <ng-container *ngIf="isClassActivityLoaded; else skeletonViewForList">
+      <ng-container *ngIf="meetingClassContents && meetingClassContents.length">
+        <nav-meeting-activities [meetingClassContents]="meetingClassContents"
+          (openVideoConferenceEvent)="openVideoConference($event)"
+          (enableMeetingActivityEvent)="enableMeetingActivity($event)"
+          (deleteMeetingActivityEvent)="deleteMeetingActivity($event)"></nav-meeting-activities>
+      </ng-container>
+      <ion-row class="row-activity-list" [ngClass]="{'list-view': isListView || selectedView !== 'daily' }"
+        *ngIf="classContents && classContents.length; else noClassActivitiesMsg">
+        <ng-container *ngFor="let classContent of scheduledActivities; let activityDateIndex = index">
+          <ion-row class="row-date" *ngIf="selectedView !== 'daily'">
+            <ion-text>{{classContent.key | date: 'd MMMM y'}}</ion-text>
+            <hr>
+          </ion-row>
+          <ng-container *ngFor="let classActivity of classContent.value; let classActivityIndex = index">
+            <ng-container *ngIf="!classActivity.isMeeting">
+              <ng-container *ngIf="selectedView === 'daily' && !isListView; else classActivityListTemplate">
+                <nav-class-activity-card [isOnline]="isOnline" [activity]="classActivity"
+                  [offlineSynInProgress]="offlineSynInProgress"
+                  [activityIndex]="classActivityIndex"
+                  [courseId]="courseId"
+                  [isCaBaselineWorkflow]="isCaBaselineWorkflow"
+                  (enableClassActivityEvent)="onEnableClassActivity(activityDateIndex, classActivityIndex)"
+                  (deleteClassActivityEvent)="onDeleteClassActivity($event, activityDateIndex, classActivityIndex)"
+                  (studentListEvent)="onOpenStudentList($event)"
+                  (rescheduleActivityEvent)="onRescheduleActivity($event)"
+                  (updateClassActivityStatusEvent)="onUpdateClassActivityStatus($event, activityDateIndex, classActivityIndex)"
+                  (reloadCAList)="reloadCAList()" (updateMasteryAccuralEvent)="onUpdateMasteryAccural($event)"
+                  (gradeItemEvent)="gradeItem($event)" (openVideoConferenceEvent)="openVideoConference(classActivity)"
+                  [isCaAutoAssignToStudent]="isCaAutoAssignToStudent"></nav-class-activity-card>
+              </ng-container>
+              <ng-template #classActivityListTemplate>
+                <class-activity-list-item [isOnline]="isOnline" [activity]="classActivity"
+                  [offlineSynInProgress]="offlineSynInProgress"
+                  [activityIndex]="classActivityIndex" class="ca-item-list"
+                  [courseId]="courseId"
+                  [isCaBaselineWorkflow]="isCaBaselineWorkflow"
+                  (studentListEvent)="onOpenStudentList($event)"
+                  (enableClassActivityEvent)="onEnableClassActivity(activityDateIndex, classActivityIndex)"
+                  (updateClassActivityStatusEvent)="onUpdateClassActivityStatus($event, activityDateIndex, classActivityIndex)"
+                  (deleteClassActivityEvent)="onDeleteClassActivity($event, activityDateIndex, classActivityIndex)"
+                  (rescheduleActivityEvent)="onRescheduleActivity($event)"
+                  (openVideoConferenceEvent)="openVideoConference(classActivity)" (reloadCAList)="reloadCAList()"
+                  (updateMasteryAccuralEvent)="onUpdateMasteryAccural($event)" (gradeItemEvent)="gradeItem($event)"
+                  [isCaAutoAssignToStudent]="isCaAutoAssignToStudent"></class-activity-list-item>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ion-row>
+    </ng-container>
+    <ng-template #noClassActivitiesMsg>
+      <ion-row class="no-activity">
+        <ion-text>{{'NO_ACTIVITY' | translate}}</ion-text>
+      </ion-row>
+    </ng-template>
+  </ion-content>
+</ng-container>
+<ion-footer *ngIf="isOnline && class && !class.isArchived">
+  <ion-row class="row-assign-class-activity">
+    <ion-row class="content-type-panel">
+      <ion-col class="col-collection-icon" (click)="openAssignActivity('collection')">
+        <ion-icon class="nav-collection"></ion-icon>
+      </ion-col>
+      <ion-col class="col-assessment-icon" (click)="openAssignActivity('assessment')">
+        <ion-icon class="nav-assessment"></ion-icon>
+      </ion-col>
+      <ion-col class="col-offline-activity-icon" (click)="openAssignActivity('offline-activity')">
+        <ion-icon class="nav-offline-activity"></ion-icon>
+      </ion-col>
+      <ion-col class="col-meeting-icon" (click)="openAssignActivity('meeting')"></ion-col>
+    </ion-row>
+    <ion-row (click)="openAssignActivity()" class="search-panel">
+      <ion-col class="col-search-icon">
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      </ion-col>
+      <ion-col class="col-add-activity-icon">
+        <ion-icon name="add-outline" class="add-activity-icon"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-footer>
+<ng-template #skeletonViewForList>
+  <ng-container *ngIf="isListView; else skeletonViewForCard">
+    <ion-row class="skeleton-view-for-list">
+      <ion-grid class="grid-skeleton">
+        <ng-container *ngFor="let item of [].constructor(3)">
+          <ion-row class="row-date">
+            <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+          </ion-row>
+          <ion-row class="skeleton-panel-header">
+            <ion-col class="horiz-vert-center">
+              <ion-skeleton-text animated class="skeleton-header-text" *ngFor="let item of [].constructor(2)">
+              </ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ion-grid>
+    </ion-row>
+  </ng-container>
+</ng-template>
+<ng-template #skeletonViewForCard>
+  <ion-row class="skeleton-card-list">
+    <ng-container *ngFor="let item of [].constructor(3)">
+      <ion-card class="skeleton-card">
+        <ion-row class="row-header">
+          <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+        </ion-row>
+        <ion-card-content class="row-body">
+          <ion-row class="row-count">
+            <ng-container *ngFor="let item of [].constructor(3)">
+              <ion-col>
+                <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+          <ion-row class="row-desc">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+          <ion-row class="row-desc row-desc-one">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+          <ion-row class="row-desc row-desc-two">
+            <ion-skeleton-text animated class="skeleton-header-text"></ion-skeleton-text>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ion-row>
+</ng-template>

@@ -1,0 +1,15 @@
+<ng-container *ngIf="showOaAnswerTab">
+  <ng-container *ngIf="student && student.activityTasks">
+    <ng-container *ngFor="let task of student.activityTasks">
+      <oa-task-submissions [task]="task"></oa-task-submissions>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="showTeacherTab">
+  <ng-container *ngIf="student && student.teacherRubric">
+    <nav-rubric-report [isReadonly]="false" [rubric]="student.teacherRubric" (updateCategoryLevels)="updateCategory($event)" (submitGrade)="submitGrade($event)" [maxScore]="maxScore" [isTeacherRubric]="true"></nav-rubric-report>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="showStudentTab">
+  <nav-rubric-report [isReadonly]="true" [rubric]="student.studentRubric" [maxScore]="maxScore" [isTeacherRubric]="false"></nav-rubric-report>
+</ng-container>

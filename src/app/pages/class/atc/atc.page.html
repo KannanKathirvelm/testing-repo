@@ -1,0 +1,93 @@
+<ion-content class="atc-content-container" *ngIf="isLoaded" [scrollY]="!showCalendar">
+  <ng-container *ngIf="showAtcChart;else noChartMsg">
+    <ion-row class="ion-no-padding atc-container-row" *ngIf="isShowMonthSelector">
+      <ion-grid class="ion-no-padding ellipsis">
+        <ion-row class="calendar-container">
+          <i class="material-icons left-arrow" (click)="onPreviousDate()">keyboard_arrow_left</i>
+          <div class="calendar-panel">
+            <div class="label-conatiner" (click)="onToggleCalendar()">
+              <div class="date-label">
+                {{monthlyViewDate | formatDate:'MMMM-YYYY'}}
+              </div>
+              <i class="material-icons dropdown-icon">arrow_drop_down</i>
+            </div>
+          </div>
+          <i class="material-icons right-arrow" [ngClass]="{'disabled': disableNextDate}" (click)="onNextDate()">keyboard_arrow_right</i>
+        </ion-row>
+      </ion-grid>
+      <!-- Atc calendar component -->
+      <atc-calendar [currentMonth]="monthlyViewDate" [showCalendar]="showCalendar" (selectedCalendarDate)="selectedCalendarDate($event)" (closeCalendar)="onToggleCalendar()">
+      </atc-calendar>
+    </ion-row>
+    <ion-row class="atc-chart-content">
+      <!-- Atc chart components -->
+      <ng-container *ngIf="isPremiumClass;else nonPremiumAtc">
+        <atc-chart-view [classMembers]="classMembers" [selectedDate]="monthlyViewDate" (emitSelectedStudentList)="onSelectStudentList($event)" (emitSelectedStudent)="onSelectStudent($event)" (rotateScreen)="onRotateScreen($event)"
+          (emitTotalMasteredCompetencies)="getTotalMasteredCompetencies($event)" [tenantSettings]="tenantSettings">
+        </atc-chart-view>
+      </ng-container>
+      <ng-template #nonPremiumAtc>
+        <non-premium-atc-chart-view [classMembers]="classMembers" (rotateScreen)="onRotateScreen($event)" (selectStudent)="onSelectStudentPerformance($event)">
+        </non-premium-atc-chart-view>
+      </ng-template>
+    </ion-row>
+    <ion-grid class="atc-competency-container-grid ion-no-padding" *ngIf="isPremiumClass">
+      <ion-row class="atc-learning-struggles-panel-container">
+        <!-- Atc learning struggles panel -->
+        <atc-opportunities-for-growth  [fwDomains]="fwDomains" [currentGradeName]="currentGradeName" [opportunitiesForGrowthList]="opportunitiesForGrowthList" [fwCompetencies]="fwCompetencies"
+          (openLearningChallenges)="openLearningChallenges($event)" (navigateLearningChallenges)="navigateLearningChallenges()" (openLearningGaps)="openLearningGaps($event)" class="atc-learning-struggles-panel-row">
+        </atc-opportunities-for-growth>
+      </ion-row>
+      <ion-row class="atc-progress-containers">
+        <atc-class-progress class="progress-container" [performanceScore]="performanceScore" [inProgressData]="inProgressData" [gainedData]="gainedData" [timespentSummary]="timespentSummary" [classId]="class.id"></atc-class-progress>
+      </ion-row>
+      <ion-row class="atc-progress-containers">
+        <atc-student-progress class="progress-container" [classMembers]="classMembers.members" [classDetail]="class"></atc-student-progress>
+      </ion-row>
+      <ion-row class="atc-progress-containers">
+        <atc-data-by-milestone class="progress-container" [classDetail]="class"></atc-data-by-milestone>
+      </ion-row>
+      <ion-row class="atc-progress-containers">
+        <atc-ca-progress class="progress-container" [activitiesCount]="activitiesCount" [classId]="class.id"></atc-ca-progress>
+      </ion-row>
+      <ion-row class="atc-progress-containers" *ngIf="diagnosticSummary && tenantSettings && tenantSettings.domainDiagnosticEnabled">
+        <atc-diagnostic-report class="progress-container" [diagnosticSummary]="diagnosticSummary" [classDetail]="class"></atc-diagnostic-report>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  <ng-template #noChartMsg>
+    <ion-row class="no-chart-message">
+      {{'NO_COURSE_FOR_ATC' | translate}}
+    </ion-row>
+  </ng-template>
+</ion-content>
+<!-- Atc student list report -->
+<pullup-with-dynamic-height [isShowPullUp]="isShowStudentListAtcReport">
+  <ng-container *ngIf="selectedStudentList">
+    <atc-student-list-report [studentList]="selectedStudentList" [isShowStudentListAtcReport]="isShowStudentListAtcReport" (selectStudent)="selectStudentFromList($event)" (closeStudentListReport)="closeStudentListReport()"
+      class="pull-up-dynamic-height">
+    </atc-student-list-report>
+  </ng-container>
+</pullup-with-dynamic-height>
+<!-- Atc student performance report -->
+<pullup-with-dynamic-height [isShowPullUp]="isShowStudentAtcReport">
+  <ng-container *ngIf="selectedStudentData">
+    <atc-student-performance-report [studentPerformance]="selectedStudentData" [isShowStudentAtcReport]="isShowStudentAtcReport" (closeStudentPerformanceReport)="closeStudentPerformanceReport()" class="pull-up-dynamic-height">
+    </atc-student-performance-report>
+  </ng-container>
+</pullup-with-dynamic-height>
+<!-- Atc student performance report for non premium classes -->
+<pullup-with-dynamic-height [isShowPullUp]="showStudentPerformanceReport">
+  <ng-container *ngIf="selectedStudentPerformance">
+    <atc-student-performance-report [nonPremiumClassStudentData]="selectedStudentPerformance" [isShowStudentAtcReport]="showStudentPerformanceReport" (closeStudentPerformanceReport)="closeStudentPerformanceReport()" class="pull-up-dynamic-height">
+    </atc-student-performance-report>
+  </ng-container>
+</pullup-with-dynamic-height>
+<!-- Atc learning challenges pullup -->
+<ng-container *ngIf="gradeCompetencyDomainList && gradeCompetencyDomainList.length">
+<pullup-with-dynamic-height [isShowPullUp]="isShowLearningChallengesPullUp">
+    <learning-challenges [fwDomains]="fwDomains" [gradeCompetencyDomainList]="gradeCompetencyDomainList" [fwCompetencies]="fwCompetencies" [selectedGradeDomainIndex]="selectedGradeDomainIndex"
+      [isShowLearningChallengesPullUp]="isShowLearningChallengesPullUp" (openSuggestionContainer)="openLearningStruggleSuggestion($event)" (closeLearningChallengesPullUp)="closeLearningChallengesPullUp()" class="pull-up-dynamic-height" [tenantSettings]="tenantSettings" [selectedGradeCompetencyIndex]="selectedGradeCompetencyIndex">
+    </learning-challenges>
+</pullup-with-dynamic-height>
+</ng-container>

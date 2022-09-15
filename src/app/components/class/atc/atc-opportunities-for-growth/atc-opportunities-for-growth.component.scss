@@ -1,0 +1,110 @@
+.atc-learning-struggles-panel-container {
+  padding: 0;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--atc-learning-struggles-panel-container);
+
+  .atc-learning-topics-showall {
+    font-family: var(--sans);
+    font-size: 12px;
+    padding: 5px 10px 10px;
+    font-weight: bold;
+    justify-content: flex-end;
+    text-transform: uppercase;
+    color: var(--atc-learning-topics-showall-text);
+  }
+
+  .atc-title-row {
+    padding: 10px;
+
+    &.row-main-title-border {
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 25%);
+      padding: 5px 15px;
+    }
+
+    .atc-learning-struggle-panel-title {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: bold;
+      text-transform: capitalize;
+      color: var(--atc-progress-title-text);
+    }
+
+    .navigate-col {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: var(--atc-progress-title-text);
+      font-size: 24px;
+    }
+  }
+
+  .atc-student-count-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .student-count {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      top: -6px;
+      background-color: --student-count-color;
+      border-radius: 50%;
+      border: 1px solid var(--grade-header-color);
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+  }
+
+  .atc-learning-topic {
+    font-family: var(--sans);
+    color: var(--atc-learning-topic);
+
+    &.main-title {
+      font-size: 12px;
+    }
+
+    &.title-id {
+      font-weight: bold;
+      font-size: 10px;
+      color: var(--atc-highlight-text);
+      padding-left: 5px;
+    }
+
+    &.title {
+      font-size: 10px;
+      color: var(--atc-highlight-text);
+    }
+  }
+
+  .atc-suggestion-icon-col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .rotate-90 {
+      transform: rotate(90deg);
+    }
+
+    ion-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--atc-suggestion-icon-color);
+      margin-left: auto;
+    }
+  }
+
+  .struggling-content-empty-panel {
+    ion-col {
+      ion-text {
+        padding: 10px 15px;
+        font-size: 12px;
+        display: block;
+      }
+    }
+  }
+}

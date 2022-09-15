@@ -1,0 +1,36 @@
+<ion-row class="card-content">
+  <ion-grid class="title-content">
+    <ion-row class="collection-thumbnail">
+      <ion-col class="thumbnail-panel" [ngStyle]="{'background-image':'url('+ content.thumbnailUrl +')'}">
+        <i class="badge-img" *ngIf="content.version === 'premium'"></i>
+        <ion-text>{{content.title}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="course-unit-counts">
+      <i class="material-icons align-icon">format_align_center</i>
+      <ion-text class="unit-count">{{content.unitCount}}</ion-text>
+    </ion-row>
+    <ion-row class="course-content-detail">
+      <ion-col class="owner-detail">
+        <ion-text class="owner-profile">{{'CREATED_BY' | translate}}</ion-text>
+        <ion-img class="owner-img" *ngIf="content.owner.avatarUrl; else ngxAvatar" [src]="content.owner.avatarUrl"></ion-img>
+        <ng-template #ngxAvatar>
+          <ion-avatar class="profile avatar-icon">
+            <ngx-avatar [name]="content.owner.firstName"></ngx-avatar>
+          </ion-avatar>
+        </ng-template>
+        <ion-text class="owner-text">{{content.owner.username}}</ion-text>
+      </ion-col>
+      <ion-col class="course-desc">
+        <ion-text class="course-text" [ngClass]="{'multi-line-ellipsis': !isShowMore}" [innerHTML]="content.description"></ion-text>
+        <span *ngIf="content.description" class="show-desc" (click)="showMoreContent()">{{(isShowMore ? 'SHOW_LESS' : 'SHOW_MORE') | translate}}</span>
+      </ion-col>
+      <ion-col class="course-taxonomy">
+        <nav-taxonomy-list [taxonomy]="content.standards" [showMore]="true" [showFrameworkInfo]="true"></nav-taxonomy-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="course-footer-actions" [ngClass]="{'disabled': classDetail.isArchived}">
+      <i class="material-icons" (click)="addCourse()">add</i>
+    </ion-row>
+  </ion-grid>
+</ion-row>

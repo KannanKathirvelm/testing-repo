@@ -1,0 +1,79 @@
+@import "src/theme/grade-mixin.scss";
+
+.aggregated-score-panel {
+  .performance-activity {
+    display: grid;
+    position: relative;
+    height: 240px;
+    grid-template-rows: 20px 1fr;
+
+    &.timeSpent-row {
+      background-color: var(--collection-summary-report-bgcolor);
+      font-size: 14px;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      opacity: 0.3;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(242, 235, 235);
+    }
+
+    %webkit-container {
+      -webkit-mask-size: cover;
+      -webkit-mask-repeat: no-repeat;
+      background: currentColor;
+      -webkit-mask-image: var(--performance-score-fill-bg);
+    }
+
+    %container {
+      mask-size: cover;
+      mask-repeat: no-repeat;
+      background: currentColor;
+      mask-image: var(--performance-score-fill-bg);
+    }
+
+    .performance {
+      text-align: center;
+      display: grid;
+      font-weight: bold;
+      justify-content: center;
+      z-index: 1;
+      height: 240px;
+      align-items: center;
+
+      .score-container {
+        display: grid;
+        justify-content: center;
+        color: var(--assessment-summary-report-text-color);
+
+        .assessment-time {
+          font-size: 18px;
+          padding-top: 10px;
+        }
+
+        .collection-time {
+          font-size: 56px;
+        }
+
+        .score {
+          font-size: 56px;
+          font-weight: bold;
+          line-height: 1.14;
+          align-self: end;
+        }
+      }
+    }
+    @include grade-range();
+
+    .performance-img {
+      grid-row-start: 2;
+      @extend %webkit-container;
+      @extend %container;
+      display: grid;
+      align-self: end;
+    }
+  }
+}

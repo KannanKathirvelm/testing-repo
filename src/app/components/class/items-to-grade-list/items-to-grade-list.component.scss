@@ -1,0 +1,87 @@
+.items-to-grade-list-header {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  width: 100%;
+
+  &::after {
+    display: none;
+  }
+
+  .items-to-grade-list-toolbar {
+    --min-height: 40px;
+    padding: 0;
+
+    ion-grid {
+      display: flex;
+      align-items: center;
+
+      .collection-title-col {
+        width: 100%;
+        padding-left: 16px;
+        font-size: 12px;
+        text-transform: capitalize;
+        color: var(--items-to-grade-collection-title);
+      }
+
+      .icon-col {
+        width: 48px;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.items-to-grade-container {
+  width: 100%;
+
+  .items-to-grade-row {
+    height: 40px;
+    width: 100%;
+    border-bottom: 0.5px solid var(--items-to-grade-row-border);
+    display: grid;
+    grid-template-columns: 36px auto;
+
+    .icon-col {
+      display: grid;
+      align-items: center;
+      justify-content: center;
+
+      .activity-icon {
+        width: 100%;
+        height: 25px;
+      }
+    }
+
+    .items-to-grade-title-col {
+      display: grid;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 5px 0;
+
+      .items-to-grade-title {
+        font-size: 12px;
+        font-family: var(--sans);
+        color: var(--items-to-grade-question-title);
+      }
+    }
+  }
+
+  .performance-col {
+    max-height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    &.performance-score-opacity-bg {
+      background-color: var(--items-to-grade-performance-bgcolor);
+    }
+
+    ion-text {
+      width: 35px;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+}

@@ -1,0 +1,126 @@
+.detail-class-statistics-count {
+  display: grid;
+  background-color: var(--detail-class-statistics-bg);
+  position: absolute;
+  z-index: 14;
+  width: 100%;
+  padding: 5px 10px;
+  box-shadow: inset 0 5px 15px -5px rgba(0,0,0,0.4);
+
+  .students-detail {
+    padding: 5px 10px 12px;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  .domain-competency-title {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 10px;
+    text-transform: uppercase;
+  }
+
+  .domain-count {
+    display: grid;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 10px;
+
+    ion-text {
+      padding: 2px 0;
+    }
+
+    .mastered {
+      text-transform: uppercase;
+      color: var(--proficiency-competency-status-3);
+    }
+
+    .in-progress {
+      text-transform: uppercase;
+      color: var(--proficiency-competency-status-1);
+    }
+
+    .not-started {
+      text-transform: uppercase;
+      color: var(--proficiency-competency-status-0);
+    }
+  }
+}
+
+.class-statistics-container {
+  width: 100%;
+
+  .class-statistics-header {
+    width: 100%;
+    padding: 10px 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+
+    .class-statistics-title {
+      display: flex;
+
+      ion-skeleton-text {
+        width: 100px;
+        height: 20px;
+        margin: auto 5px;
+      }
+
+      ion-text {
+        margin: auto 0 auto 4px;
+      }
+
+      ion-row {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .class-statistics-count {
+      margin: auto;
+
+      .progressBar-count {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 10px;
+
+        ion-skeleton-text {
+          width: 25px;
+          margin: 2px;
+        }
+
+        ion-text {
+          padding: 0 5px;
+
+          &:last-child {
+            padding: 0 0 0 5px;
+          }
+        }
+
+        .mastered {
+          color: var(--proficiency-competency-status-3);
+        }
+
+        .in-progress {
+          color: var(--proficiency-competency-status-1);
+        }
+
+        .not-started {
+          color: var(--proficiency-competency-status-0);
+        }
+      }
+    }
+  }
+
+  .class-statistics-progress-bar {
+    width: 100%;
+    padding: 0 20px 0 0;
+
+    ion-skeleton-text {
+      margin: 15px;
+    }
+
+    ::ng-deep nav-student-competency-progress-bar {
+      width: 100%;
+    }
+  }
+}

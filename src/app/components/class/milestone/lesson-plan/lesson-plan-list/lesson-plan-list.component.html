@@ -1,0 +1,116 @@
+<!-- Prior Knowledge -->
+<mat-accordion class="lesson-plan-list-container">
+  <ion-row class="ion-no-padding lesson-plan-list-container-row">
+    <mat-expansion-panel class="lesson-plan-list-panel" [hideToggle]="true" (opened)="priorPanelState = true" (closed)="priorPanelState = false">
+      <mat-expansion-panel-header class="lesson-plan-list-panel-header" collapsedHeight="48px" expandedHeight="inherit">
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="lesson-plan-list-row">
+            <ion-col class="title-col ellipsis ion-no-padding">
+              <ion-row class="lesson-plan-list-title lesson ellipsis">
+                <ion-text>Prior Knowledge</ion-text>
+              </ion-row>
+            </ion-col>
+            <ion-col class="lesson-plan-arrow-icon-col ion-no-padding">
+              <ion-icon *ngIf="!priorPanelState" class="lesson-plan-arrow-icon" name="caret-down-outline"></ion-icon>
+              <ion-icon *ngIf="priorPanelState" class="lesson-plan-arrow-icon" name="caret-up-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="prior-knowledge-button-row">
+            <ion-text class="prior-knowledge-button">2-3 Word Competency</ion-text>
+            <ion-text class="prior-knowledge-button">2-3 Word Competency</ion-text>
+            <ion-text class="prior-knowledge-button">2-3 Word Competency</ion-text>
+          </ion-row>
+        </ion-grid>
+      </ng-template>
+    </mat-expansion-panel>
+  </ion-row>
+</mat-accordion>
+<!-- Guiding Questions -->
+<mat-accordion class="lesson-plan-list-container">
+  <ion-row class="ion-no-padding lesson-plan-list-container-row">
+    <mat-expansion-panel class="lesson-plan-list-panel" [hideToggle]="true" (opened)="questionPanelState = true" (closed)="questionPanelState = false">
+      <mat-expansion-panel-header class="lesson-plan-list-panel-header" collapsedHeight="48px" expandedHeight="inherit">
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="lesson-plan-list-row">
+            <ion-col class="title-col ellipsis ion-no-padding">
+              <ion-row class="lesson-plan-list-title lesson ellipsis">
+                <ion-text>Guiding Questions</ion-text>
+              </ion-row>
+            </ion-col>
+            <ion-col class="lesson-plan-arrow-icon-col ion-no-padding">
+              <ion-icon *ngIf="!questionPanelState" class="lesson-plan-arrow-icon" name="caret-down-outline"></ion-icon>
+              <ion-icon *ngIf="questionPanelState" class="lesson-plan-arrow-icon" name="caret-up-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ion-grid class="ion-no-padding ellipsis question-row">
+          <ion-row>
+            <ion-text class="question-text ellipsis">What is the first question to consider?</ion-text>
+          </ion-row>
+          <ion-row>
+            <ion-text class="question-text ellipsis">Does the first question affect the second question's opinion?</ion-text>
+          </ion-row>
+          <ion-row>
+            <ion-text class="question-text ellipsis">Does this, in turn, affect the student's ability to focus on what actually needs to be questioned?</ion-text>
+          </ion-row>
+        </ion-grid>
+      </ng-template>
+    </mat-expansion-panel>
+  </ion-row>
+</mat-accordion>
+<!-- Anticipated Struggles -->
+<mat-accordion class="lesson-plan-list-container">
+  <ion-row class="ion-no-padding lesson-plan-list-container-row">
+    <mat-expansion-panel class="lesson-plan-list-panel" [hideToggle]="true" (opened)="anticipatedPanelState = true" (closed)="anticipatedPanelState = false">
+      <mat-expansion-panel-header class="lesson-plan-list-panel-header" collapsedHeight="48px" expandedHeight="inherit">
+        <ion-grid class="ion-no-padding ellipsis">
+          <ion-row class="lesson-plan-list-row">
+            <ion-col class="title-col ellipsis ion-no-padding">
+              <ion-row class="lesson-plan-list-title lesson ellipsis">
+                <ion-text>Anticipated Struggles</ion-text>
+              </ion-row>
+            </ion-col>
+            <ion-col class="lesson-plan-arrow-icon-col ion-no-padding">
+              <ion-icon *ngIf="!anticipatedPanelState" class="lesson-plan-arrow-icon" name="caret-down-outline"></ion-icon>
+              <ion-icon *ngIf="anticipatedPanelState" class="lesson-plan-arrow-icon" name="caret-up-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ion-grid class="ion-no-padding ellipsis anticipated-accordion-bgcolor">
+          <ion-row class="anticipated-row">
+            <ion-text class="anticipated-text ellipsis">Lorem ipsum dolor sit amet, ad vis unum scaevola mandamus, duis saperet vis et. Duo utroque denique perpetua id, ad probo delicata necessitatibus nec. Vis ea aliquip singulis gloriatur.
+            </ion-text>
+          </ion-row>
+          <ion-grid class="anticipated-blocks-row ">
+            <ion-grid class="anticipated-block">
+              <ion-row>
+                <ion-text class="anticipated-text anticipated-headline-text ellipsis">Alt-Concept Name</ion-text>
+              </ion-row>
+              <ion-row>
+                <ion-text class="anticipated-text ellipsis">Lorem ipsum dolor sit amet, ad vis unum scaevola mandamus, duis saperet vis et. Duo utroque denique perpetua id, ad probo delicata necessitatibus nec. Vis ea aliquip singulis gloriatur.
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+            <ion-grid class="anticipated-block">
+              <ion-row>
+                <ion-text class="anticipated-text anticipated-headline-text ellipsis">Alt-Concept Name</ion-text>
+              </ion-row>
+              <ion-row>
+                <ion-text class="anticipated-text ellipsis">Lorem ipsum dolor sit amet, ad vis unum scaevola mandamus, duis saperet vis et. Duo utroque denique perpetua id, ad probo delicata necessitatibus nec. Vis ea aliquip singulis gloriatur.
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+          </ion-grid>
+        </ion-grid>
+      </ng-template>
+    </mat-expansion-panel>
+  </ion-row>
+</mat-accordion>

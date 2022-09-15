@@ -1,0 +1,27 @@
+.grid-increment-container {
+  padding: 0;
+  max-width: 100px;
+  text-align: center;
+  margin: auto;
+
+  .row-input {
+    ion-input {
+      border-bottom: 3px solid var(--dark-400);
+      font-size: 24px;
+      text-align: center;
+      --padding-end: 0;
+      --padding-top: 5px;
+      --padding-bottom: 5px;
+      --padding-start: 0px;
+    }
+  }
+
+  .row-text {
+    ion-text {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 24px;
+      width: 100%;
+    }
+  }
+}

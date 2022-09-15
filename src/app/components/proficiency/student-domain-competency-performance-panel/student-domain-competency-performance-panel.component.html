@@ -1,0 +1,67 @@
+  <ng-container *ngIf="domain">
+    <ion-grid class="performance-container ion-no-padding">
+      <ion-row class="performance-content">
+        <ion-col class="students-container ion-no-padding" size="4">
+          <ion-row class="competency-header">
+            <ion-text>
+              Topic
+            </ion-text>
+          </ion-row>
+          <ng-container *ngFor="let student of studentCompetencies">
+            <ion-row *ngIf="student.competencies?.length" class="student-container ion-no-border" (click)="onSelectStudent(student)">
+              <ng-container *ngIf="student.isActive;else thumbnailImg">
+                <ion-text class="suggestion material-icons-outlined">
+                  done_all
+                </ion-text>
+              </ng-container>
+              <ng-template #thumbnailImg>
+                <ion-avatar>
+                  <ion-img class="user-profile-img" *ngIf="student.avatarUrl && !isThumbnailError; else ngxAvatar" (ionError)="onImgError()" [src]="student.avatarUrl" [ngClass]="{'selected': student.selectedForSuggestion}">
+                  </ion-img>
+                  <ng-template #ngxAvatar>
+                    <ion-avatar class="profile avatar-icon">
+                      <ngx-avatar [name]="student.firstName"></ngx-avatar>
+                    </ion-avatar>
+                  </ng-template>
+                </ion-avatar>
+              </ng-template>
+              <ion-text class="student-name ellipsis">
+                {{student.firstName}}
+              </ion-text>
+            </ion-row>
+          </ng-container>
+        </ion-col>
+        <ion-col class="students-competencies-performance-container ion-no-padding" size="8">
+          <ion-row class="competencies-info ellipsis">
+            <ng-container *ngFor="let topic of activeDomainData.topics">
+              <ion-row class="topic-coverage">
+                <ion-row class="topic-seq">
+                  {{(activeDomainSeq + 1)}}.{{topic.topicSeq}}
+                </ion-row>
+                <ion-row class="topic-competencies">
+                  <ng-container *ngFor="let competency of topic.competencies">
+                    <ion-row class="competency-info" (click)="onSelectTopic(competency)">
+                      <ion-text class="material-icons">
+                        info
+                      </ion-text>
+                    </ion-row>
+                  </ng-container>
+                </ion-row>
+              </ion-row>
+            </ng-container>
+          </ion-row>
+          <ion-row class="competency-performance-content">
+            <ng-container *ngFor="let studentCompetencyPerformance of studentCompetencies">
+              <ion-row class="competencies-performance-container">
+                <ng-container *ngFor="let competencyPerformance of studentCompetencyPerformance.competencies">
+                  <ion-row class="competency-performance ion-no-border status-{{competencyPerformance.status}}" (click)="onSelectCompetency(competencyPerformance,studentCompetencyPerformance)">
+                    <ion-icon class="nav-check-circle"></ion-icon>
+                  </ion-row>
+                </ng-container>
+              </ion-row>
+            </ng-container>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>

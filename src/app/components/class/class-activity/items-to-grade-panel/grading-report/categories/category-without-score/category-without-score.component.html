@@ -1,0 +1,23 @@
+<ion-grid class="grid-category-with-score" [ngClass]="{'read-only': isReadonly}">
+  <ion-row class="row-grade-rubric-levels">
+    <ion-col class="col-radio">
+      <ion-row class="grid-radio-container">
+        <ion-list>
+          <ion-radio-group value={{teacherSelectedGrade}}>
+            <ion-item *ngFor="let level of category.levels;index as levelIndex">
+              <ion-label>{{level.name}}</ion-label>
+              <ion-radio slot="start" value={{level.name}} (ionFocus)="changeLevel(levelIndex, level)"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-row>
+    </ion-col>
+    <ion-col class="col-message-icon">
+      <i (click)="showGradeComment()" class="material-icons grade-comment">chat_bubble_outline</i>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="isShowComment" class="row-comment-section" [@slideUpAnimation]>
+    <ion-label>{{'ADD_COMMENT' | translate}}</ion-label>
+    <ion-input name="comments" [(ngModel)]="category.comment" placeholder="{{'ENTER_COMMENTS' | translate}}" (focusout)="enterLevelComments()"></ion-input>
+  </ion-row>
+</ion-grid>

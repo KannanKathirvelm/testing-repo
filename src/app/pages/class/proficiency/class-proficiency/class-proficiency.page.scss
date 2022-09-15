@@ -1,0 +1,84 @@
+.class-proficiency-content-container {
+  --background: var(--class-proficiency-bg);
+
+  .download-proficiency-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px 0 0 10px;
+  }
+
+  .proficiency-download-button {
+    --border-radius: 5px;
+    --background: var(--iris-blue);
+    box-shadow: 1px 1px 20px 0 var(--black-200);
+    margin: 10px;
+    --padding-start: 5px;
+    --padding-end: 5px;
+  }
+
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0px 10px 10px 10px;
+
+    ion-text {
+      color: var(--white);
+    }
+
+    .progress-bar {
+      height: 5px;
+      margin-top: 10px;
+    }
+  }
+
+  .search-student-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--student-list-search-border);
+    background: var(--class-progress-body-bg);
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+
+    .input-row {
+      font-size: 12px;
+      color: var(--student-list-search-text);
+      border-right: 1px solid var(--student-list-search-border);
+    }
+
+    .search-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--student-list-search-text);
+
+      ion-icon {
+        height: 22px;
+        min-width: 48px;
+      }
+    }
+  }
+
+  .proficiency-cards-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 8px 0;
+
+    .student-class-card:focus {
+      outline: none;
+    }
+  }
+
+  .no-data-msg {
+    color: var(--class-proficiency-no-data);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+  }
+}
