@@ -95,6 +95,7 @@
         "d3": "^5.15.0",
         "es6-promise-plugin": "^4.2.2",
         "eventsource": "^2.0.2",
+        "follow-redirects": "^1.15.2",
         "ionic-plugin-deeplinks": "^1.0.24",
         "jetifier": "^1.6.8",
         "lodash": "^4.17.21",
