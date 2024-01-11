@@ -95,7 +95,7 @@
         "d3": "^5.15.0",
         "es6-promise-plugin": "^4.2.2",
         "eventsource": "^2.0.2",
-        "follow-redirects": "^1.15.2",
+        "follow-redirects": "^1.15.4",
         "glob-parent": "^6.0.2",
         "ini": "^3.0.1",
         "ionic-plugin-deeplinks": "^1.0.24",
